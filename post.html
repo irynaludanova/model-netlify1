@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+    <title>Ника — фотограф</title>
+    <meta
+      name="description"
+      content="Профиль Ники - фотографа из Майами-Бич: фото, описание, контакты. Возраст 28, специализация fashion-съемки."
+    />
+    <link rel="canonical" href="./post.html" />
+    <link
+      rel="preload"
+      as="image"
+      href="./img/profile-low-1.webp"
+      fetchpriority="high"
+    />
+    <meta property="og:title" content="Ника – Фотограф из Майами-Бич" />
+    <meta
+      property="og:description"
+      content="Профиль Ники, фотографа с опытом в fashion-съемках. Майами-Бич, 28 лет."
+    />
+    <meta property="og:image" content="./img/profile-low-1.webp" />
+    <meta property="og:image:alt" content="Портфолио Ники, фотографа" />
+    <meta property="og:url" content="./post.html" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="ModelConnect Miami" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ника – Фотограф из Майами-Бич" />
+    <meta
+      name="twitter:description"
+      content="Профиль Ники, фотографа с опытом в fashion-съемках. Майами-Бич, 28 лет."
+    />
+    <meta name="twitter:image" content="./img/profile-low-1.webp" />
+    <meta name="twitter:image:alt" content="Портфолио Ники, фотографа" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Ника",
+        "jobTitle": "Фотограф",
+        "age": 28,
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Майами-Бич",
+          "addressRegion": "Майами"
+        },
+        "description": "Опытный фотограф с фокусом на <mark>fashion-съемки</mark>. Работала с топ-моделями в Майами. Готова к новым проектам.",
+        "email": "anna@example.com",
+        "telephone": "+1 (123) 456-7890",
+        "image": [
+          {
+            "@type": "ImageObject",
+            "url": "./img/profile-low-1.webp",
+            "width": 300,
+            "height": 200,
+            "caption": "Основное портфолио Ники"
+          },
+          {
+            "@type": "ImageObject",
+            "url": "./img/profile-med-1.webp",
+            "width": 600,
+            "height": 400,
+            "caption": "Работы Ники в fashion-съемках"
+          },
+          {
+            "@type": "ImageObject",
+            "url": "./img/profile-high-1.webp",
+            "width": 1200,
+            "height": 800,
+            "caption": "Пример фотосессии Ники"
+          }
+        ],
+        "url": "./post.html",
+        "sameAs": ["https://example.com/anna-social"],
+        "datePublished": "2025-08-08T11:43:00Z",
+        "dateModified": "2025-08-17T20:11:00Z"
+      }
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <h1>Ника — фотограф</h1>
+    </header>
+
+    <main>
+      <article class="profile-detail">
+        <div class="profile-detail__images">
+          <figure>
+            <img
+              class="profile-detail__image"
+              src="./img/profile-low-1.webp"
+              srcset="
+                ./img/profile-low-1.webp   300w,
+                ./img/profile-med-1.webp   600w,
+                ./img/profile-high-1.webp 1200w
+              "
+              sizes="(max-width: 600px) 100vw, (max-width: 1024px) 100vw, 400px"
+              alt="Основное портфолио Ники, фотографа из Майами-Бич"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>Основное фото профиля Ники</figcaption>
+          </figure>
+          <figure>
+            <img
+              class="profile-detail__image"
+              src="./img/profile-low-2.webp"
+              srcset="
+                ./img/profile-low-2.webp   300w,
+                ./img/profile-med-2.webp   600w,
+                ./img/profile-high-2.webp 1200w
+              "
+              sizes="(max-width: 600px) 100vw, (max-width: 1024px) 100vw, 400px"
+              alt="Работы Ники в fashion-съемках"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>Работы Ники в fashion-съемках</figcaption>
+          </figure>
+          <figure>
+            <img
+              class="profile-detail__image"
+              src="./img/profile-low-3.webp"
+              srcset="
+                ./img/profile-low-3.webp   300w,
+                ./img/profile-med-3.webp   600w,
+                ./img/profile-high-3.webp 1200w
+              "
+              sizes="(max-width: 600px) 100vw, (max-width: 1024px) 100vw, 400px"
+              alt="Пример фотосессии Ники"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>Пример фотосессии Ники</figcaption>
+          </figure>
+        </div>
+
+        <div class="profile-detail__info">
+          <p><strong>Имя:</strong> Ника</p>
+          <p><strong>Возраст:</strong> <data value="28">28</data></p>
+          <p><strong>Город:</strong> Майами-Бич</p>
+          <p><strong>Рубрика:</strong> Фотографы</p>
+          <p class="profile-detail__description">
+            Описание: Опытный фотограф с фокусом на <mark>fashion-съемки</mark>.
+            Работала с топ-моделями в Майами. Готова к новым проектам.
+          </p>
+          <p class="profile-detail__date">
+            <time datetime="2025-08-08T11:43">08.08.2025, 11:43</time>
+          </p>
+          <address class="profile-detail__contact">
+            nika@example.com / +1 (123) 456-7890
+          </address>
+          <a
+            href="mailto:nika@example.com"
+            class="button"
+            aria-label="Связаться с Анной по email"
+            >Связаться</a
+          >
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <nav aria-label="Навигация по сайту">
+        <ul class="nav-list">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="region.html">Регионы</a></li>
+          <li><a href="category.html">Рубрики</a></li>
+          <li><a href="#">О проекте</a></li>
+          <li><a href="index.html#profiles">Свежие профили</a></li>
+          <li><a href="add-profile.html">Добавить профиль</a></li>
+        </ul>
+      </nav>
+      <p>&copy; 2025 ModelConnect Miami</p>
+    </footer>
+  </body>
+</html>
