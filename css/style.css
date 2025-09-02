@@ -49,6 +49,11 @@ img {
 }
 
 /* === Navigation === */
+nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
 .nav-list {
   list-style: none;
   padding: 0;
