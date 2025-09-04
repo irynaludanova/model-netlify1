@@ -1,8 +1,14 @@
 {
   "id": "ivan",
   "name": "Ivan",
-  "city": "Miami Beach",
-  "category": "Model",
-  "description": "Опытная модель для fashion-съемок.",
-  "date": "2025-08-31T10:00:00.000Z"
+  "city": "Халландейл-Бич",
+  "category": "Фотограф",
+  "description": "Опытный фотограф с фокусом на fashion-съемки. Работал с топ-моделями в Халландейл-Бич. Готов к новым проектам.",
+  "date": "2025-08-07T14:20:00.000Z",
+  "age": 25,
+  "email": "ivan@example.com",
+  "phone": "12345678",
+  "image_url": "/img/profile-low-1.webp",
+  "image_url2": "/img/profile-low-2.webp",
+  "image_url3": "/img/profile-low-3.webp"
 }

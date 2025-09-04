@@ -1,86 +1,71 @@
 ---
 layout: base.liquid
+permalink: /category/index.html
+seo_title: "Категории — ModelConnect Miami"
+seo_description: "Профили профессионалов fashion-индустрии по категориям: модели, фотографы, стилисты."
+seo_keywords: "категории Майами, fashion Майами, ModelConnect"
+seo_og_title: "Категории — ModelConnect Miami"
+seo_og_description: "Найдите профессионалов по категориям: модели, фотографы, стилисты."
+seo_og_image: /img/og-image-photographers.webp
+seo_og_url: https://models-connect.netlify.app/category/
+seo_og_type: website
+seo_twitter_card: summary_large_image
+seo_twitter_title: "Категории — ModelConnect Miami"
+seo_twitter_description: "Найдите профессионалов по категориям в Майами."
+seo_twitter_image: /img/og-image-photographers.webp
+seo_canonical: https://models-connect.netlify.app/category/
+seo_json_ld: |
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Категории",
+    "url": "https://models-connect.netlify.app/category/",
+    "description": "Профили по категориям на платформе ModelConnect."
+  }
 ---
-
-<head>
-  <title>Фотографы в Майами</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta
-    name="description"
-    content="Найдите профессиональных фотографов в Майами для fashion-съемок, портретов и мероприятий. Свежие профили с ежедневными обновлениями."
-  />
-  <meta
-    name="keywords"
-    content="фотографы Майами, fashion-съемки Майами, профили фотографов, ModelConnect"
-  />
-  <meta property="og:title" content="Фотографы в Майами" />
-  <meta
-    property="og:description"
-    content="Свежие профили фотографов в Майами для fashion-индустрии."
-  />
-  <meta property="og:image" content="/img/og-image-photographers.webp" />
-  <meta property="og:url" content="https://example.com/category/" />
-  <link rel="canonical" href="https://example.com/category/" />
-  <link rel="stylesheet" href="/style.css" />
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Фотографы в Майами",
-      "url": "https://example.com/category/",
-      "description": "Профессиональные фотографы в Майами для fashion-проектов."
-    }
-  </script>
-</head>
 
 <nav>
   <ul class="nav-list">
-    <li><a href="/">Главная</a></li>
-    <li><a href="/region/">Регионы</a></li>
-    <li><a href="/category/">Рубрики</a></li>
-    <li><a href="/about/">О проекте</a></li>
-    <li><a href="/profiles/">Свежие профили</a></li>
-    <li><a href="/add-profile/">Добавить профиль</a></li>
+    <li><a href="{{ '/' | assetUrl }}">Главная</a></li>
+    <li><a href="{{ '/region/' | assetUrl }}">Регионы</a></li>
+    <li><a href="{{ '/category/' | assetUrl }}">Категории</a></li>
+    <li><a href="{{ '/add-profile/' | assetUrl }}">Добавить профиль</a></li>
   </ul>
 </nav>
 
-<h1>Фотографы в Майами</h1>
-
-<div class="profiles-grid">
-  {% for profile in collections.allProfiles %}
-  <div class="profile-card">
-    <img
-      class="profile-card__image"
-      src="{{ profile.image_url | default : '/img/placeholder.jpg' }}"
-      alt="Фото профиля {{ profile.name }}"
-    />
-    <div class="profile-card__name">{{ profile.name }}</div>
-    <div class="profile-card__location">
-      {{ profile.city }}, {{ profile.category }}
+<div class="categories-section">
+  <h1>Профили по категориям</h1>
+  {% assign categories = "Модель,Фотограф,Стилист" | split: "," %} {% for
+  category in categories %} {% assign profiles_in_category =
+  collections.allProfiles | where: "category", category %} {% if
+  profiles_in_category.size > 0 %}
+  <section id="{{ category | slugify }}">
+    <h2>{{ category }}</h2>
+    <div class="profile-list">
+      {% for profile in profiles_in_category %}
+      <div class="profile-card">
+        <img
+          class="profile-card__image"
+          src="{{
+            profile.image_url | default : '/img/placeholder.png' | assetUrl
+          }}"
+          alt="Фото профиля {{ profile.name }}"
+        />
+        <h3>{{ profile.name }}</h3>
+        <p><strong>Город:</strong> {{ profile.city }}</p>
+        <p>{{ profile.description | truncate : 100 }}</p>
+        <a
+          href="{{
+            '/profiles/' | append : profile.id | append : '/' | assetUrl
+          }}"
+          >Подробнее</a
+        >
+      </div>
+      {% endfor %}
     </div>
-    <div class="profile-card__date">
-      {{ profile.date | date : "%d.%m.%Y, %H:%M" }}
-    </div>
-  </div>
-  {% endfor %}
+  </section>
+  {% endif %} {% endfor %}
 </div>
-
-<p>
-  Найдите профессиональных фотографов в Майами для fashion-съемок, портретов и
-  мероприятий. Свежие профили с ежедневными обновлениями.
-</p>
-
-<section>
-  <h2>Переключение регионов</h2>
-  <ul>
-    <li><a href="/region/#miami-beach">Майами-Бич</a></li>
-    <li><a href="/region/#hallandale">Халландейл</a></li>
-    <li><a href="/region/#coral-gables">Корал-Гейблс</a></li>
-    <li><a href="/region/#downtown-miami">Даунтаун Майами</a></li>
-    <li><a href="/region/#wynwood">Винвуд</a></li>
-  </ul>
-</section>
 
 <footer class="site-footer">
   <p>© 2025 ModelConnect Miami</p>

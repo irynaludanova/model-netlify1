@@ -1,85 +1,71 @@
 ---
 layout: base.liquid
+permalink: /region/index.html
+seo_title: Регионы — ModelConnect Miami
+seo_description: Профили профессионалов fashion-индустрии по регионам Майами.
+seo_keywords: регионы Майами, fashion Майами, ModelConnect
+seo_og_title: Регионы — ModelConnect Miami
+seo_og_description: Найдите моделей, фотографов и стилистов в разных регионах Майами.
+seo_og_image: /img/og-image-region.webp
+seo_og_url: https://models-connect.netlify.app/
+seo_og_type: website
+seo_twitter_card: summary_large_image
+seo_twitter_title: Регионы — ModelConnect Miami
+seo_twitter_description: Найдите профессионалов в регионах Майами.
+seo_twitter_image: /img/og-image-region.webp
+seo_canonical: https://models-connect.netlify.app/region/
+seo_json_ld: |
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Регионы",
+    "url": "https://models-connect.netlify.app/region/",
+    "description": "Профили по регионам Майами на платформе ModelConnect."
+  }
 ---
-
-<head>
-  <title>Профили в Халландейл-Бич</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta
-    name="description"
-    content="Найдите профили моделей, фотографов и стилистов в Халландейл-Бич, Майами. Свежие контакты для fashion-проектов."
-  />
-  <meta
-    name="keywords"
-    content="профили Халландейл-Бич, модели Майами, фотографы Майами, стилисты Майами, fashion Халландейл"
-  />
-  <meta property="og:title" content="Профили в Халландейл-Бич" />
-  <meta
-    property="og:description"
-    content="Свежие профили в Халландейл-Бич, Майами для fashion-индустрии."
-  />
-  <meta property="og:image" content="/img/og-image-region.webp" />
-  <meta property="og:url" content="https://example.com/region/" />
-  <link rel="canonical" href="https://example.com/region/" />
-  <link rel="stylesheet" href="/style.css" />
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Профили в Халландейл-Бич",
-      "url": "https://example.com/region/",
-      "description": "Профили моделей, фотографов и стилистов в Халландейл-Бич, Майами."
-    }
-  </script>
-</head>
 
 <nav>
   <ul class="nav-list">
-    <li><a href="/">Главная</a></li>
-    <li><a href="/region/">Регионы</a></li>
-    <li><a href="/category/">Рубрики</a></li>
-    <li><a href="/about/">О проекте</a></li>
-    <li><a href="/profiles/">Свежие профили</a></li>
-    <li><a href="/add-profile/">Добавить профиль</a></li>
+    <li><a href="{{ '/' | assetUrl }}">Главная</a></li>
+    <li><a href="{{ '/region/' | assetUrl }}">Регионы</a></li>
+    <li><a href="{{ '/category/' | assetUrl }}">Категории</a></li>
+    <li><a href="{{ '/add-profile/' | assetUrl }}">Добавить профиль</a></li>
   </ul>
 </nav>
 
-<h1>Профили в Халландейл-Бич</h1>
-
-<div class="profiles-grid">
-  {% for profile in collections.allProfiles %}
-  <div class="profile-card">
-    <img
-      class="profile-card__image"
-      src="{{ profile.image_url | default : '/img/placeholder.jpg' }}"
-      alt="Фото профиля {{ profile.name }}"
-    />
-    <div class="profile-card__name">{{ profile.name }}</div>
-    <div class="profile-card__location">
-      {{ profile.city }}, {{ profile.category }}
+<div class="regions-section">
+  <h1>Профили по регионам</h1>
+  {% assign cities = "Майами-Бич,Халландейл-Бич,Центр Майами,Корал-Гейблс" |
+  split: "," %} {% for city in cities %} {% assign profiles_in_city =
+  collections.allProfiles | where: "city", city %} {% if profiles_in_city.size >
+  0 %}
+  <section id="{{ city | slugify }}">
+    <h2>{{ city }}</h2>
+    <div class="profile-list">
+      {% for profile in profiles_in_city %}
+      <div class="profile-card">
+        <img
+          class="profile-card__image"
+          src="{{
+            profile.image_url | default : '/img/placeholder.png' | assetUrl
+          }}"
+          alt="Фото профиля {{ profile.name }}"
+        />
+        <h3>{{ profile.name }}</h3>
+        <p><strong>Категория:</strong> {{ profile.category }}</p>
+        <p>{{ profile.description | truncate : 100 }}</p>
+        <a
+          href="{{
+            '/profiles/' | append : profile.id | append : '/' | assetUrl
+          }}"
+          >Подробнее</a
+        >
+      </div>
+      {% endfor %}
     </div>
-    <div class="profile-card__date">
-      {{ profile.date | date : "%d.%m.%Y, %H:%M" }}
-    </div>
-  </div>
-  {% endfor %}
+  </section>
+  {% endif %} {% endfor %}
 </div>
-
-<p>
-  Найдите профили моделей, фотографов и стилистов в Халландейл-Бич, Майами.
-  Свежие контакты для fashion-проектов.
-</p>
-
-<section>
-  <h2>Фильтр по рубрикам</h2>
-  <ul>
-    <li><a href="/category/#photographers">Фотографы</a></li>
-    <li><a href="/category/#models">Модели</a></li>
-    <li><a href="/category/#stylists">Стилисты</a></li>
-    <li><a href="/category/#others">Другие</a></li>
-  </ul>
-</section>
 
 <footer class="site-footer">
   <p>© 2025 ModelConnect Miami</p>

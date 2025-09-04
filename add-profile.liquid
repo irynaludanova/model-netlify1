@@ -1,61 +1,49 @@
 ---
 layout: base.liquid
+permalink: /add-profile/index.html
+seo_title: Добавить профиль — ModelConnect Miami
+seo_description: Добавьте свой профиль на платформу ModelConnect Miami для профессионалов fashion-индустрии.
+seo_keywords: добавить профиль, ModelConnect Miami, fashion Майами
+seo_og_title: Добавить профиль — ModelConnect Miami
+seo_og_description: Станьте частью сообщества профессионалов fashion-индустрии в Майами.
+seo_og_image: /img/og-image-main.webp
+seo_og_url: https://models-connect.netlify.app/add-profile/
+seo_og_type: website
+seo_twitter_card: summary_large_image
+seo_twitter_title: Добавить профиль — ModelConnect Miami
+seo_twitter_description: Станьте частью сообщества профессионалов в Майами.
+seo_twitter_image: /img/og-image-main.webp
+seo_canonical: https://models-connect.netlify.app/add-profile/
+seo_json_ld: |
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Добавить профиль",
+    "url": "https://models-connect.netlify.app/add-profile/",
+    "description": "Добавьте свой профиль на платформу ModelConnect Miami."
+  }
 ---
-
-<head>
-  <title>ModelConnect Miami – Добавить профиль</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta
-    name="description"
-    content="Добавьте свой профиль в ModelConnect Miami. Зарегистрируйтесь как модель, фотограф или стилист."
-  />
-  <meta
-    name="keywords"
-    content="добавить профиль, регистрация Майами, fashion Майами, ModelConnect"
-  />
-  <meta property="og:title" content="Добавить профиль в ModelConnect Miami" />
-  <meta
-    property="og:description"
-    content="Заполните форму, чтобы добавить свой профиль в платформу."
-  />
-  <meta property="og:image" content="/img/og-image-main.webp" />
-  <meta property="og:url" content="https://example.com/add-profile/" />
-  <link rel="canonical" href="https://example.com/add-profile/" />
-  <link rel="stylesheet" href="/style.css" />
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Добавить профиль",
-      "url": "https://example.com/add-profile/",
-      "description": "Форма для добавления профиля в ModelConnect Miami."
-    }
-  </script>
-</head>
 
 <nav>
   <ul class="nav-list">
-    <li><a href="/">Главная</a></li>
-    <li><a href="/region/">Регионы</a></li>
-    <li><a href="/category/">Рубрики</a></li>
-    <li><a href="/about/">О проекте</a></li>
-    <li><a href="/profiles/">Свежие профили</a></li>
-    <li><a href="/add-profile/">Добавить профиль</a></li>
+    <li><a href="{{ '/' | assetUrl }}">Главная</a></li>
+    <li><a href="{{ '/region/' | assetUrl }}">Регионы</a></li>
+    <li><a href="{{ '/category/' | assetUrl }}">Категории</a></li>
+    <li><a href="{{ '/add-profile/' | assetUrl }}">Добавить профиль</a></li>
   </ul>
 </nav>
 
-<div class="form-section">
+<div class="add-profile-section">
   <h1>Добавление профиля</h1>
   <p>Заполните форму ниже, чтобы добавить свой профиль в ModelConnect Miami.</p>
-  <form class="profile-form">
+  <form action="/submit-profile" method="POST">
     <div class="form-group">
       <label for="full-name">Полное имя</label>
       <input type="text" id="full-name" name="full-name" required />
     </div>
     <div class="form-group">
       <label for="age">Возраст</label>
-      <input type="number" id="age" name="age" min="18" required />
+      <input type="number" id="age" name="age" required />
     </div>
     <div class="form-group">
       <label for="email">Email</label>
@@ -72,6 +60,7 @@ layout: base.liquid
         <option value="Майами-Бич">Майами-Бич</option>
         <option value="Халландейл-Бич">Халландейл-Бич</option>
         <option value="Центр Майами">Центр Майами</option>
+        <option value="Корал-Гейблс">Корал-Гейблс</option>
       </select>
     </div>
     <div class="form-group">
@@ -85,24 +74,19 @@ layout: base.liquid
     </div>
     <div class="form-group">
       <label for="description">Описание</label>
-      <textarea
-        id="description"
-        name="description"
-        rows="5"
-        required
-      ></textarea>
+      <textarea id="description" name="description" required></textarea>
     </div>
     <div class="form-group">
       <label for="photo">Загрузить фото (необязательно)</label>
-      <input type="file" id="photo" name="photo" />
+      <input type="file" id="photo" name="photo" accept="image/*" />
       <p class="form-note">
         Примечание: Загрузка фото — заглушка; отправьте фото отдельно по email.
       </p>
     </div>
-    <button type="submit" class="submit-btn">Отправить профиль</button>
+    <button type="submit">Отправить профиль</button>
   </form>
 </div>
 
 <footer class="site-footer">
-  <p>© 2025 ModelConnect Miami. Все права защищены.</p>
+  <p>© 2025 ModelConnect Miami</p>
 </footer>

@@ -2,16 +2,95 @@
 layout: base.liquid
 ---
 
-<div>
-  <h1>{{ profile.name }}</h1>
-  <p><strong>Город:</strong> {{ profile.city }}</p>
-  <p><strong>Категория:</strong> {{ profile.category }}</p>
-  <p><strong>Описание:</strong> {{ profile.description }}</p>
-  <p><strong>Дата:</strong> {{ profile.date | date: "%Y-%m-%d" }}</p>
-  {% if profile.image_url %}
-  <img
-    src="{{ profile.image_url }}"
-    alt="{{ profile.name | default: 'Профиль' }}"
-  />
-  {% endif %}
+{% capture content_for_head %}
+<title>{{ profile.name }} — {{ profile.category }}</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="{{ profile.description | truncate: 150 }}" />
+<meta
+  name="keywords"
+  content="{{ profile.name }}, {{ profile.category }}, {{ profile.city }}, fashion Майами, ModelConnect"
+/>
+<meta
+  property="og:title"
+  content="{{ profile.name }} — {{ profile.category }}"
+/>
+<meta
+  property="og:description"
+  content="{{ profile.description | truncate: 150 }}"
+/>
+<meta
+  property="og:image"
+  content="{{ profile.image_url | default: '/img/placeholder.jpg' | assetUrl }}"
+/>
+<meta property="og:url" content="https://example.com{{ page.url }}" />
+<link rel="canonical" href="https://example.com{{ page.url }}" />
+<link rel="stylesheet" href="{{ assetUrl }}" />
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "{{ profile.name }}",
+    "jobTitle": "{{ profile.category }}",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "{{ profile.city }}",
+      "addressRegion": "FL",
+      "postalCode": "33139",
+      "streetAddress": "Miami"
+    },
+    "email": "{{ profile.email | default: 'Not provided' }}",
+    "description": "{{ profile.description }}"
+  }
+</script>
+{% endcapture %}
+
+<nav>
+  <ul class="nav-list">
+    <li><a href="{{ '/' | assetUrl }}">Главная</a></li>
+    <li><a href="{{ '/region/' | assetUrl }}">Регионы</a></li>
+    <li><a href="{{ '/category/' | assetUrl }}">Категории</a></li>
+    <li><a href="{{ '/add-profile/' | assetUrl }}">Добавить профиль</a></li>
+  </ul>
+</nav>
+
+<div class="profile-detail">
+  <div class="profile-detail__images">
+    <img
+      class="profile-detail__image"
+      src="{{ profile.image_url | default: '/img/placeholder.jpg' | assetUrl }}"
+      alt="Основное фото профиля {{ profile.name }}"
+    />
+    <img
+      class="profile-detail__image"
+      src="{{ profile.image_url2 | default: '/img/placeholder.jpg' | assetUrl }}"
+      alt="Работы {{ profile.name }} в fashion-съемках"
+    />
+    <img
+      class="profile-detail__image"
+      src="{{ profile.image_url3 | default: '/img/placeholder.jpg' | assetUrl }}"
+      alt="Пример фотосессии {{ profile.name }}"
+    />
+  </div>
+  <div class="profile-detail__info">
+    <h1>{{ profile.name }} — {{ profile.category }}</h1>
+    <p>Имя: {{ profile.name }}</p>
+    <p>Возраст: {{ profile.age | default: 'Не указан' }}</p>
+    <p>Город: {{ profile.city }}</p>
+    <p>Рубрика: {{ profile.category }}</p>
+    <p class="profile-detail__description">
+      Описание: {{ profile.description }}
+    </p>
+    <p>{{ profile.date | date: "%d.%m.%Y, %H:%M" }}</p>
+    <p class="profile-detail__contact">
+      {{ profile.email | default: 'Не указан' }}
+    </p>
+    <a class="button" href="mailto:{{ profile.email | default: '#' }}"
+      >Связаться</a
+    >
+  </div>
 </div>
+
+<footer class="site-footer">
+  <p>© 2025 ModelConnect Miami</p>
+</footer>

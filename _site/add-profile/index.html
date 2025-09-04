@@ -3,64 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MC</title>
+  <title>Добавить профиль — ModelConnect Miami</title>
+  <meta property="og:locale" content="ru_RU" />
+  <meta name="description" content="Добавьте свой профиль на платформу ModelConnect Miami для профессионалов fashion-индустрии.">
+  <meta name="keywords" content="добавить профиль, ModelConnect Miami, fashion Майами">
+  <meta property="og:site_name" content="ModelConnect Miami" />
+  <meta property="og:title" content="Добавить профиль — ModelConnect Miami">
+  <meta property="og:description" content="Станьте частью сообщества профессионалов fashion-индустрии в Майами.">
+  <meta property="og:image" content="/img/og-image-main.webp">
+<meta property="og:image:alt" content=Добавить профиль — ModelConnect Miami />
+  <meta property="og:image:width" content="300" />
+  <meta property="og:image:height" content="200" />
+  <meta property="og:url" content="https://models-connect.netlify.app/add-profile//add-profile/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Добавить профиль — ModelConnect Miami">
+  <meta name="twitter:description" content="Станьте частью сообщества профессионалов в Майами.">
+  <meta name="twitter:image" content="/img/og-image-main.webp">
+  <link rel="canonical" href="https://models-connect.netlify.app/add-profile//add-profile/">
+  <link rel="stylesheet" href="/style.css">
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://models-connect.netlify.app/favicon.ico"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://models-connect.netlify.app/favicon.ico/img/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="https://models-connect.netlify.app/favicon.ico/img/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="https://models-connect.netlify.app/favicon.ico/img/favicon-16x16.png"
+    />
+    <link
+      rel="manifest"
+      href="https://models-connect.netlify.app/favicon.ico/site.webmanifest"
+    />
+  
+    <script type="application/ld+json">
+      {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Добавить профиль",
+  "url": "https://models-connect.netlify.app/add-profile/",
+  "description": "Добавьте свой профиль на платформу ModelConnect Miami."
+}
+
+    </script>
+  
+  
 </head>
 <body>
   
-<head>
-  <title>ModelConnect Miami – Добавить профиль</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta
-    name="description"
-    content="Добавьте свой профиль в ModelConnect Miami. Зарегистрируйтесь как модель, фотограф или стилист."
-  />
-  <meta
-    name="keywords"
-    content="добавить профиль, регистрация Майами, fashion Майами, ModelConnect"
-  />
-  <meta property="og:title" content="Добавить профиль в ModelConnect Miami" />
-  <meta
-    property="og:description"
-    content="Заполните форму, чтобы добавить свой профиль в платформу."
-  />
-  <meta property="og:image" content="/img/og-image-main.webp" />
-  <meta property="og:url" content="https://example.com/add-profile/" />
-  <link rel="canonical" href="https://example.com/add-profile/" />
-  <link rel="stylesheet" href="/style.css" />
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Добавить профиль",
-      "url": "https://example.com/add-profile/",
-      "description": "Форма для добавления профиля в ModelConnect Miami."
-    }
-  </script>
-</head>
-
 <nav>
   <ul class="nav-list">
     <li><a href="/">Главная</a></li>
     <li><a href="/region/">Регионы</a></li>
-    <li><a href="/category/">Рубрики</a></li>
-    <li><a href="/about/">О проекте</a></li>
-    <li><a href="/profiles/">Свежие профили</a></li>
+    <li><a href="/category/">Категории</a></li>
     <li><a href="/add-profile/">Добавить профиль</a></li>
   </ul>
 </nav>
 
-<div class="form-section">
+<div class="add-profile-section">
   <h1>Добавление профиля</h1>
   <p>Заполните форму ниже, чтобы добавить свой профиль в ModelConnect Miami.</p>
-  <form class="profile-form">
+  <form action="/submit-profile" method="POST">
     <div class="form-group">
       <label for="full-name">Полное имя</label>
       <input type="text" id="full-name" name="full-name" required />
     </div>
     <div class="form-group">
       <label for="age">Возраст</label>
-      <input type="number" id="age" name="age" min="18" required />
+      <input type="number" id="age" name="age" required />
     </div>
     <div class="form-group">
       <label for="email">Email</label>
@@ -77,6 +101,7 @@
         <option value="Майами-Бич">Майами-Бич</option>
         <option value="Халландейл-Бич">Халландейл-Бич</option>
         <option value="Центр Майами">Центр Майами</option>
+        <option value="Корал-Гейблс">Корал-Гейблс</option>
       </select>
     </div>
     <div class="form-group">
@@ -90,26 +115,21 @@
     </div>
     <div class="form-group">
       <label for="description">Описание</label>
-      <textarea
-        id="description"
-        name="description"
-        rows="5"
-        required
-      ></textarea>
+      <textarea id="description" name="description" required></textarea>
     </div>
     <div class="form-group">
       <label for="photo">Загрузить фото (необязательно)</label>
-      <input type="file" id="photo" name="photo" />
+      <input type="file" id="photo" name="photo" accept="image/*" />
       <p class="form-note">
         Примечание: Загрузка фото — заглушка; отправьте фото отдельно по email.
       </p>
     </div>
-    <button type="submit" class="submit-btn">Отправить профиль</button>
+    <button type="submit">Отправить профиль</button>
   </form>
 </div>
 
 <footer class="site-footer">
-  <p>© 2025 ModelConnect Miami. Все права защищены.</p>
+  <p>© 2025 ModelConnect Miami</p>
 </footer>
 
 </body>

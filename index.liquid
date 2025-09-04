@@ -1,105 +1,143 @@
 ---
 layout: base.liquid
+permalink: /index.html
+seo_title: "Главная — ModelConnect Miami"
+seo_description: "Платформа для профессионалов fashion-индустрии в Майами. Найдите моделей, фотографов и стилистов."
+seo_keywords: "ModelConnect Miami, fashion Майами, платформа для моделей"
+seo_og_title: "Главная — ModelConnect Miami"
+seo_og_description: "Найдите профессионалов fashion-индустрии в Майами для ваших проектов."
+seo_og_image: /img/og-image-main.webp
+seo_og_url: https://models-connect.netlify.app/
+seo_og_type: website
+seo_twitter_card: summary_large_image
+seo_twitter_title: "Главная — ModelConnect Miami"
+seo_twitter_description: "Найдите профессионалов fashion-индустрии в Майами."
+seo_twitter_image: /img/og-image-main.webp
+seo_canonical: https://models-connect.netlify.app
+seo_json_ld: |
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "ModelConnect Miami",
+    "url": "https://models-connect.netlify.app/",
+    "description": "Платформа для профессионалов fashion-индустрии."
+  }
 ---
 
-<head>
-  <title>ModelConnect Miami – Свежие профили</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta
-    name="description"
-    content="ModelConnect Miami — платформа для поиска свежих профилей моделей, фотографов и стилистов в Майами. Ежедневные обновления для fashion-индустрии."
-  />
-  <meta
-    name="keywords"
-    content="модели Майами, фотографы Майами, стилисты Майами, fashion Майами, ModelConnect"
-  />
-  <meta property="og:title" content="ModelConnect Miami – Свежие профили" />
-  <meta
-    property="og:description"
-    content="Свежие профили в fashion-индустрии Майами. Модели, фотографы, стилисты."
-  />
-  <meta property="og:image" content="/img/og-image-main.webp" />
-  <meta property="og:url" content="https://example.com/" />
-  <link rel="canonical" href="https://example.com/" />
-  <link rel="stylesheet" href="/css/style.css" />
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "ModelConnect Miami",
-      "url": "https://example.com/",
-      "description": "Платформа для поиска профилей в fashion-индустрии Майами"
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "ModelConnect Miami: Свежие Профили",
+    "description": "Главная страница каталога профилей творческих специалистов в Майами.",
+    "url": "https://models-connect.netlify.app/index.html",
+    "datePublished": "2025-09-02T20:50:00Z",
+    "dateModified": "2025-09-02T20:50:00Z",
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Person",
+            "name": "Ника",
+            "jobTitle": "Фотограф",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Майами-Бич"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://models-connect.netlify.app/img/profile-low-1.webp"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Person",
+            "name": "Иван",
+            "jobTitle": "Модель",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Халландейл"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://models-connect.netlify.app/img/profile-low-2.webp"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "Person",
+            "name": "Мария",
+            "jobTitle": "Стилист",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Корал-Гейблс"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://models-connect.netlify.app/img/profile-low-3.webp"
+            }
+          }
+        }
+      ]
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "@id": "hhttps://models-connect.netlify.app/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Главная",
+          "item": "https://models-connect.netlify.app/"
+        }
+      ]
     }
-  </script>
-</head>
-
+  }
+</script>
 <nav>
   <ul class="nav-list">
-    <li><a href="/">Главная</a></li>
-    <li><a href="/region/">Регионы</a></li>
-    <li><a href="/category/">Рубрики</a></li>
-    <li><a href="/about/">О проекте</a></li>
-    <li><a href="/profiles/">Свежие профили</a></li>
-    <li><a href="/add-profile/">Добавить профиль</a></li>
+    <li><a href="{{ '/' | assetUrl }}">Главная</a></li>
+    <li><a href="{{ '/region/' | assetUrl }}">Регионы</a></li>
+    <li><a href="{{ '/category/' | assetUrl }}">Категории</a></li>
+    <li><a href="{{ '/add-profile/' | assetUrl }}">Добавить профиль</a></li>
   </ul>
 </nav>
 
-<h1>
-  ModelConnect Miami: Свежие Профили Моделей, Фотографов и Стилистов в 2025
-</h1>
-
-<div class="profiles-grid">
-  {% for profile in collections.allProfiles %}
-  <div class="profile-card">
-    <img
-      class="profile-card__image"
-      src="{{ profile.image_url | default : '/img/placeholder.jpg' }}"
-      alt="Фото профиля {{ profile.name }}"
-    />
-    <div class="profile-card__name">{{ profile.name }}</div>
-    <div class="profile-card__location">
-      {{ profile.city }}, {{ profile.category }}
+<div class="home-section">
+  <h1>ModelConnect Miami</h1>
+  <p>Ведущая платформа для профессионалов fashion-индустрии в Майами.</p>
+  <div class="profile-list">
+    {% for profile in collections.allProfiles %}
+    <div class="profile-card">
+      <img
+        class="profile-card__image"
+        src="{{
+          profile.image_url | default : '/img/placeholder.png' | assetUrl
+        }}"
+        alt="Фото профиля {{ profile.name }}"
+      />
+      <h3>{{ profile.name }}</h3>
+      <p><strong>Город:</strong> {{ profile.city }}</p>
+      <p><strong>Категория:</strong> {{ profile.category }}</p>
+      <a
+        href="{{
+          '/profiles/' | append : profile.id | append : '/' | assetUrl
+        }}"
+        >Подробнее</a
+      >
     </div>
-    <div class="profile-card__date">
-      {{ profile.date | date : "%d.%m.%Y, %H:%M" }}
-    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
 </div>
-
-<p>
-  Добро пожаловать на ModelConnect Miami — ведущую платформу для поиска свежих
-  профилей в fashion-индустрии Майами. Мы соединяем моделей, фотографов и
-  стилистов из Майами-Бич, Халландейл, Корал-Гейблс и других районов. Наши
-  ежедневные обновления помогают вам найти идеальных профессионалов для съемок,
-  показов и креативных проектов. Зарегистрируйтесь бесплатно, чтобы добавить
-  свой профиль и стать частью сообщества, которое ценит талант и стиль. Майами —
-  центр моды и искусства, и мы предлагаем доступ к самым актуальным контактам в
-  индустрии.
-</p>
-
-<section>
-  <h2>Регионы</h2>
-  <ul>
-    <li><a href="/region/#miami-beach">Майами-Бич</a></li>
-    <li><a href="/region/#hallandale">Халландейл</a></li>
-    <li><a href="/region/#coral-gables">Корал-Гейблс</a></li>
-    <li><a href="/region/#downtown-miami">Даунтаун Майами</a></li>
-    <li><a href="/region/#wynwood">Винвуд</a></li>
-  </ul>
-</section>
-
-<section>
-  <h2>Рубрики</h2>
-  <ul>
-    <li><a href="/category/#photographers">Фотографы</a></li>
-    <li><a href="/category/#models">Модели</a></li>
-    <li><a href="/category/#stylists">Стилисты</a></li>
-    <li><a href="/category/#makeup-artists">Визажисты</a></li>
-    <li><a href="/category/#producers">Продюсеры</a></li>
-  </ul>
-</section>
 
 <footer class="site-footer">
   <p>© 2025 ModelConnect Miami</p>
