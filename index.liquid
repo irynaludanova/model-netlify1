@@ -1,0 +1,72 @@
+---
+layout: base.liquid
+---
+
+<h1>ModelConnect Miami – Свежие профили</h1>
+
+<nav>
+  <ul>
+    <li><a href="/">Главная</a></li>
+    <li><a href="/region/">Регионы</a></li>
+    <li><a href="/category/">Рубрики</a></li>
+    <li><a href="/about/">О проекте</a></li>
+    <li><a href="/profiles/">Свежие профили</a></li>
+    <li><a href="/add-profile/">Добавить профиль</a></li>
+  </ul>
+</nav>
+
+<section>
+  <h2>
+    ModelConnect Miami: Свежие Профили Моделей, Фотографов и Стилистов в 2025
+  </h2>
+
+  {% for profile in collections.allProfiles %}
+  <div>
+    {% if profile.image_url %}
+    <img src="{{ profile.image_url }}" alt="Фото профиля {{ profile.name }}" />
+    {% else %}
+    <img src="/img/placeholder.jpg" alt="Фото профиля {{ profile.name }}" />
+    {% endif %}
+    <h3>{{ profile.name }}</h3>
+    <p>{{ profile.city }}, {{ profile.category }}</p>
+    <p>{{ profile.date | date : "%d.%m.%Y, %H:%M" }}</p>
+  </div>
+  {% endfor %}
+
+  <p>
+    Добро пожаловать на ModelConnect Miami — ведущую платформу для поиска свежих
+    профилей в fashion-индустрии Майами. Мы соединяем моделей, фотографов и
+    стилистов из Майами-Бич, Халландейл, Корал-Гейблс и других районов. Наши
+    ежедневные обновления помогают вам найти идеальных профессионалов для
+    съемок, показов и креативных проектов. Зарегистрируйтесь бесплатно, чтобы
+    добавить свой профиль и стать частью сообщества, которое ценит талант и
+    стиль. Майами — центр моды и искусства, и мы предлагаем доступ к самым
+    актуальным контактам в индустрии.
+  </p>
+</section>
+
+<section>
+  <h2>Регионы</h2>
+  <ul>
+    <li><a href="/region/#miami-beach">Майами-Бич</a></li>
+    <li><a href="/region/#hallandale">Халландейл</a></li>
+    <li><a href="/region/#coral-gables">Корал-Гейблс</a></li>
+    <li><a href="/region/#downtown-miami">Даунтаун Майами</a></li>
+    <li><a href="/region/#wynwood">Винвуд</a></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Рубрики</h2>
+  <ul>
+    <li><a href="/category/#photographers">Фотографы</a></li>
+    <li><a href="/category/#models">Модели</a></li>
+    <li><a href="/category/#stylists">Стилисты</a></li>
+    <li><a href="/category/#makeup-artists">Визажисты</a></li>
+    <li><a href="/category/#producers">Продюсеры</a></li>
+  </ul>
+</section>
+
+<footer>
+  <p>© 2025 ModelConnect Miami</p>
+</footer>

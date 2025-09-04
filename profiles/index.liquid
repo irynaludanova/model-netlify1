@@ -1,0 +1,12 @@
+---
+layout: base.liquid
+permalink: /profiles/index.html
+---
+<h1>Список профилей</h1>
+<ul>
+{% for profile in collections.allProfiles %}
+  <li>
+    <a href="/profiles/{{ profile.id }}/">{{ profile.name }}</a> - {{ profile.category }} ({{ profile.city }})
+  </li>
+{% endfor %}
+</ul>

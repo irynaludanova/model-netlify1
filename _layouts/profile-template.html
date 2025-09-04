@@ -1,0 +1,17 @@
+---
+layout: base.liquid
+---
+
+<div>
+  <h1>{{ profile.name }}</h1>
+  <p><strong>Город:</strong> {{ profile.city }}</p>
+  <p><strong>Категория:</strong> {{ profile.category }}</p>
+  <p><strong>Описание:</strong> {{ profile.description }}</p>
+  <p><strong>Дата:</strong> {{ profile.date | date: "%Y-%m-%d" }}</p>
+  {% if profile.image_url %}
+  <img
+    src="{{ profile.image_url }}"
+    alt="{{ profile.name | default: 'Профиль' }}"
+  />
+  {% endif %}
+</div>
