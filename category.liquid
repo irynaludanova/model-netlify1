@@ -1,5 +1,9 @@
 ---
-layout: base.liquid
+layout: base
+title: "ModelConnect Miami — Поиск по категориям"
+description: "Смотрите профили моделей, фотографов и стилистов по регионам Майами."
+keywords: "категории, Майами, fashion, ModelConnect"
+
 permalink: /category/index.html
 seo_title: "Категории — ModelConnect Miami"
 seo_description: "Профили профессионалов fashion-индустрии по категориям: модели, фотографы, стилисты."
@@ -24,21 +28,12 @@ seo_json_ld: |
   }
 ---
 
-<nav>
-  <ul class="nav-list">
-    <li><a href="{{ '/' | assetUrl }}">Главная</a></li>
-    <li><a href="{{ '/region/' | assetUrl }}">Регионы</a></li>
-    <li><a href="{{ '/category/' | assetUrl }}">Категории</a></li>
-    <li><a href="{{ '/add-profile/' | assetUrl }}">Добавить профиль</a></li>
-  </ul>
-</nav>
-
-<div class="categories-section">
+<div class="categories-section" id="categories">
   <h1>Профили по категориям</h1>
   {% assign categories = "Модель,Фотограф,Стилист" | split: "," %} {% for
   category in categories %} {% assign profiles_in_category =
-  collections.allProfiles | where: "category", category %} {% if
-  profiles_in_category.size > 0 %}
+  collections.allProfiles | where: "category", category %}
+  {% if  profiles_in_category.size > 0 %}
   <section id="{{ category | slugify }}">
     <h2>{{ category }}</h2>
     <div class="profile-list">
@@ -50,8 +45,12 @@ seo_json_ld: |
             profile.image_url | default : '/img/placeholder.png' | assetUrl
           }}"
           alt="Фото профиля {{ profile.name }}"
+              width="300"
+                  height="200"
+                  fetchpriority="high"
         />
-        <h3>{{ profile.name }}</h3>
+         <div class="profile-card__description">
+        <h3>{{ profile.name | safe }}</h3>
         <p><strong>Город:</strong> {{ profile.city }}</p>
         <p>{{ profile.description | truncate : 100 }}</p>
         <a
@@ -63,10 +62,9 @@ seo_json_ld: |
       </div>
       {% endfor %}
     </div>
+    </div>
   </section>
   {% endif %} {% endfor %}
 </div>
 
-<footer class="site-footer">
-  <p>© 2025 ModelConnect Miami</p>
-</footer>
+

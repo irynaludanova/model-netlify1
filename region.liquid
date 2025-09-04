@@ -1,5 +1,11 @@
 ---
-layout: base.liquid
+
+layout: base
+title: "ModelConnect Miami — Поиск по регионам"
+description: "Смотрите профили моделей, фотографов и стилистов по регионам Майами."
+keywords: "регионы, Майами, fashion, ModelConnect"
+
+
 permalink: /region/index.html
 seo_title: "Регионы — ModelConnect Miami"
 seo_description: "Найдите профессионалов fashion-индустрии в разных регионах Майами: Майами-Бич, Халландейл, Корал-Гейблс."
@@ -24,21 +30,12 @@ seo_json_ld: |
   }
 ---
 
-<nav>
-  <ul class="nav-list">
-    <li><a href="{{ '/' | assetUrl }}">Главная</a></li>
-    <li><a href="{{ '/region/' | assetUrl }}">Регионы</a></li>
-    <li><a href="{{ '/category/' | assetUrl }}">Категории</a></li>
-    <li><a href="{{ '/add-profile/' | assetUrl }}">Добавить профиль</a></li>
-  </ul>
-</nav>
-
-<div class="regions-section">
+<div class="regions-section" id="regions">
   <h1>Профили по регионам</h1>
   {% assign regions = "Майами-Бич,Халландейл,Корал-Гейблс" | split: "," %} {%
   for region in regions %} {% assign profiles_in_region =
-  collections.allProfiles | where: "city", region %} {% if
-  profiles_in_region.size > 0 %}
+  collections.allProfiles | where: "city", region %}
+  {% if  profiles_in_region.size > 0 %}
   <section id="{{ region | slugify }}">
     <h2>{{ region }}</h2>
     <div class="profile-list">
@@ -46,12 +43,15 @@ seo_json_ld: |
       <div class="profile-card">
         <img
           class="profile-card__image"
+           width="300"
+         height="200"
           src="{{
             profile.image_url | default : '/img/placeholder.png' | assetUrl
           }}"
           alt="Фото профиля {{ profile.name }}"
         />
-        <h3>{{ profile.name }}</h3>
+         <div class="profile-card__description">
+        <h3>{{ profile.name | safe}}</h3>
         <p><strong>Категория:</strong> {{ profile.category }}</p>
         <p>{{ profile.description | truncate : 100 }}</p>
         <p>{{ profile.date | date : "%d.%m.%Y, %H:%M" }}</p>
@@ -61,6 +61,7 @@ seo_json_ld: |
           }}"
           >Подробнее</a
         >
+        </div>
       </div>
       {% endfor %}
     </div>
@@ -68,6 +69,3 @@ seo_json_ld: |
   {% endif %} {% endfor %}
 </div>
 
-<footer class="site-footer">
-  <p>© 2025 ModelConnect Miami</p>
-</footer>

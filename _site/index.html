@@ -3,53 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow" />
+  <title>ModelConnect Miami — Свежие профили моделей и фотографов</title>
+<meta name="description" content="Платформа ModelConnect Miami: новые модели, фотографы и стилисты в Майами.">
+<meta name="keywords" content="модели, фотографы, стилисты, Майами, fashion">
 
-  <title></title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="">
-  <meta property="og:description" content="">
-  <meta property="og:image" content="">
-  <meta property="og:url" content="">
-  <meta property="og:type" content="profile">
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="">
-  <meta name="twitter:description" content="">
-  <meta name="twitter:image" content="">
-
-  <!-- Canonical -->
-  <link rel="canonical" href="">
+<!-- Open Graph -->
+<meta property="og:title" content="ModelConnect Miami — Свежие профили моделей и фотографов">
+<meta property="og:description" content="Платформа ModelConnect Miami: новые модели, фотографы и стилисты в Майами.">
+<meta property="og:image" content="/img/og-image-main.webp">
+<meta property="og:image:alt" content="ModelConnect Miami — Свежие профили моделей и фотографов"/>
+<meta property="og:image:width" content="300" />
+<meta property="og:image:height" content="200" />
+<meta property="og:url" content="/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU" />
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ModelConnect Miami — Свежие профили моделей и фотографов">
+<meta name="twitter:description" content="Платформа ModelConnect Miami: новые модели, фотографы и стилисты в Майами.">
+<meta name="twitter:image" content="/img/og-image-main.webp">
+  <link rel="stylesheet" href="https://models-connect.netlify.app/style.css">
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://models-connect.netlify.app/favicon.ico"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://models-connect.netlify.app/img/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="https://models-connect.netlify.app/img/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="https://models-connect.netlify.app/img/favicon-16x16.png"
+    />
+    <link
+      rel="manifest"
+      href="https://models-connect.netlify.app/img/site.webmanifest"
+    />
+<!-- Canonical -->
+<link rel="canonical" href="/">
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "",
-    "jobTitle": "",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": ""
-    },
-    "image": "",
-    "url": ""
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "ModelConnect Miami: Свежие Профили",
+        "description": "Главная страница каталога профилей творческих специалистов в Майами.",
+        "url": "https://models-connect.netlify.app/index.html",
+        "datePublished": "2025-09-02T20:50:00Z",
+        "dateModified": "2025-09-02T20:50:00Z",
+        "mainEntity": {
+          "@type": "ItemList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "item": {
+                "@type": "Person",
+                  "name": "ModelConnect Miami Свежие профили моделей и фотографов",
+                    "jobTitle": "",
+                    "address": {
+                      "@type": "PostalAddress",
+                      "addressLocality": "fashion"
+                    },
+                    "image": "",
+                    "url": ""
+              }
+            },
+          ],
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "@id": "https://models-connect.netlify.app/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Главная",
+              "item": "https://models-connect.netlify.app/"
+            }
+          ]
+        }
+      }
   }
   </script>
 
-  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-  <nav>
-    …
-  </nav>
-
-  <main>
-    
 <nav>
   <ul class="nav-list">
     <li><a href="/">Главная</a></li>
@@ -58,8 +108,10 @@
     <li><a href="/add-profile/">Добавить профиль</a></li>
   </ul>
 </nav>
+  <main>
+    
 
-<div class="home-section">
+<div class="profiles-section" id="profiles">
   <h1>ModelConnect Miami</h1>
   <h2>Свежие Профили Моделей, Фотографов и Стилистов в 2025</h2>
   <div class="home-section__intro">
@@ -79,9 +131,12 @@
     <div class="profile-card">
       <img
         class="profile-card__image"
+        width="300"
+         height="200"
         src="/img/profile-low-3.webp"
         alt="Фото профиля Nika"
       />
+     <div class="profile-card__description">
       <h3>Nika</h3>
       <p>
         Майами-Бич,
@@ -90,35 +145,44 @@
       <p>08.08.2025, 14:43</p>
       <a href="/profiles/nika/">Подробнее</a>
     </div>
-    
-    <div class="profile-card">
-      <img
-        class="profile-card__image"
-        src="/img/profile-low-1.webp"
-        alt="Фото профиля Ivan"
-      />
-      <h3>Ivan</h3>
-      <p>
-        Халландейл-Бич,
-        Фотографы
-      </p>
-      <p>07.08.2025, 17:20</p>
-      <a href="/profiles/ivan/">Подробнее</a>
     </div>
     
     <div class="profile-card">
       <img
         class="profile-card__image"
+        width="300"
+         height="200"
+        src="/img/profile-low-1.webp"
+        alt="Фото профиля Ivan"
+      />
+     <div class="profile-card__description">
+      <h3>Ivan</h3>
+      <p>
+        Халландейл,
+        Фотографы
+      </p>
+      <p>07.08.2025, 17:20</p>
+      <a href="/profiles/ivan/">Подробнее</a>
+    </div>
+    </div>
+    
+    <div class="profile-card">
+      <img
+        class="profile-card__image"
+        width="300"
+         height="200"
         src="/img/profile-low-2.webp"
         alt="Фото профиля Maria"
       />
+     <div class="profile-card__description">
       <h3>Maria</h3>
       <p>
         Корал-Гейблс,
-        Стилистыы
+        Стилисты
       </p>
       <p>06.08.2025, 12:15</p>
       <a href="/profiles/maria/">Подробнее</a>
+    </div>
     </div>
     
   </div>
@@ -133,9 +197,7 @@
   </ul>
 </div>
 
-<footer class="site-footer">
-  <p>© 2025 ModelConnect Miami</p>
-</footer>
+
   </main>
 
   <footer class="site-footer">

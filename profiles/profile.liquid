@@ -17,52 +17,71 @@ eleventyComputed:
   twitterTitle: "{{ profile.name }} — {{ profile.category }} | ModelConnect Miami"
   twitterDescription: "{{ profile.description }}"
   twitterImage: "{{ profile.image_url | default: '/img/og-image-main.webp' }}"
+  canonical: "https://models-connect.netlify.app/profiles/{{ profile.id | slugify }}/"
+  jsonLd: |
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "{{ profile.name | safe }}",
+      "jobTitle": "{{ profile.category | safe }}",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "{{ profile.city | safe }}"
+      },
+      "image": "{{ profile.image_url | default: '/img/placeholder.png' | assetUrl }}",
+      "url": "https://models-connect.netlify.app/profiles/{{ profile.id | slugify }}/"
+    }
 ---
-
-seo_canonical: https://models-connect.netlify.app/profiles/{{ profile.id | slugify }}/
-seo_json_ld: |
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "{{ profile.name | safe }}",
-    "jobTitle": "{{ profile.category | safe }}",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "{{ profile.city | safe }}"
-    },
-    "image": "{{ profile.image_url | default: '/img/placeholder.png' | assetUrl }}",
-    "url": "https://models-connect.netlify.app/profiles/{{ profile.id | slugify }}/"
-  }
----
-
-<nav>
-  <ul class="nav-list">
-    <li><a href="{{ '/' | assetUrl }}">Главная</a></li>
-    <li><a href="{{ '/region/' | assetUrl }}">Регионы</a></li>
-    <li><a href="{{ '/category/' | assetUrl }}">Категории</a></li>
-    <li><a href="{{ '/add-profile/' | assetUrl }}">Добавить профиль</a></li>
-  </ul>
-</nav>
-
-<div class="profile-detail">
-  <h1>{{ profile.name | safe }} — {{ profile.category | safe }}</h1>
+<h1>{{ profile.name | safe }} — {{ profile.category | safe }}</h1>
+<div  class="profile-detail">
   <div class="profile-detail__images">
+   <figure>
     <img
       class="profile-detail__image"
+      srcset="
+                https://models-connect.netlify.app/img/profile-low-1.webp   300w,
+               https://models-connect.netlify.app/img/profile-med-1.webp   600w,
+                https://models-connect.netlify.app/img/profile-high-1.webp 1200w
+              "
+              sizes="(max-width: 600px) 100vw, (max-width: 1024px) 100vw, 400px"
       src="{{ profile.image_url | default: '/img/placeholder.jpg' | assetUrl }}"
       alt="Основное фото профиля {{ profile.name | safe }}"
     />
+     <figcaption>Основное фото профиля {{ profile.name | safe }}</figcaption>
+    </figure>
+    <figure>
     <img
-      class="profile-detail__image"
-      src="{{ profile.image_url2 | default: '/img/placeholder.jpg' | assetUrl }}"
-      alt="Работы {{ profile.name | safe }} в fashion-съемках"
-    />
+              class="profile-detail__image"
+              src="{{ profile.image_url | default: 'https://models-connect.netlify.app/img/placeholder.jpg' | assetUrl }}"
+               srcset="
+                https://models-connect.netlify.app/img/profile-low-1.webp   300w,
+               https://models-connect.netlify.app/img/profile-med-1.webp   600w,
+                https://models-connect.netlify.app/img/profile-high-1.webp 1200w
+              "
+              sizes="(max-width: 600px) 100vw, (max-width: 1024px) 100vw, 400px"
+              alt="Работы {{ profile.name | safe }}"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>Работы {{ profile.name | safe }}</figcaption>
+            </figure>
+    <figure>
     <img
-      class="profile-detail__image"
-      src="{{ profile.image_url3 | default: '/img/placeholder.jpg' | assetUrl }}"
-      alt="Пример фотосессии {{ profile.name | safe }}"
-    />
-  </div>
+              class="profile-detail__image"
+              src="{{ profile.image_url | default: 'https://models-connect.netlify.app/img/placeholder.jpg' | assetUrl }}"
+              srcset="
+                https://models-connect.netlify.app/img/profile-low-1.webp   300w,
+               https://models-connect.netlify.app/img/profile-med-1.webp   600w,
+                https://models-connect.netlify.app/img/profile-high-1.webp 1200w
+              "
+              sizes="(max-width: 600px) 100vw, (max-width: 1024px) 100vw, 400px"
+              alt="Пример фотосессии {{ profile.name | safe }}"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>Пример фотосессии {{ profile.name | safe }}</figcaption>
+            </figure>
+     </div>
   <div class="profile-detail__info">
     <p><strong>Имя:</strong> {{ profile.name | safe }}</p>
     <p><strong>Возраст:</strong> {{ profile.age | default: 'Не указан' }}</p>
@@ -72,9 +91,6 @@ seo_json_ld: |
     <p>{{ profile.date | date: "%d.%m.%Y, %H:%M" }}</p>
     <p class="profile-detail__contact">{{ profile.email | default: 'Не указан' | safe }}</p>
     <a class="button" href="mailto:{{ profile.email | default: '#' }}">Связаться</a>
-  </div>
+    </div>
 </div>
 
-<footer class="site-footer">
-  <p>© 2025 ModelConnect Miami</p>
-</footer>

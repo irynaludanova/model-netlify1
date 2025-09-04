@@ -1,5 +1,9 @@
 ---
-layout: base.liquid
+layout: base
+title: "ModelConnect Miami — Свежие профили моделей и фотографов"
+description: "Платформа ModelConnect Miami: новые модели, фотографы и стилисты в Майами."
+keywords: "модели, фотографы, стилисты, Майами, fashion"
+
 permalink: /index.html
 seo_title: "Главная — ModelConnect Miami"
 seo_description: "Платформа для профессионалов fashion-индустрии в Майами. Найдите моделей, фотографов и стилистов."
@@ -61,16 +65,8 @@ seo_json_ld: |
   }
 ---
 
-<nav>
-  <ul class="nav-list">
-    <li><a href="{{ '/' | assetUrl }}">Главная</a></li>
-    <li><a href="{{ '/region/' | assetUrl }}">Регионы</a></li>
-    <li><a href="{{ '/category/' | assetUrl }}">Категории</a></li>
-    <li><a href="{{ '/add-profile/' | assetUrl }}">Добавить профиль</a></li>
-  </ul>
-</nav>
 
-<div class="home-section">
+<div class="profiles-section" id="profiles">
   <h1>ModelConnect Miami</h1>
   <h2>Свежие Профили Моделей, Фотографов и Стилистов в 2025</h2>
   <div class="home-section__intro">
@@ -90,9 +86,12 @@ seo_json_ld: |
     <div class="profile-card">
       <img
         class="profile-card__image"
+        width="300"
+         height="200"
         src="{{ profile.image_url | default: '/img/placeholder.png' | assetUrl }}"
         alt="Фото профиля {{ profile.name | safe }}"
       />
+     <div class="profile-card__description">
       <h3>{{ profile.name | safe }}</h3>
       <p>
         {{ profile.city | safe }},
@@ -100,6 +99,7 @@ seo_json_ld: |
       </p>
       <p>{{ profile.date | date: "%d.%m.%Y, %H:%M" }}</p>
       <a href="{{ '/profiles/' | append: profile.id | append: '/' | assetUrl }}">Подробнее</a>
+    </div>
     </div>
     {% endfor %}
   </div>
@@ -114,6 +114,3 @@ seo_json_ld: |
   </ul>
 </div>
 
-<footer class="site-footer">
-  <p>© 2025 ModelConnect Miami</p>
-</footer>

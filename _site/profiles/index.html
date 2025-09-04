@@ -3,51 +3,111 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="robots" content="index, follow" />
   <title></title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="keywords" content="">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="">
-  <meta property="og:description" content="">
-  <meta property="og:image" content="">
-  <meta property="og:url" content="">
-  <meta property="og:type" content="profile">
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="">
-  <meta name="twitter:description" content="">
-  <meta name="twitter:image" content="">
-
-  <!-- Canonical -->
-  <link rel="canonical" href="">
+<!-- Open Graph -->
+<meta property="og:title" content="">
+<meta property="og:description" content="">
+<meta property="og:image" content="/img/og-image-main.webp">
+<meta property="og:image:alt" content=""/>
+<meta property="og:image:width" content="300" />
+<meta property="og:image:height" content="200" />
+<meta property="og:url" content="/profiles/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU" />
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="/img/og-image-main.webp">
+  <link rel="stylesheet" href="https://models-connect.netlify.app/style.css">
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://models-connect.netlify.app/favicon.ico"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://models-connect.netlify.app/img/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="https://models-connect.netlify.app/img/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="https://models-connect.netlify.app/img/favicon-16x16.png"
+    />
+    <link
+      rel="manifest"
+      href="https://models-connect.netlify.app/img/site.webmanifest"
+    />
+<!-- Canonical -->
+<link rel="canonical" href="/profiles/">
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "",
-    "jobTitle": "",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": ""
-    },
-    "image": "",
-    "url": ""
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "ModelConnect Miami: Свежие Профили",
+        "description": "Главная страница каталога профилей творческих специалистов в Майами.",
+        "url": "https://models-connect.netlify.app/index.html",
+        "datePublished": "2025-09-02T20:50:00Z",
+        "dateModified": "2025-09-02T20:50:00Z",
+        "mainEntity": {
+          "@type": "ItemList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "item": {
+                "@type": "Person",
+                  "name": "",
+                    "jobTitle": "",
+                    "address": {
+                      "@type": "PostalAddress",
+                      "addressLocality": ""
+                    },
+                    "image": "",
+                    "url": ""
+              }
+            },
+          ],
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "@id": "https://models-connect.netlify.app/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Главная",
+              "item": "https://models-connect.netlify.app/"
+            }
+          ]
+        }
+      }
   }
   </script>
 
-  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-  <nav>
-    …
-  </nav>
-
+<nav>
+  <ul class="nav-list">
+    <li><a href="/">Главная</a></li>
+    <li><a href="/region/">Регионы</a></li>
+    <li><a href="/category/">Категории</a></li>
+    <li><a href="/add-profile/">Добавить профиль</a></li>
+  </ul>
+</nav>
   <main>
     
 <nav>
@@ -93,7 +153,7 @@
       />
       <h3>Ivan</h3>
       <p>
-        Халландейл-Бич,
+        Халландейл,
         Фотографы
       </p>
       <p>07.08.2025, 17:20</p>
@@ -109,7 +169,7 @@
       <h3>Maria</h3>
       <p>
         Корал-Гейблс,
-        Стилистыы
+        Стилисты
       </p>
       <p>06.08.2025, 12:15</p>
       <a href="/profiles/maria/">Подробнее</a>
