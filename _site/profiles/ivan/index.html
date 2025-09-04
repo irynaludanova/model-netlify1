@@ -3,76 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ profile.name }} — ModelConnect Miami</title>
-  <meta property="og:locale" content="ru_RU" />
-  <meta name="description" content="{{ profile.description | truncate: 160 }}">
-  <meta name="keywords" content="{{ profile.category }}, {{ profile.city }}, ModelConnect Miami">
-  <meta property="og:site_name" content="ModelConnect Miami" />
-  <meta property="og:title" content="{{ profile.name }} — ModelConnect Miami">
-  <meta property="og:description" content="{{ profile.description | truncate: 160 }}">
-  <meta property="og:image" content="/{{ profile.image_url | default: '/img/placeholder.png' }}">
-<meta property="og:image:alt" content={{ profile.name }} — ModelConnect Miami />
-  <meta property="og:image:width" content="300" />
-  <meta property="og:image:height" content="200" />
-  <meta property="og:url" content="https://models-connect.netlify.app/profiles/{{ profile.id }}//profiles/ivan/">
+
+  <title>Ivan — Фотограф | ModelConnect Miami</title>
+  <meta name="description" content="Опытный фотограф с фокусом на fashion-съемки. Работал с топ-моделями в Халландейл-Бич. Готов к новым проектам.">
+  <meta name="keywords" content="Ivan, Фотограф, Халландейл-Бич, fashion Майами, ModelConnect">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Ivan — Фотограф | ModelConnect Miami">
+  <meta property="og:description" content="Опытный фотограф с фокусом на fashion-съемки. Работал с топ-моделями в Халландейл-Бич. Готов к новым проектам.">
+  <meta property="og:image" content="/img/profile-low-1.webp">
+  <meta property="og:url" content="https://models-connect.netlify.app/profiles/ivan/">
   <meta property="og:type" content="profile">
+
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ profile.name }} — ModelConnect Miami">
-  <meta name="twitter:description" content="{{ profile.description | truncate: 160 }}">
-  <meta name="twitter:image" content="/{{ profile.image_url | default: '/img/placeholder.png' }}">
-  <link rel="canonical" href="https://models-connect.netlify.app/profiles/{{ profile.id }}//profiles/ivan/">
-  <link rel="stylesheet" href="/style.css">
+  <meta name="twitter:title" content="Ivan — Фотограф | ModelConnect Miami">
+  <meta name="twitter:description" content="Опытный фотограф с фокусом на fashion-съемки. Работал с топ-моделями в Халландейл-Бич. Готов к новым проектам.">
+  <meta name="twitter:image" content="/img/profile-low-1.webp">
 
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="https://models-connect.netlify.app/favicon.ico"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="https://models-connect.netlify.app/favicon.ico/img/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="https://models-connect.netlify.app/favicon.ico/img/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="https://models-connect.netlify.app/favicon.ico/img/favicon-16x16.png"
-    />
-    <link
-      rel="manifest"
-      href="https://models-connect.netlify.app/favicon.ico/site.webmanifest"
-    />
-  
-    <script type="application/ld+json">
-      {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "{{ profile.name }}",
-  "jobTitle": "{{ profile.category }}",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "{{ profile.city }}",
-    "addressRegion": "Майами"
-  },
-  "email": "{{ profile.email }}",
-  "telephone": "{{ profile.phone | default: '' }}",
-  "image": "{{ profile.image_url | default: '/img/placeholder.png' | assetUrl }}",
-  "description": "{{ profile.description | truncate: 160 }}"
-}
+  <!-- Canonical -->
+  <link rel="canonical" href="https://models-connect.netlify.app/profiles/ivan/">
 
-    </script>
-  
-  
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ivan Фотограф | ModelConnect Miami",
+    "jobTitle": "Фотограф | ModelConnect Miami",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "ModelConnect"
+    },
+    "image": "/img/profile-low-1.webp",
+    "url": "https://models-connect.netlify.app/profiles/ivan/"
+  }
+  </script>
+
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+
   <nav>
+    …
+  </nav>
+
+  <main>
+    
+seo_canonical: https://models-connect.netlify.app/profiles/ivan/
+seo_json_ld: |
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ivan",
+    "jobTitle": "Фотограф",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Халландейл-Бич"
+    },
+    "image": "/img/profile-low-1.webp",
+    "url": "https://models-connect.netlify.app/profiles/ivan/"
+  }
+---
+
+<nav>
   <ul class="nav-list">
     <li><a href="/">Главная</a></li>
     <li><a href="/region/">Регионы</a></li>
@@ -82,19 +76,43 @@
 </nav>
 
 <div class="profile-detail">
-  <h1>Ivan</h1>
-  <img class="profile-detail__image" src="/img/profile-low-1.webp" alt="Фото профиля Ivan">
-  <p><strong>Город:</strong> Халландейл-Бич</p>
-  <p><strong>Категория:</strong> Фотограф</p>
-  <p><strong>Email:</strong> ivan@example.com</p>
-  
-    <p><strong>Телефон:</strong> 12345678</p>
-  
-  <p>Опытный фотограф с фокусом на fashion-съемки. Работал с топ-моделями в Халландейл-Бич. Готов к новым проектам.</p>
+  <h1>Ivan — Фотограф</h1>
+  <div class="profile-detail__images">
+    <img
+      class="profile-detail__image"
+      src="/img/profile-low-1.webp"
+      alt="Основное фото профиля Ivan"
+    />
+    <img
+      class="profile-detail__image"
+      src="/img/profile-low-2.webp"
+      alt="Работы Ivan в fashion-съемках"
+    />
+    <img
+      class="profile-detail__image"
+      src="/img/profile-low-3.webp"
+      alt="Пример фотосессии Ivan"
+    />
+  </div>
+  <div class="profile-detail__info">
+    <p><strong>Имя:</strong> Ivan</p>
+    <p><strong>Возраст:</strong> 25</p>
+    <p><strong>Город:</strong> Халландейл-Бич</p>
+    <p><strong>Рубрика:</strong> Фотограф</p>
+    <p class="profile-detail__description"><strong>Описание:</strong> Опытный фотограф с фокусом на fashion-съемки. Работал с топ-моделями в Халландейл-Бич. Готов к новым проектам.</p>
+    <p>07.08.2025, 17:20</p>
+    <p class="profile-detail__contact">ivan@example.com</p>
+    <a class="button" href="mailto:ivan@example.com">Связаться</a>
+  </div>
 </div>
 
 <footer class="site-footer">
   <p>© 2025 ModelConnect Miami</p>
 </footer>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 ModelConnect Miami</p>
+  </footer>
 </body>
 </html>

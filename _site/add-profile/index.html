@@ -3,68 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Добавить профиль — ModelConnect Miami</title>
-  <meta property="og:locale" content="ru_RU" />
-  <meta name="description" content="Добавьте свой профиль на платформу ModelConnect Miami для профессионалов fashion-индустрии.">
-  <meta name="keywords" content="добавить профиль, ModelConnect Miami, fashion Майами">
-  <meta property="og:site_name" content="ModelConnect Miami" />
-  <meta property="og:title" content="Добавить профиль — ModelConnect Miami">
-  <meta property="og:description" content="Станьте частью сообщества профессионалов fashion-индустрии в Майами.">
-  <meta property="og:image" content="/img/og-image-main.webp">
-<meta property="og:image:alt" content=Добавить профиль — ModelConnect Miami />
-  <meta property="og:image:width" content="300" />
-  <meta property="og:image:height" content="200" />
-  <meta property="og:url" content="https://models-connect.netlify.app/add-profile//add-profile/">
-  <meta property="og:type" content="website">
+
+  <title></title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:image" content="">
+  <meta property="og:url" content="">
+  <meta property="og:type" content="profile">
+
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Добавить профиль — ModelConnect Miami">
-  <meta name="twitter:description" content="Станьте частью сообщества профессионалов в Майами.">
-  <meta name="twitter:image" content="/img/og-image-main.webp">
-  <link rel="canonical" href="https://models-connect.netlify.app/add-profile//add-profile/">
-  <link rel="stylesheet" href="/style.css">
+  <meta name="twitter:title" content="">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="">
 
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="https://models-connect.netlify.app/favicon.ico"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="https://models-connect.netlify.app/favicon.ico/img/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="https://models-connect.netlify.app/favicon.ico/img/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="https://models-connect.netlify.app/favicon.ico/img/favicon-16x16.png"
-    />
-    <link
-      rel="manifest"
-      href="https://models-connect.netlify.app/favicon.ico/site.webmanifest"
-    />
-  
-    <script type="application/ld+json">
-      {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Добавить профиль",
-  "url": "https://models-connect.netlify.app/add-profile/",
-  "description": "Добавьте свой профиль на платформу ModelConnect Miami."
-}
+  <!-- Canonical -->
+  <link rel="canonical" href="">
 
-    </script>
-  
-  
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "",
+    "jobTitle": "",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": ""
+    },
+    "image": "",
+    "url": ""
+  }
+  </script>
+
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  
+
+  <nav>
+    …
+  </nav>
+
+  <main>
+    
 <nav>
   <ul class="nav-list">
     <li><a href="/">Главная</a></li>
@@ -75,56 +60,52 @@
 </nav>
 
 <div class="add-profile-section">
-  <h1>Добавление профиля</h1>
-  <p>Заполните форму ниже, чтобы добавить свой профиль в ModelConnect Miami.</p>
+  <h1>Добавить профиль</h1>
   <form action="/submit-profile" method="POST">
     <div class="form-group">
-      <label for="full-name">Полное имя</label>
-      <input type="text" id="full-name" name="full-name" required />
+      <label for="name">Имя:</label>
+      <input type="text" id="name" name="name" required />
     </div>
     <div class="form-group">
-      <label for="age">Возраст</label>
-      <input type="number" id="age" name="age" required />
-    </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required />
-    </div>
-    <div class="form-group">
-      <label for="phone">Телефон (необязательно)</label>
-      <input type="tel" id="phone" name="phone" />
-    </div>
-    <div class="form-group">
-      <label for="city">Город</label>
+      <label for="city">Город:</label>
       <select id="city" name="city" required>
-        <option value="">Выберите город</option>
         <option value="Майами-Бич">Майами-Бич</option>
-        <option value="Халландейл-Бич">Халландейл-Бич</option>
-        <option value="Центр Майами">Центр Майами</option>
+        <option value="Халландейл">Халландейл</option>
         <option value="Корал-Гейблс">Корал-Гейблс</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="category">Категория</label>
+      <label for="category">Категория:</label>
       <select id="category" name="category" required>
-        <option value="">Выберите категорию</option>
-        <option value="Фотограф">Фотограф</option>
         <option value="Модель">Модель</option>
+        <option value="Фотограф">Фотограф</option>
         <option value="Стилист">Стилист</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="description">Описание</label>
+      <label for="description">Описание:</label>
       <textarea id="description" name="description" required></textarea>
     </div>
     <div class="form-group">
-      <label for="photo">Загрузить фото (необязательно)</label>
-      <input type="file" id="photo" name="photo" accept="image/*" />
+      <label for="age">Возраст:</label>
+      <input type="number" id="age" name="age" required />
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+    </div>
+    <div class="form-group">
+      <label for="phone">Телефон (опционально):</label>
+      <input type="tel" id="phone" name="phone" />
+    </div>
+    <div class="form-group">
+      <label for="image">Фото профиля:</label>
+      <input type="file" id="image" name="image" accept="image/*" />
       <p class="form-note">
-        Примечание: Загрузка фото — заглушка; отправьте фото отдельно по email.
+        Рекомендуемый размер: 300x300px, формат: JPG, PNG, WEBP.
       </p>
     </div>
-    <button type="submit">Отправить профиль</button>
+    <button type="submit">Отправить</button>
   </form>
 </div>
 
@@ -132,5 +113,10 @@
   <p>© 2025 ModelConnect Miami</p>
 </footer>
 
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 ModelConnect Miami</p>
+  </footer>
 </body>
 </html>

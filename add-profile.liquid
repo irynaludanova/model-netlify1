@@ -1,26 +1,26 @@
 ---
 layout: base.liquid
 permalink: /add-profile/index.html
-seo_title: Добавить профиль — ModelConnect Miami
-seo_description: Добавьте свой профиль на платформу ModelConnect Miami для профессионалов fashion-индустрии.
-seo_keywords: добавить профиль, ModelConnect Miami, fashion Майами
-seo_og_title: Добавить профиль — ModelConnect Miami
-seo_og_description: Станьте частью сообщества профессионалов fashion-индустрии в Майами.
-seo_og_image: /img/og-image-main.webp
-seo_og_url: https://models-connect.netlify.app/add-profile/
+seo_title: "Добавить профиль — ModelConnect Miami"
+seo_description: "Добавьте свой профиль модели, фотографа или стилиста на платформу ModelConnect Miami."
+seo_keywords: "добавить профиль, fashion Майами, ModelConnect"
+seo_og_title: "Добавить профиль — ModelConnect Miami"
+seo_og_description: "Создайте профиль на платформе для профессионалов fashion-индустрии."
+seo_og_image: https://models-connect.netlify.app/img/og-image-main.webp
+seo_og_url: https://models-connect.netlify.app/add-profile
 seo_og_type: website
 seo_twitter_card: summary_large_image
-seo_twitter_title: Добавить профиль — ModelConnect Miami
-seo_twitter_description: Станьте частью сообщества профессионалов в Майами.
-seo_twitter_image: /img/og-image-main.webp
-seo_canonical: https://models-connect.netlify.app/add-profile/
+seo_twitter_title: "Добавить профиль — ModelConnect Miami"
+seo_twitter_description: "Создайте профиль на платформе для профессионалов fashion-индустрии."
+seo_twitter_image: https://models-connect.netlify.app/img/og-image-main.webp
+seo_canonical: https://models-connect.netlify.app/add-profile
 seo_json_ld: |
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": "Добавить профиль",
-    "url": "https://models-connect.netlify.app/add-profile/",
-    "description": "Добавьте свой профиль на платформу ModelConnect Miami."
+    "url": "https://models-connect.netlify.app/add-profile",
+    "description": "Форма для добавления профиля на платформу ModelConnect Miami."
   }
 ---
 
@@ -34,56 +34,52 @@ seo_json_ld: |
 </nav>
 
 <div class="add-profile-section">
-  <h1>Добавление профиля</h1>
-  <p>Заполните форму ниже, чтобы добавить свой профиль в ModelConnect Miami.</p>
+  <h1>Добавить профиль</h1>
   <form action="/submit-profile" method="POST">
     <div class="form-group">
-      <label for="full-name">Полное имя</label>
-      <input type="text" id="full-name" name="full-name" required />
+      <label for="name">Имя:</label>
+      <input type="text" id="name" name="name" required />
     </div>
     <div class="form-group">
-      <label for="age">Возраст</label>
-      <input type="number" id="age" name="age" required />
-    </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required />
-    </div>
-    <div class="form-group">
-      <label for="phone">Телефон (необязательно)</label>
-      <input type="tel" id="phone" name="phone" />
-    </div>
-    <div class="form-group">
-      <label for="city">Город</label>
+      <label for="city">Город:</label>
       <select id="city" name="city" required>
-        <option value="">Выберите город</option>
         <option value="Майами-Бич">Майами-Бич</option>
-        <option value="Халландейл-Бич">Халландейл-Бич</option>
-        <option value="Центр Майами">Центр Майами</option>
+        <option value="Халландейл">Халландейл</option>
         <option value="Корал-Гейблс">Корал-Гейблс</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="category">Категория</label>
+      <label for="category">Категория:</label>
       <select id="category" name="category" required>
-        <option value="">Выберите категорию</option>
-        <option value="Фотограф">Фотограф</option>
         <option value="Модель">Модель</option>
+        <option value="Фотограф">Фотограф</option>
         <option value="Стилист">Стилист</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="description">Описание</label>
+      <label for="description">Описание:</label>
       <textarea id="description" name="description" required></textarea>
     </div>
     <div class="form-group">
-      <label for="photo">Загрузить фото (необязательно)</label>
-      <input type="file" id="photo" name="photo" accept="image/*" />
+      <label for="age">Возраст:</label>
+      <input type="number" id="age" name="age" required />
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+    </div>
+    <div class="form-group">
+      <label for="phone">Телефон (опционально):</label>
+      <input type="tel" id="phone" name="phone" />
+    </div>
+    <div class="form-group">
+      <label for="image">Фото профиля:</label>
+      <input type="file" id="image" name="image" accept="image/*" />
       <p class="form-note">
-        Примечание: Загрузка фото — заглушка; отправьте фото отдельно по email.
+        Рекомендуемый размер: 300x300px, формат: JPG, PNG, WEBP.
       </p>
     </div>
-    <button type="submit">Отправить профиль</button>
+    <button type="submit">Отправить</button>
   </form>
 </div>
 

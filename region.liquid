@@ -1,26 +1,26 @@
 ---
 layout: base.liquid
 permalink: /region/index.html
-seo_title: Регионы — ModelConnect Miami
-seo_description: Профили профессионалов fashion-индустрии по регионам Майами.
-seo_keywords: регионы Майами, fashion Майами, ModelConnect
-seo_og_title: Регионы — ModelConnect Miami
-seo_og_description: Найдите моделей, фотографов и стилистов в разных регионах Майами.
-seo_og_image: /img/og-image-region.webp
-seo_og_url: https://models-connect.netlify.app/
+seo_title: "Регионы — ModelConnect Miami"
+seo_description: "Найдите профессионалов fashion-индустрии в разных регионах Майами: Майами-Бич, Халландейл, Корал-Гейблс."
+seo_keywords: "регионы Майами, fashion Майами, ModelConnect"
+seo_og_title: "Регионы — ModelConnect Miami"
+seo_og_description: "Найдите моделей, фотографов и стилистов в регионах Майами."
+seo_og_image: https://models-connect.netlify.app/img/og-image-region.webp
+seo_og_url: https://models-connect.netlify.app/region
 seo_og_type: website
 seo_twitter_card: summary_large_image
-seo_twitter_title: Регионы — ModelConnect Miami
-seo_twitter_description: Найдите профессионалов в регионах Майами.
-seo_twitter_image: /img/og-image-region.webp
-seo_canonical: https://models-connect.netlify.app/region/
+seo_twitter_title: "Регионы — ModelConnect Miami"
+seo_twitter_description: "Найдите профессионалов в регионах Майами."
+seo_twitter_image: https://models-connect.netlify.app/img/og-image-region.webp
+seo_canonical: https://models-connect.netlify.app
 seo_json_ld: |
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": "Регионы",
-    "url": "https://models-connect.netlify.app/region/",
-    "description": "Профили по регионам Майами на платформе ModelConnect."
+    "url": "https://models-connect.netlify.app/region",
+    "description": "Профили профессионалов fashion-индустрии по регионам Майами."
   }
 ---
 
@@ -35,14 +35,14 @@ seo_json_ld: |
 
 <div class="regions-section">
   <h1>Профили по регионам</h1>
-  {% assign cities = "Майами-Бич,Халландейл-Бич,Центр Майами,Корал-Гейблс" |
-  split: "," %} {% for city in cities %} {% assign profiles_in_city =
-  collections.allProfiles | where: "city", city %} {% if profiles_in_city.size >
-  0 %}
-  <section id="{{ city | slugify }}">
-    <h2>{{ city }}</h2>
+  {% assign regions = "Майами-Бич,Халландейл,Корал-Гейблс" | split: "," %} {%
+  for region in regions %} {% assign profiles_in_region =
+  collections.allProfiles | where: "city", region %} {% if
+  profiles_in_region.size > 0 %}
+  <section id="{{ region | slugify }}">
+    <h2>{{ region }}</h2>
     <div class="profile-list">
-      {% for profile in profiles_in_city %}
+      {% for profile in profiles_in_region %}
       <div class="profile-card">
         <img
           class="profile-card__image"
@@ -54,6 +54,7 @@ seo_json_ld: |
         <h3>{{ profile.name }}</h3>
         <p><strong>Категория:</strong> {{ profile.category }}</p>
         <p>{{ profile.description | truncate : 100 }}</p>
+        <p>{{ profile.date | date : "%d.%m.%Y, %H:%M" }}</p>
         <a
           href="{{
             '/profiles/' | append : profile.id | append : '/' | assetUrl

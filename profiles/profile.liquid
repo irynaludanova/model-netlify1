@@ -1,40 +1,40 @@
 ---
-layout: base.liquid
+layout: base
 pagination:
-  data: collections.allProfiles
+  data: static-profiles
   size: 1
   alias: profile
-permalink: /profiles/{{ profile.id }}/index.html
-seo_title: "{{ profile.name }} — ModelConnect Miami"
-seo_description: "{{ profile.description | truncate: 160 }}"
-seo_keywords: "{{ profile.category }}, {{ profile.city }}, ModelConnect Miami"
-seo_og_title: "{{ profile.name }} — ModelConnect Miami"
-seo_og_description: "{{ profile.description | truncate: 160 }}"
-seo_og_image: "{{ profile.image_url | default: '/img/placeholder.png' }}"
-seo_og_url: "https://models-connect.netlify.app/profiles/{{ profile.id }}/"
-seo_og_type: profile
-seo_twitter_card: summary_large_image
-seo_twitter_title: "{{ profile.name }} — ModelConnect Miami"
-seo_twitter_description: "{{ profile.description | truncate: 160 }}"
-seo_twitter_image: "{{ profile.image_url | default: '/img/placeholder.png' }}"
-seo_canonical: "https://models-connect.netlify.app/profiles/{{ profile.id }}/"
+permalink: "profiles/{{ profile.id | slugify }}/index.html"
+
+eleventyComputed:
+  title: "{{ profile.name }} — {{ profile.category }} | ModelConnect Miami"
+  description: "{{ profile.description }}"
+  keywords: "{{ profile.name }}, {{ profile.category }}, {{ profile.city }}, fashion Майами, ModelConnect"
+  ogTitle: "{{ profile.name }} — {{ profile.category }} | ModelConnect Miami"
+  ogDescription: "{{ profile.description }}"
+  ogImage: "{{ profile.image_url | default: '/img/og-image-main.webp' }}"
+  ogUrl: "https://models-connect.netlify.app/profiles/{{ profile.id | slugify }}/"
+  twitterTitle: "{{ profile.name }} — {{ profile.category }} | ModelConnect Miami"
+  twitterDescription: "{{ profile.description }}"
+  twitterImage: "{{ profile.image_url | default: '/img/og-image-main.webp' }}"
+---
+
+seo_canonical: https://models-connect.netlify.app/profiles/{{ profile.id | slugify }}/
 seo_json_ld: |
   {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "{{ profile.name }}",
-    "jobTitle": "{{ profile.category }}",
+    "name": "{{ profile.name | safe }}",
+    "jobTitle": "{{ profile.category | safe }}",
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": "{{ profile.city }}",
-      "addressRegion": "Майами"
+      "addressLocality": "{{ profile.city | safe }}"
     },
-    "email": "{{ profile.email }}",
-    "telephone": "{{ profile.phone | default: '' }}",
     "image": "{{ profile.image_url | default: '/img/placeholder.png' | assetUrl }}",
-    "description": "{{ profile.description | truncate: 160 }}"
+    "url": "https://models-connect.netlify.app/profiles/{{ profile.id | slugify }}/"
   }
 ---
+
 <nav>
   <ul class="nav-list">
     <li><a href="{{ '/' | assetUrl }}">Главная</a></li>
@@ -45,15 +45,34 @@ seo_json_ld: |
 </nav>
 
 <div class="profile-detail">
-  <h1>{{ profile.name }}</h1>
-  <img class="profile-detail__image" src="{{ profile.image_url | default: '/img/placeholder.png' | assetUrl }}" alt="Фото профиля {{ profile.name }}">
-  <p><strong>Город:</strong> {{ profile.city }}</p>
-  <p><strong>Категория:</strong> {{ profile.category }}</p>
-  <p><strong>Email:</strong> {{ profile.email }}</p>
-  {% if profile.phone %}
-    <p><strong>Телефон:</strong> {{ profile.phone }}</p>
-  {% endif %}
-  <p>{{ profile.description }}</p>
+  <h1>{{ profile.name | safe }} — {{ profile.category | safe }}</h1>
+  <div class="profile-detail__images">
+    <img
+      class="profile-detail__image"
+      src="{{ profile.image_url | default: '/img/placeholder.jpg' | assetUrl }}"
+      alt="Основное фото профиля {{ profile.name | safe }}"
+    />
+    <img
+      class="profile-detail__image"
+      src="{{ profile.image_url2 | default: '/img/placeholder.jpg' | assetUrl }}"
+      alt="Работы {{ profile.name | safe }} в fashion-съемках"
+    />
+    <img
+      class="profile-detail__image"
+      src="{{ profile.image_url3 | default: '/img/placeholder.jpg' | assetUrl }}"
+      alt="Пример фотосессии {{ profile.name | safe }}"
+    />
+  </div>
+  <div class="profile-detail__info">
+    <p><strong>Имя:</strong> {{ profile.name | safe }}</p>
+    <p><strong>Возраст:</strong> {{ profile.age | default: 'Не указан' }}</p>
+    <p><strong>Город:</strong> {{ profile.city | safe }}</p>
+    <p><strong>Рубрика:</strong> {{ profile.category | safe }}</p>
+    <p class="profile-detail__description"><strong>Описание:</strong> {{ profile.description | safe }}</p>
+    <p>{{ profile.date | date: "%d.%m.%Y, %H:%M" }}</p>
+    <p class="profile-detail__contact">{{ profile.email | default: 'Не указан' | safe }}</p>
+    <a class="button" href="mailto:{{ profile.email | default: '#' }}">Связаться</a>
+  </div>
 </div>
 
 <footer class="site-footer">
