@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MC</title>
-</head>
-<body>
-  
+---
+layout: base.liquid
+---
+
 <head>
   <title>Профили в Халландейл-Бич</title>
   <meta charset="UTF-8" />
@@ -53,52 +48,22 @@
 <h1>Профили в Халландейл-Бич</h1>
 
 <div class="profiles-grid">
-  
+  {% for profile in collections.allProfiles %}
   <div class="profile-card">
     <img
       class="profile-card__image"
-      src="/img/placeholder.jpg"
-      alt="Фото профиля Ivan"
+      src="{{ profile.image_url | default : '/img/placeholder.jpg' }}"
+      alt="Фото профиля {{ profile.name }}"
     />
-    <div class="profile-card__name">Ivan</div>
+    <div class="profile-card__name">{{ profile.name }}</div>
     <div class="profile-card__location">
-      Miami Beach, Model
+      {{ profile.city }}, {{ profile.category }}
     </div>
     <div class="profile-card__date">
-      31.08.2025, 13:00
+      {{ profile.date | date : "%d.%m.%Y, %H:%M" }}
     </div>
   </div>
-  
-  <div class="profile-card">
-    <img
-      class="profile-card__image"
-      src="/img/profile-low-3.jpg"
-      alt="Фото профиля Maria"
-    />
-    <div class="profile-card__name">Maria</div>
-    <div class="profile-card__location">
-      Корал-Гейблс, Стилисты
-    </div>
-    <div class="profile-card__date">
-      06.08.2025, 12:15
-    </div>
-  </div>
-  
-  <div class="profile-card">
-    <img
-      class="profile-card__image"
-      src="/img/profile-low-1.jpg"
-      alt="Фото профиля Nika"
-    />
-    <div class="profile-card__name">Nika</div>
-    <div class="profile-card__location">
-      Майами-Бич, Модель
-    </div>
-    <div class="profile-card__date">
-      08.08.2025, 14:43
-    </div>
-  </div>
-  
+  {% endfor %}
 </div>
 
 <p>
@@ -119,6 +84,3 @@
 <footer class="site-footer">
   <p>© 2025 ModelConnect Miami</p>
 </footer>
-
-</body>
-</html>
