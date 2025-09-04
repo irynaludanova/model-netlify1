@@ -2,10 +2,40 @@
 layout: base.liquid
 ---
 
-<h1>ModelConnect Miami – Свежие профили</h1>
+<head>
+  <title>ModelConnect Miami – Свежие профили</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="ModelConnect Miami — платформа для поиска свежих профилей моделей, фотографов и стилистов в Майами. Ежедневные обновления для fashion-индустрии."
+  />
+  <meta
+    name="keywords"
+    content="модели Майами, фотографы Майами, стилисты Майами, fashion Майами, ModelConnect"
+  />
+  <meta property="og:title" content="ModelConnect Miami – Свежие профили" />
+  <meta
+    property="og:description"
+    content="Свежие профили в fashion-индустрии Майами. Модели, фотографы, стилисты."
+  />
+  <meta property="og:image" content="/img/og-image-main.webp" />
+  <meta property="og:url" content="https://example.com/" />
+  <link rel="canonical" href="https://example.com/" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ModelConnect Miami",
+      "url": "https://example.com/",
+      "description": "Платформа для поиска профилей в fashion-индустрии Майами"
+    }
+  </script>
+</head>
 
 <nav>
-  <ul>
+  <ul class="nav-list">
     <li><a href="/">Главная</a></li>
     <li><a href="/region/">Регионы</a></li>
     <li><a href="/category/">Рубрики</a></li>
@@ -15,35 +45,39 @@ layout: base.liquid
   </ul>
 </nav>
 
-<section>
-  <h2>
-    ModelConnect Miami: Свежие Профили Моделей, Фотографов и Стилистов в 2025
-  </h2>
+<h1>
+  ModelConnect Miami: Свежие Профили Моделей, Фотографов и Стилистов в 2025
+</h1>
 
+<div class="profiles-grid">
   {% for profile in collections.allProfiles %}
-  <div>
-    {% if profile.image_url %}
-    <img src="{{ profile.image_url }}" alt="Фото профиля {{ profile.name }}" />
-    {% else %}
-    <img src="/img/placeholder.jpg" alt="Фото профиля {{ profile.name }}" />
-    {% endif %}
-    <h3>{{ profile.name }}</h3>
-    <p>{{ profile.city }}, {{ profile.category }}</p>
-    <p>{{ profile.date | date : "%d.%m.%Y, %H:%M" }}</p>
+  <div class="profile-card">
+    <img
+      class="profile-card__image"
+      src="{{ profile.image_url | default : '/img/placeholder.jpg' }}"
+      alt="Фото профиля {{ profile.name }}"
+    />
+    <div class="profile-card__name">{{ profile.name }}</div>
+    <div class="profile-card__location">
+      {{ profile.city }}, {{ profile.category }}
+    </div>
+    <div class="profile-card__date">
+      {{ profile.date | date : "%d.%m.%Y, %H:%M" }}
+    </div>
   </div>
   {% endfor %}
+</div>
 
-  <p>
-    Добро пожаловать на ModelConnect Miami — ведущую платформу для поиска свежих
-    профилей в fashion-индустрии Майами. Мы соединяем моделей, фотографов и
-    стилистов из Майами-Бич, Халландейл, Корал-Гейблс и других районов. Наши
-    ежедневные обновления помогают вам найти идеальных профессионалов для
-    съемок, показов и креативных проектов. Зарегистрируйтесь бесплатно, чтобы
-    добавить свой профиль и стать частью сообщества, которое ценит талант и
-    стиль. Майами — центр моды и искусства, и мы предлагаем доступ к самым
-    актуальным контактам в индустрии.
-  </p>
-</section>
+<p>
+  Добро пожаловать на ModelConnect Miami — ведущую платформу для поиска свежих
+  профилей в fashion-индустрии Майами. Мы соединяем моделей, фотографов и
+  стилистов из Майами-Бич, Халландейл, Корал-Гейблс и других районов. Наши
+  ежедневные обновления помогают вам найти идеальных профессионалов для съемок,
+  показов и креативных проектов. Зарегистрируйтесь бесплатно, чтобы добавить
+  свой профиль и стать частью сообщества, которое ценит талант и стиль. Майами —
+  центр моды и искусства, и мы предлагаем доступ к самым актуальным контактам в
+  индустрии.
+</p>
 
 <section>
   <h2>Регионы</h2>
@@ -67,6 +101,6 @@ layout: base.liquid
   </ul>
 </section>
 
-<footer>
+<footer class="site-footer">
   <p>© 2025 ModelConnect Miami</p>
 </footer>

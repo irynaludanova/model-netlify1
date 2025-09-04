@@ -1,91 +1,144 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Мой сайт</title>
-  </head>
-  <body>
-    <h1>ModelConnect Miami – Свежие профили</h1>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC</title>
+</head>
+<body>
+  
+<head>
+  <title>ModelConnect Miami – Свежие профили</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="ModelConnect Miami — платформа для поиска свежих профилей моделей, фотографов и стилистов в Майами. Ежедневные обновления для fashion-индустрии."
+  />
+  <meta
+    name="keywords"
+    content="модели Майами, фотографы Майами, стилисты Майами, fashion Майами, ModelConnect"
+  />
+  <meta property="og:title" content="ModelConnect Miami – Свежие профили" />
+  <meta
+    property="og:description"
+    content="Свежие профили в fashion-индустрии Майами. Модели, фотографы, стилисты."
+  />
+  <meta property="og:image" content="/img/og-image-main.webp" />
+  <meta property="og:url" content="https://example.com/" />
+  <link rel="canonical" href="https://example.com/" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ModelConnect Miami",
+      "url": "https://example.com/",
+      "description": "Платформа для поиска профилей в fashion-индустрии Майами"
+    }
+  </script>
+</head>
 
-    <nav>
-      <ul>
-        <li><a href="/">Главная</a></li>
-        <li><a href="/region/">Регионы</a></li>
-        <li><a href="/category/">Рубрики</a></li>
-        <li><a href="/about/">О проекте</a></li>
-        <li><a href="/profiles/">Свежие профили</a></li>
-        <li><a href="/add-profile/">Добавить профиль</a></li>
-      </ul>
-    </nav>
+<nav>
+  <ul class="nav-list">
+    <li><a href="/">Главная</a></li>
+    <li><a href="/region/">Регионы</a></li>
+    <li><a href="/category/">Рубрики</a></li>
+    <li><a href="/about/">О проекте</a></li>
+    <li><a href="/profiles/">Свежие профили</a></li>
+    <li><a href="/add-profile/">Добавить профиль</a></li>
+  </ul>
+</nav>
 
-    <section>
-      <h2>
-        ModelConnect Miami: Свежие Профили Моделей, Фотографов и Стилистов в
-        2025
-      </h2>
+<h1>
+  ModelConnect Miami: Свежие Профили Моделей, Фотографов и Стилистов в 2025
+</h1>
 
-      <div>
-        <img src="/img/placeholder.jpg" alt="Фото профиля Ivan" />
+<div class="profiles-grid">
+  
+  <div class="profile-card">
+    <img
+      class="profile-card__image"
+      src="/img/placeholder.jpg"
+      alt="Фото профиля Ivan"
+    />
+    <div class="profile-card__name">Ivan</div>
+    <div class="profile-card__location">
+      Miami Beach, Model
+    </div>
+    <div class="profile-card__date">
+      31.08.2025, 13:00
+    </div>
+  </div>
+  
+  <div class="profile-card">
+    <img
+      class="profile-card__image"
+      src="/img/profile-low-3.jpg"
+      alt="Фото профиля Maria"
+    />
+    <div class="profile-card__name">Maria</div>
+    <div class="profile-card__location">
+      Корал-Гейблс, Стилисты
+    </div>
+    <div class="profile-card__date">
+      06.08.2025, 12:15
+    </div>
+  </div>
+  
+  <div class="profile-card">
+    <img
+      class="profile-card__image"
+      src="/img/profile-low-1.jpg"
+      alt="Фото профиля Nika"
+    />
+    <div class="profile-card__name">Nika</div>
+    <div class="profile-card__location">
+      Майами-Бич, Модель
+    </div>
+    <div class="profile-card__date">
+      08.08.2025, 14:43
+    </div>
+  </div>
+  
+</div>
 
-        <h3>Ivan</h3>
-        <p>Miami Beach, Model</p>
-        <p>31.08.2025, 13:00</p>
-      </div>
+<p>
+  Добро пожаловать на ModelConnect Miami — ведущую платформу для поиска свежих
+  профилей в fashion-индустрии Майами. Мы соединяем моделей, фотографов и
+  стилистов из Майами-Бич, Халландейл, Корал-Гейблс и других районов. Наши
+  ежедневные обновления помогают вам найти идеальных профессионалов для съемок,
+  показов и креативных проектов. Зарегистрируйтесь бесплатно, чтобы добавить
+  свой профиль и стать частью сообщества, которое ценит талант и стиль. Майами —
+  центр моды и искусства, и мы предлагаем доступ к самым актуальным контактам в
+  индустрии.
+</p>
 
-      <div>
-        <img src="/img/profile-low-3.jpg" alt="Фото профиля Maria" />
+<section>
+  <h2>Регионы</h2>
+  <ul>
+    <li><a href="/region/#miami-beach">Майами-Бич</a></li>
+    <li><a href="/region/#hallandale">Халландейл</a></li>
+    <li><a href="/region/#coral-gables">Корал-Гейблс</a></li>
+    <li><a href="/region/#downtown-miami">Даунтаун Майами</a></li>
+    <li><a href="/region/#wynwood">Винвуд</a></li>
+  </ul>
+</section>
 
-        <h3>Maria</h3>
-        <p>Корал-Гейблс, Стилисты</p>
-        <p>06.08.2025, 12:15</p>
-      </div>
+<section>
+  <h2>Рубрики</h2>
+  <ul>
+    <li><a href="/category/#photographers">Фотографы</a></li>
+    <li><a href="/category/#models">Модели</a></li>
+    <li><a href="/category/#stylists">Стилисты</a></li>
+    <li><a href="/category/#makeup-artists">Визажисты</a></li>
+    <li><a href="/category/#producers">Продюсеры</a></li>
+  </ul>
+</section>
 
-      <div>
-        <img src="/img/profile-low-1.jpg" alt="Фото профиля Nika" />
+<footer class="site-footer">
+  <p>© 2025 ModelConnect Miami</p>
+</footer>
 
-        <h3>Nika</h3>
-        <p>Майами-Бич, Модель</p>
-        <p>08.08.2025, 14:43</p>
-      </div>
-
-      <p>
-        Добро пожаловать на ModelConnect Miami — ведущую платформу для поиска
-        свежих профилей в fashion-индустрии Майами. Мы соединяем моделей,
-        фотографов и стилистов из Майами-Бич, Халландейл, Корал-Гейблс и других
-        районов. Наши ежедневные обновления помогают вам найти идеальных
-        профессионалов для съемок, показов и креативных проектов.
-        Зарегистрируйтесь бесплатно, чтобы добавить свой профиль и стать частью
-        сообщества, которое ценит талант и стиль. Майами — центр моды и
-        искусства, и мы предлагаем доступ к самым актуальным контактам в
-        индустрии.
-      </p>
-    </section>
-
-    <section>
-      <h2>Регионы</h2>
-      <ul>
-        <li><a href="/region/#miami-beach">Майами-Бич</a></li>
-        <li><a href="/region/#hallandale">Халландейл</a></li>
-        <li><a href="/region/#coral-gables">Корал-Гейблс</a></li>
-        <li><a href="/region/#downtown-miami">Даунтаун Майами</a></li>
-        <li><a href="/region/#wynwood">Винвуд</a></li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Рубрики</h2>
-      <ul>
-        <li><a href="/category/#photographers">Фотографы</a></li>
-        <li><a href="/category/#models">Модели</a></li>
-        <li><a href="/category/#stylists">Стилисты</a></li>
-        <li><a href="/category/#makeup-artists">Визажисты</a></li>
-        <li><a href="/category/#producers">Продюсеры</a></li>
-      </ul>
-    </section>
-
-    <footer>
-      <p>© 2025 ModelConnect Miami</p>
-    </footer>
-  </body>
+</body>
 </html>
