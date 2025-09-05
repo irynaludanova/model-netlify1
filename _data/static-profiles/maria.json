@@ -8,7 +8,5 @@
   "age": 30,
   "email": "maria@example.com",
   "phone": "3456789",
-  "image_url": "/img/profile-low-2.webp",
-  "image_url2": "/img/profile-low-1.webp",
-  "image_url3": "/img/profile-low-3.webp"
+  "image_url": "/img/profile-low-2.webp"
 }

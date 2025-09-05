@@ -149,10 +149,12 @@
 <div class="add-profile-section">
   <h1>Добавить профиль</h1>
   <form  name="add-profile"
-  method="POST"
-  data-netlify="true"
-  enctype="multipart/form-data"
-  action="/submit-profile/">
+    name="add-profile"
+    method="POST"
+    netlify
+    data-netlify="true"
+    enctype="multipart/form-data"
+    action="/submit-profile/">
     <input type="hidden" name="form-name" value="add-profile" />
     <div class="form-group">
       <label for="name">Имя:</label>
