@@ -6,18 +6,9 @@ const SUPABASE_URL = process.env.SUPABASE_URL
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
 
 module.exports = async function () {
-  const NETLIFY_BUILD_HOOK = process.env.NETLIFY_BUILD_HOOK
-  if (NETLIFY_BUILD_HOOK) {
-    try {
-      await fetch(NETLIFY_BUILD_HOOK, { method: "POST" })
-    } catch (err) {
-      console.error("Failed to call Netlify build hook", err)
-    }
-  }
-
   if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
     console.warn(
-      "⚠️ SUPABASE env variables not found, using local fallback data."
+      " SUPABASE env variables not found, using local fallback data."
     )
 
     const localFile = path.join(__dirname, "profiles.json")
