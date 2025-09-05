@@ -1,50 +1,71 @@
-const fs = require("fs")
-const path = require("path")
-const fetch = require("node-fetch")
+const fetch = (...args) => import("node-fetch").then((m) => m.default(...args))
 
-exports.handler = async function (event, context) {
+const SUPABASE_URL = process.env.SUPABASE_URL
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+function slugify(s = "") {
+  return s
+    .toString()
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[^\w\s-]+/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+}
+
+exports.handler = async function (event) {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" }
   }
 
+  let body
   try {
-    const data = JSON.parse(event.body)
-
-    const id = data.name.toLowerCase().replace(/\s+/g, "-")
-
-    const profile = {
-      id,
-      name: data.name,
-      city: data.city,
-      category: data.category,
-      description: data.description,
-      age: data.age,
-      email: data.email,
-      phone: data.phone || "",
-      image: data.image || "/img/placeholder.png",
-    }
-
-    const submissionsDir = path.join(__dirname, "../../_data/form-submissions")
-    if (!fs.existsSync(submissionsDir)) {
-      fs.mkdirSync(submissionsDir, { recursive: true })
-    }
-
-    fs.writeFileSync(
-      path.join(submissionsDir, `${id}.json`),
-      JSON.stringify(profile, null, 2)
-    )
-
-    const buildHookURL = process.env.NETLIFY_BUILD_HOOK
-    if (buildHookURL) {
-      await fetch(buildHookURL, { method: "POST" })
-    }
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: "Профиль успешно добавлен" }),
-    }
+    body = JSON.parse(event.body)
   } catch (err) {
-    console.error(err)
-    return { statusCode: 500, body: "Ошибка сервера" }
+    return { statusCode: 400, body: "Invalid JSON" }
+  }
+
+  const name = body.name || ""
+  const profile = {
+    slug: body.slug || slugify(name),
+    name: name,
+    city: body.city || null,
+    category: body.category || null,
+    description: body.description || null,
+    age: body.age ? Number(body.age) : null,
+    email: body.email || null,
+    phone: body.phone || null,
+    image_url: body.image_url || null,
+    created_at: new Date().toISOString(),
+  }
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/profiles`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: SUPABASE_SERVICE_ROLE_KEY,
+        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+        Prefer: "return=representation",
+      },
+      body: JSON.stringify(profile),
+    })
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          message: "Supabase insert failed",
+          detail: data,
+        }),
+      }
+    }
+
+    return { statusCode: 200, body: JSON.stringify(data) }
+  } catch (err) {
+    return { statusCode: 500, body: "Server error: " + err.message }
   }
 }

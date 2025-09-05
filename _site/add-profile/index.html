@@ -211,12 +211,75 @@ form.addEventListener("submit", async (e) => {
   }
 });
 </script>
+<script type="module">
+  // Option A: загрузка изображения в Cloudinary (проще) — пример ниже.
+  async function cloudinaryUpload(file) {
+    const form = new FormData();
+    form.append('file', file);
+    form.append('upload_preset', 'YOUR_UNSIGNED_UPLOAD_PRESET'); // поставь из Cloudinary
+    const res = await fetch('https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/upload', {
+      method: 'POST',
+      body: form
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error('Cloudinary upload failed: ' + JSON.stringify(data));
+    return data.secure_url;
+  }
+
+  document.querySelector('#add-profile-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const fd = new FormData(form);
+    const name = fd.get('name');
+
+
+    let image_url = '';
+    const file = fd.get('image');
+    if (file && file.size) {
+      try {
+        image_url = await cloudinaryUpload(file);
+      } catch (err) {
+        alert('Ошибка загрузки изображения: ' + err.message);
+        return;
+      }
+    }
+
+    const payload = {
+      name,
+      city: fd.get('city'),
+      category: fd.get('category'),
+      description: fd.get('description'),
+      age: fd.get('age'),
+      email: fd.get('email'),
+      phone: fd.get('phone'),
+      image_url
+    };
+
+
+    const resp = await fetch('/.netlify/functions/add-profile', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!resp.ok) {
+      const text = await resp.text();
+      alert('Ошибка сервера: ' + text);
+      return;
+    }
+
+    const result = await resp.json();
+    alert('Профиль добавлен!');
+    form.reset();
+  });
+</script>
+
 <div class="add-profile-section">
   <h1>Добавить профиль</h1>
   <form name="add-profile"
       method="POST"
       netlify
-      data-netlify="true"
+     id="add-profile-form"
       enctype="multipart/form-data">
   <input type="hidden" name="form-name" value="add-profile" />
 
