@@ -4,7 +4,7 @@ pagination:
   data: static-profiles
   size: 1
   alias: profile
-permalink: "profiles/{{ profile.id | slugify }}/index.html"
+permalink: /profiles/{{ profile.id }}/
 
 eleventyComputed:
   title: "{{ profile.name }} — {{ profile.category }} | ModelConnect Miami"
@@ -22,17 +22,17 @@ eleventyComputed:
     {
       "@context": "https://schema.org",
       "@type": "Person",
-      "name": "{{ profile.name | safe }}",
-      "jobTitle": "{{ profile.category | safe }}",
+      "name": "{{ profile.name   }}",
+      "jobTitle": "{{ profile.category   }}",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "{{ profile.city | safe }}"
+        "addressLocality": "{{ profile.city   }}"
       },
-      "image": "{{ profile.image_url | default: '/img/placeholder.png' | assetUrl }}",
+      "image": "{{ profile.image_url | default: '/img/placeholder.png'   }}",
       "url": "https://models-connect.netlify.app/profiles/{{ profile.id | slugify }}/"
     }
 ---
-<h1>{{ profile.name | safe }} — {{ profile.category | safe }}</h1>
+<h1>{{ profile.name   }} — {{ profile.category   }}</h1>
 <div  class="profile-detail">
   <div class="profile-detail__images">
    <figure>
@@ -44,52 +44,52 @@ eleventyComputed:
                 https://models-connect.netlify.app/img/profile-high-1.webp 1200w
               "
               sizes="(max-width: 600px) 100vw, (max-width: 1024px) 100vw, 400px"
-      src="{{ profile.image_url | default: '/img/placeholder.jpg' | assetUrl }}"
-      alt="Основное фото профиля {{ profile.name | safe }}"
+      src="{{ profile.image_url | default: 'https://models-connect.netlify.app/img/placeholder.png'   }}"
+      alt="Основное фото профиля {{ profile.name   }}"
     />
-     <figcaption>Основное фото профиля {{ profile.name | safe }}</figcaption>
+     <figcaption>Основное фото профиля {{ profile.name   }}</figcaption>
     </figure>
     <figure>
     <img
               class="profile-detail__image"
-              src="{{ profile.image_url | default: 'https://models-connect.netlify.app/img/placeholder.jpg' | assetUrl }}"
+              src="{{ profile.image_url | default: 'https://models-connect.netlify.app/img/placeholder.png'   }}"
                srcset="
                 https://models-connect.netlify.app/img/profile-low-1.webp   300w,
                https://models-connect.netlify.app/img/profile-med-1.webp   600w,
                 https://models-connect.netlify.app/img/profile-high-1.webp 1200w
               "
               sizes="(max-width: 600px) 100vw, (max-width: 1024px) 100vw, 400px"
-              alt="Работы {{ profile.name | safe }}"
+              alt="Работы {{ profile.name   }}"
               loading="lazy"
               decoding="async"
             />
-            <figcaption>Работы {{ profile.name | safe }}</figcaption>
+            <figcaption>Работы {{ profile.name   }}</figcaption>
             </figure>
     <figure>
     <img
               class="profile-detail__image"
-              src="{{ profile.image_url | default: 'https://models-connect.netlify.app/img/placeholder.jpg' | assetUrl }}"
+              src="{{ profile.image_url | default: 'https://models-connect.netlify.app/img/placeholder.png'   }}"
               srcset="
                 https://models-connect.netlify.app/img/profile-low-1.webp   300w,
                https://models-connect.netlify.app/img/profile-med-1.webp   600w,
                 https://models-connect.netlify.app/img/profile-high-1.webp 1200w
               "
               sizes="(max-width: 600px) 100vw, (max-width: 1024px) 100vw, 400px"
-              alt="Пример фотосессии {{ profile.name | safe }}"
+              alt="Пример фотосессии {{ profile.name   }}"
               loading="lazy"
               decoding="async"
             />
-            <figcaption>Пример фотосессии {{ profile.name | safe }}</figcaption>
+            <figcaption>Пример фотосессии {{ profile.name   }}</figcaption>
             </figure>
      </div>
   <div class="profile-detail__info">
-    <p><strong>Имя:</strong> {{ profile.name | safe }}</p>
+    <p><strong>Имя:</strong> {{ profile.name   }}</p>
     <p><strong>Возраст:</strong> {{ profile.age | default: 'Не указан' }}</p>
-    <p><strong>Город:</strong> {{ profile.city | safe }}</p>
-    <p><strong>Рубрика:</strong> {{ profile.category | safe }}</p>
-    <p class="profile-detail__description"><strong>Описание:</strong> {{ profile.description | safe }}</p>
+    <p><strong>Город:</strong> {{ profile.city   }}</p>
+    <p><strong>Рубрика:</strong> {{ profile.category   }}</p>
+    <p class="profile-detail__description"><strong>Описание:</strong> {{ profile.description   }}</p>
     <p>{{ profile.date | date: "%d.%m.%Y, %H:%M" }}</p>
-    <p class="profile-detail__contact">{{ profile.email | default: 'Не указан' | safe }}</p>
+    <p class="profile-detail__contact">{{ profile.email | default: 'Не указан'   }}</p>
     <a class="button" href="mailto:{{ profile.email | default: '#' }}">Связаться</a>
     </div>
 </div>

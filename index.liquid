@@ -3,72 +3,12 @@ layout: base
 title: "ModelConnect Miami — Свежие профили моделей и фотографов"
 description: "Платформа ModelConnect Miami: новые модели, фотографы и стилисты в Майами."
 keywords: "модели, фотографы, стилисты, Майами, fashion"
-
-permalink: /index.html
-seo_title: "Главная — ModelConnect Miami"
-seo_description: "Платформа для профессионалов fashion-индустрии в Майами. Найдите моделей, фотографов и стилистов."
-seo_keywords: "ModelConnect Miami, fashion Майами, платформа для моделей"
-seo_og_title: "Главная — ModelConnect Miami"
-seo_og_description: "Найдите профессионалов fashion-индустрии в Майами для ваших проектов."
-seo_og_image: https://models-connect.netlify.app/img/og-image-main.webp
-seo_og_url: https://models-connect.netlify.app
-seo_og_type: website
-seo_twitter_card: summary_large_image
-seo_twitter_title: "Главная — ModelConnect Miami"
-seo_twitter_description: "Найдите профессионалов fashion-индустрии в Майами."
-seo_twitter_image: https://models-connect.netlify.app/img/og-image-main.webp
-seo_canonical: https://models-connect.netlify.app
-seo_json_ld: |
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "ModelConnect Miami",
-    "url": "https://models-connect.netlify.app",
-    "description": "Платформа для профессионалов fashion-индустрии.",
-    "mainEntity": {
-      "@type": "ItemList",
-      "itemListElement": [
-        {% for profile in collections.allProfiles %}
-        {
-          "@type": "ListItem",
-          "position": {{ forloop.index }},
-          "item": {
-            "@type": "Person",
-            "name": "{{ profile.name | safe }}",
-            "jobTitle": "{{ profile.category | safe }}",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "{{ profile.city | safe }}"
-            },
-            "image": {
-              "@type": "ImageObject",
-              "url": "{{ profile.image_url | default: '/img/placeholder.png' | assetUrl }}"
-            },
-            "url": "{{ '/profiles/' | append: profile.id | append: '/' | assetUrl }}"
-          }
-        }{% unless forloop.last %},{% endunless %}
-        {% endfor %}
-      ]
-    },
-    "breadcrumb": {
-      "@type": "BreadcrumbList",
-      "@id": "https://models-connect.netlify.app/#breadcrumb",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Главная",
-          "item": "https://models-connect.netlify.app"
-        }
-      ]
-    }
-  }
 ---
-
 
 <div class="profiles-section" id="profiles">
   <h1>ModelConnect Miami</h1>
   <h2>Свежие Профили Моделей, Фотографов и Стилистов в 2025</h2>
+
   <div class="home-section__intro">
     <p>
       Добро пожаловать на ModelConnect Miami — ведущую платформу для поиска
@@ -80,27 +20,26 @@ seo_json_ld: |
       индустрии.
     </p>
   </div>
+
   <div class="profile-list">
-    {% assign unique_profiles = collections.allProfiles | uniq %}
-    {% for profile in unique_profiles %}
-    <div class="profile-card">
-      <img
-        class="profile-card__image"
-        width="300"
-         height="200"
-        src="{{ profile.image_url | default: '/img/placeholder.png' | assetUrl }}"
-        alt="Фото профиля {{ profile.name | safe }}"
-      />
-     <div class="profile-card__description">
-      <h3>{{ profile.name | safe }}</h3>
-      <p>
-        {{ profile.city | safe }},
-        {{ profile.category | replace: 'Модель', 'Модели' | replace: 'Фотограф', 'Фотографы' | replace: 'Стилист', 'Стилисты' | safe }}
-      </p>
-      <p>{{ profile.date | date: "%d.%m.%Y, %H:%M" }}</p>
-      <a href="{{ '/profiles/' | append: profile.id | append: '/' | assetUrl }}">Подробнее</a>
-    </div>
-    </div>
+    {% for p in collections.profiles %}
+      <div class="profile-card">
+        <img
+          class="profile-card__image"
+          width="300"
+          height="200"
+          src="{{ p.data.profile.image_url | default: 'https://models-connect.netlify.app/img/placeholder.png' }}"
+          alt="Фото профиля {{ p.data.profile.name }}"
+        />
+        <div class="profile-card__description">
+          <h3>{{ p.data.profile.name }}</h3>
+          <p>
+            {{ p.data.profile.city }},
+            {{ p.data.profile.category }}
+          </p>
+          <a href="{{ p.url }}">Подробнее</a>
+        </div>
+      </div>
     {% endfor %}
   </div>
 </div>
@@ -108,9 +47,8 @@ seo_json_ld: |
 <div class="home-regions">
   <h2>Регионы</h2>
   <ul>
-    <li><a href="{{ '/region/#майами-бич' | assetUrl }}">Майами-Бич</a></li>
-    <li><a href="{{ '/region/#халландейл-бич' | assetUrl }}">Халландейл</a></li>
-    <li><a href="{{ '/region/#корал-гейблс' | assetUrl }}">Корал-Гейблс</a></li>
+    <li><a href="/region/#майами-бич">Майами-Бич</a></li>
+    <li><a href="/region/#халландейл-бич">Халландейл</a></li>
+    <li><a href="/region/#корал-гейблс">Корал-Гейблс</a></li>
   </ul>
 </div>
-

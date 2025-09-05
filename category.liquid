@@ -42,20 +42,20 @@ seo_json_ld: |
         <img
           class="profile-card__image"
           src="{{
-            profile.image_url | default : '/img/placeholder.png' | assetUrl
+            profile.image_url | default : '/img/placeholder.png'
           }}"
           alt="Фото профиля {{ profile.name }}"
               width="300"
-                  height="200"
-                  fetchpriority="high"
+              height="200"
+              fetchpriority="high"
         />
          <div class="profile-card__description">
-        <h3>{{ profile.name | safe }}</h3>
+        <h3>{{ profile.name }}</h3>
         <p><strong>Город:</strong> {{ profile.city }}</p>
         <p>{{ profile.description | truncate : 100 }}</p>
         <a
           href="{{
-            '/profiles/' | append : profile.id | append : '/' | assetUrl
+            '/profiles/' | append : profile.id | append : '/'
           }}"
           >Подробнее</a
         >

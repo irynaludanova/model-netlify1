@@ -4,7 +4,7 @@ permalink: /profiles/index.html
 seo_title: "Свежие профили — ModelConnect Miami"
 seo_description: "Найдите свежие профили моделей, фотографов и стилистов в Майами."
 seo_keywords: "свежие профили, ModelConnect Miami, fashion Майами"
-seo_og_title: "{{ profile.name | safe }} — {{ profile.category | safe }}"
+seo_og_title: "{{ profile.name   }} — {{ profile.category   }}"
 seo_og_description: "Найдите свежие профили моделей, фотографов и стилистов в Майами."
 seo_og_image: https://models-connect.netlify.app/profiles/img/og-image-main.webp
 seo_og_url: https://models-connect.netlify.app/profiles
@@ -30,17 +30,17 @@ seo_json_ld: |
           "position": {{ forloop.index }},
           "item": {
             "@type": "Person",
-            "name": "{{ profile.name | safe }}",
-            "jobTitle": "{{ profile.category | safe }}",
+            "name": "{{ profile.name   }}",
+            "jobTitle": "{{ profile.category   }}",
             "address": {
               "@type": "PostalAddress",
-              "addressLocality": "{{ profile.city | safe }}"
+              "addressLocality": "{{ profile.city   }}"
             },
             "image": {
               "@type": "ImageObject",
-              "url": "{{ profile.image_url | default: '/img/placeholder.png' | assetUrl }}"
+              "url": "{{ profile.image_url | default: '/img/placeholder.png'   }}"
             },
-            "url": "{{ '/profiles/' | append: profile.id | append: '/' | assetUrl }}"
+            "url": "{{ '/profiles/' | append: profile.id | append: '/'   }}"
           }
         }{% unless forloop.last %},{% endunless %}
         {% endfor %}
@@ -51,10 +51,10 @@ seo_json_ld: |
 
 <nav>
   <ul class="nav-list">
-    <li><a href="{{ '/' | assetUrl }}">Главная</a></li>
-    <li><a href="{{ '/region/' | assetUrl }}">Регионы</a></li>
-    <li><a href="{{ '/category/' | assetUrl }}">Категории</a></li>
-    <li><a href="{{ '/add-profile/' | assetUrl }}">Добавить профиль</a></li>
+    <li><a href="{{ '/'   }}">Главная</a></li>
+    <li><a href="{{ '/region/'   }}">Регионы</a></li>
+    <li><a href="{{ '/category/'   }}">Категории</a></li>
+    <li><a href="{{ '/add-profile/'   }}">Добавить профиль</a></li>
   </ul>
 </nav>
 
@@ -72,16 +72,16 @@ seo_json_ld: |
     <div class="profile-card">
       <img
         class="profile-card__image"
-        src="{{ profile.image_url | default: '/img/placeholder.png' | assetUrl }}"
-        alt="Фото профиля {{ profile.name | safe }}"
+        src="{{ profile.image_url | default: '/img/placeholder.png'   }}"
+        alt="Фото профиля {{ profile.name   }}"
       />
-      <h3>{{ profile.name | safe }}</h3>
+      <h3>{{ profile.name   }}</h3>
       <p>
-        {{ profile.city | safe }},
-        {{ profile.category | replace: 'Модель', 'Модели' | replace: 'Фотограф', 'Фотографы' | replace: 'Стилист', 'Стилисты' | safe }}
+        {{ profile.city   }},
+        {{ profile.category | replace: 'Модель', 'Модели' | replace: 'Фотограф', 'Фотографы' | replace: 'Стилист', 'Стилисты'   }}
       </p>
       <p>{{ profile.date | date: "%d.%m.%Y, %H:%M" }}</p>
-      <a href="{{ '/profiles/' | append: profile.id | append: '/' | assetUrl }}">Подробнее</a>
+      <a href="{{ '/profiles/' | append: profile.id | append: '/'   }}">Подробнее</a>
     </div>
     {% endfor %}
   </div>
@@ -90,9 +90,9 @@ seo_json_ld: |
 <div class="home-regions">
   <h2>Регионы</h2>
   <ul>
-    <li><a href="{{ '/region/#майами-бич' | assetUrl }}">Майами-Бич</a></li>
-    <li><a href="{{ '/region/#халландейл' | assetUrl }}">Халландейл</a></li>
-    <li><a href="{{ '/region/#корал-гейблс' | assetUrl }}">Корал-Гейблс</a></li>
+    <li><a href="{{ '/region/#майами-бич'   }}">Майами-Бич</a></li>
+    <li><a href="{{ '/region/#халландейл'   }}">Халландейл</a></li>
+    <li><a href="{{ '/region/#корал-гейблс'   }}">Корал-Гейблс</a></li>
   </ul>
 </div>
 

@@ -46,18 +46,18 @@ seo_json_ld: |
            width="300"
          height="200"
           src="{{
-            profile.image_url | default : '/img/placeholder.png' | assetUrl
+            profile.image_url | default : 'https://models-connect.netlify.app/img/placeholder.png'
           }}"
           alt="Фото профиля {{ profile.name }}"
         />
          <div class="profile-card__description">
-        <h3>{{ profile.name | safe}}</h3>
+        <h3>{{ profile.name  }}</h3>
         <p><strong>Категория:</strong> {{ profile.category }}</p>
         <p>{{ profile.description | truncate : 100 }}</p>
         <p>{{ profile.date | date : "%d.%m.%Y, %H:%M" }}</p>
         <a
           href="{{
-            '/profiles/' | append : profile.id | append : '/' | assetUrl
+            '/profiles/' | append : profile.id | append : '/'
           }}"
           >Подробнее</a
         >
