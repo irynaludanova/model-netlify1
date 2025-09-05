@@ -21,25 +21,22 @@ keywords: "модели, фотографы, стилисты, Майами, fas
     </p>
   </div>
 
-  <div class="profile-list">
+<div class="profile-list">
     {% for p in collections.profiles %}
-      <div class="profile-card">
-        <img
-          class="profile-card__image"
-          width="300"
-          height="200"
-          src="{{ p.data.profile.image_url | default: 'https://models-connect.netlify.app/img/placeholder.png' }}"
-          alt="Фото профиля {{ p.data.profile.name }}"
-        />
-        <div class="profile-card__description">
-          <h3>{{ p.data.profile.name }}</h3>
-          <p>
-            {{ p.data.profile.city }},
-            {{ p.data.profile.category }}
-          </p>
-          <a href="{{ p.url }}">Подробнее</a>
-        </div>
+    <div class="profile-card">
+      <img
+        class="profile-card__image"
+        width="300"
+        height="200"
+        src="{{ p.data.profile.image_url | default: '/img/placeholder.png' }}"
+        alt="Фото профиля {{ p.data.profile.name }}"
+      />
+      <div class="profile-card__description">
+        <h3>{{ p.data.profile.name }}</h3>
+        <p>{{ p.data.profile.city }}, {{ p.data.profile.category }}</p>
+        <a href="{{ p.url }}">Подробнее</a>
       </div>
+    </div>
     {% endfor %}
   </div>
 </div>

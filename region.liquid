@@ -32,40 +32,37 @@ seo_json_ld: |
 
 <div class="regions-section" id="regions">
   <h1>Профили по регионам</h1>
-  {% assign regions = "Майами-Бич,Халландейл,Корал-Гейблс" | split: "," %} {%
-  for region in regions %} {% assign profiles_in_region =
-  collections.allProfiles | where: "city", region %}
-  {% if  profiles_in_region.size > 0 %}
-  <section id="{{ region | slugify }}">
-    <h2>{{ region }}</h2>
+
+  {% comment %} Собираем уникальные города {% endcomment %}
+  {% assign cities = "" | split: "" %}
+  {% for p in collections.profiles %}
+    {% unless cities contains p.data.profile.city %}
+      {% assign cities = cities | push: p.data.profile.city %}
+    {% endunless %}
+  {% endfor %}
+
+  {% comment %} Для каждого города выводим профили {% endcomment %}
+  {% for city in cities %}
+    <h2>{{ city }}</h2>
     <div class="profile-list">
-      {% for profile in profiles_in_region %}
-      <div class="profile-card">
-        <img
-          class="profile-card__image"
-           width="300"
-         height="200"
-          src="{{
-            profile.image_url | default : 'https://models-connect.netlify.app/img/placeholder.png'
-          }}"
-          alt="Фото профиля {{ profile.name }}"
-        />
-         <div class="profile-card__description">
-        <h3>{{ profile.name  }}</h3>
-        <p><strong>Категория:</strong> {{ profile.category }}</p>
-        <p>{{ profile.description | truncate : 100 }}</p>
-        <p>{{ profile.date | date : "%d.%m.%Y, %H:%M" }}</p>
-        <a
-          href="{{
-            '/profiles/' | append : profile.id | append : '/'
-          }}"
-          >Подробнее</a
-        >
-        </div>
-      </div>
+      {% for profile in collections.profiles %}
+        {% if profile.data.profile.city == city %}
+          <div class="profile-card">
+            <img
+              class="profile-card__image"
+              width="300"
+              height="200"
+              src="{{ profile.data.profile.image_url | default: '/img/placeholder.png' }}"
+              alt="Фото профиля {{ profile.data.profile.name }}"
+            />
+            <div class="profile-card__description">
+              <h3>{{ profile.data.profile.name }}</h3>
+              <p>{{ profile.data.profile.city }}, {{ profile.data.profile.category }}</p>
+              <a href="{{ profile.url }}">Подробнее</a>
+            </div>
+          </div>
+        {% endif %}
       {% endfor %}
     </div>
-  </section>
-  {% endif %} {% endfor %}
+  {% endfor %}
 </div>
-

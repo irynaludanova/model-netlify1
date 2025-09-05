@@ -30,41 +30,31 @@ seo_json_ld: |
 
 <div class="categories-section" id="categories">
   <h1>Профили по категориям</h1>
-  {% assign categories = "Модель,Фотограф,Стилист" | split: "," %} {% for
-  category in categories %} {% assign profiles_in_category =
-  collections.allProfiles | where: "category", category %}
-  {% if  profiles_in_category.size > 0 %}
-  <section id="{{ category | slugify }}">
+ {% assign categories = collections.profiles | map: "data.profile.category" | uniq %}
+
+  {% for category in categories %}
     <h2>{{ category }}</h2>
     <div class="profile-list">
-      {% for profile in profiles_in_category %}
-      <div class="profile-card">
-        <img
-          class="profile-card__image"
-          src="{{
-            profile.image_url | default : '/img/placeholder.png'
-          }}"
-          alt="Фото профиля {{ profile.name }}"
-              width="300"
-              height="200"
-              fetchpriority="high"
-        />
-         <div class="profile-card__description">
-        <h3>{{ profile.name }}</h3>
-        <p><strong>Город:</strong> {{ profile.city }}</p>
-        <p>{{ profile.description | truncate : 100 }}</p>
-        <a
-          href="{{
-            '/profiles/' | append : profile.id | append : '/'
-          }}"
-          >Подробнее</a
-        >
-      </div>
+      {% for p in collections.profiles %}
+        {% if p.data.profile.category == category %}
+        <div class="profile-card">
+          <img
+            class="profile-card__image"
+            width="300"
+            height="200"
+            src="{{ p.data.profile.image_url | default: '/img/placeholder.png' }}"
+            alt="Фото профиля {{ p.data.profile.name }}"
+          />
+          <div class="profile-card__description">
+            <h3>{{ p.data.profile.name }}</h3>
+            <p>{{ p.data.profile.city }}, {{ p.data.profile.category }}</p>
+            <a href="{{ p.url }}">Подробнее</a>
+          </div>
+        </div>
+        {% endif %}
       {% endfor %}
     </div>
-    </div>
-  </section>
-  {% endif %} {% endfor %}
+  {% endfor %}
 </div>
 
 

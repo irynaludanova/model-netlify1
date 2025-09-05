@@ -14,11 +14,11 @@
   <meta property="og:site_name" content="ModelConnect Miami" />
   <meta property="og:locale" content="ru_RU" />
   <meta property="og:description" content="{{ ogDescription | default: description }}">
-  <meta property="og:image" content="{{ ogImage | default: '/img/og-image-main.webp' }}">
+  <meta property="og:image" content="{{ site.url }}/img/og-image-main.webp ">
   <meta property="og:image:alt" content="{{ title }}"/>
   <meta property="og:image:width" content="300" />
   <meta property="og:image:height" content="200" />
-  <meta property="og:url" content="{{ ogUrl | default: page.url | url }}">
+  <meta property="og:url" content="{{ site.url  }}">
   <meta property="og:type" content="{% if profile %}profile{% else %}website{% endif %}">
   <meta property="og:locale" content="ru_RU" />
 
@@ -26,39 +26,39 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ twitterTitle | default: title }}">
   <meta name="twitter:description" content="{{ twitterDescription | default: description }}">
-  <meta name="twitter:image" content="{{ twitterImage | default: '/img/og-image-main.webp' }}">
+  <meta name="twitter:image" content="{{ site.url }}/img/og-image-main.webp ">
 
   <!-- Canonical -->
-  <link rel="canonical" href="{{ ogUrl | default: page.url | url }}">
+ <link rel="canonical" href="{{ site.url }}{{ page.url }}">
 
   <!-- Favicon -->
  <link
       rel="icon"
       type="image/x-icon"
-      href="https://models-connect.netlify.app/favicon.ico"
+      href="{{ site.url }}/favicon.ico"
     />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="https://models-connect.netlify.app/img/apple-touch-icon.png"
+      href="{{ site.url }}/img/apple-touch-icon.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="https://models-connect.netlify.app/img/favicon-32x32.png"
+      href="{{ site.url }}/img/favicon-32x32.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="https://models-connect.netlify.app/img/favicon-16x16.png"
+      href="{{ site.url }}/img/favicon-16x16.png"
     />
     <link
       rel="manifest"
-      href="https://models-connect.netlify.app/site.webmanifest"
+      href="{{ site.url }}/img/site.webmanifest"
     />
-    <link rel="stylesheet" href="https://models-connect.netlify.app/css/style.css">
+    <link rel="stylesheet" href="{{ site.url }}/css/style.css">
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
@@ -72,13 +72,13 @@
         "@type": "PostalAddress",
         "addressLocality": "{{ profile.city }}"
       },
-      "image": "{{ profile.image_url | default: '/img/placeholder.png' }}",
-      "url": "https://models-connect.netlify.app/profiles/{{ profile.id | slugify }}/"
+     "image": "{{ profile.image_url | default: site.url }}/img/placeholder.png",
+      "url": "{{ site.url }}/profiles/{{ profile.id | slugify }}/"
     {% else %}
       "@type": "CollectionPage",
       "name": "{{ title }}",
       "description": "{{ description }}",
-      "url": "https://models-connect.netlify.app{{ page.url }}",
+      "url": "{{ site.url }}{{ page.url }}",
       "datePublished": "{{ page.date | date: '%Y-%m-%dT%H:%M:%SZ' }}",
       "mainEntity": {
         "@type": "ItemList",
@@ -92,8 +92,8 @@
     "name": "{{ p.data.profile.name }}",
     "jobTitle": "{{ p.data.profile.category }}",
     "address": { "@type": "PostalAddress", "addressLocality": "{{ p.data.profile.city }}" },
-    "image": "{{ p.data.profile.image_url | default: '/img/placeholder.png' }}",
-    "url": "https://models-connect.netlify.app{{ p.url }}"
+    "image": "{{ p.data.profile.image_url | default: '{{ site.url }}/img/placeholder.png' }}",
+    "url": "{{ site.url }}{{ p.url }}"
   }
 }{% unless forloop.last %},{% endunless %}
 {% endfor %}
@@ -103,13 +103,13 @@
     {% endif %},
      "breadcrumb": {
           "@type": "BreadcrumbList",
-          "@id": "https://models-connect.netlify.app/#breadcrumb",
+          "@id": "{{ site.url }}/#breadcrumb",
           "itemListElement": [
             {
               "@type": "ListItem",
               "position": 1,
               "name": "Главная",
-              "item": "https://models-connect.netlify.app"
+              "item": "{{ site.url }}"
             }
           ]
         }
