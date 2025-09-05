@@ -26,7 +26,7 @@ seo_json_ld:
 
 <div class="add-profile-section">
   <h1>Добавить профиль</h1>
-  <form action="/submit-profile" method="POST">
+  <form action="/submit-profile" method="POST" data-netlify="true" enctype="multipart/form-data">
     <div class="form-group">
       <label for="name">Имя:</label>
       <input type="text" id="name" name="name" required />
