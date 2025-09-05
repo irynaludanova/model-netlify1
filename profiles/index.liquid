@@ -1,100 +1,18 @@
 ---
-layout: base.liquid
-permalink: /profiles/index.html
-seo_title: "Свежие профили — ModelConnect Miami"
-seo_description: "Найдите свежие профили моделей, фотографов и стилистов в Майами."
-seo_og_title: "{{ profile.name   }} — {{ profile.category   }}"
-seo_og_description: "Найдите свежие профили моделей, фотографов и стилистов в Майами."
-seo_og_image: https://models-connect.netlify.app/profiles/img/og-image-main.webp
-seo_og_url: https://models-connect.netlify.app/profiles
-seo_og_type: website
-seo_twitter_card: summary_large_image
-seo_twitter_title: "Свежие профили — ModelConnect Miami"
-seo_twitter_description: "Найдите свежие профили моделей, фотографов и стилистов в Майами."
-seo_twitter_image: https://models-connect.netlify.app/profiles/img/og-image-main.webp
-seo_canonical: https://models-connect.netlify.app/profiles
-seo_json_ld: |
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Свежие профили",
-    "url": "https://models-connect.netlify.app/profiles",
-    "description": "Найдите свежие профили моделей, фотографов и стилистов в Майами.",
-    "mainEntity": {
-      "@type": "ItemList",
-      "itemListElement": [
-        {% for profile in collections.allProfiles %}
-        {
-          "@type": "ListItem",
-          "position": {{ forloop.index }},
-          "item": {
-            "@type": "Person",
-            "name": "{{ profile.name   }}",
-            "jobTitle": "{{ profile.category   }}",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "{{ profile.city   }}"
-            },
-            "image": {
-              "@type": "ImageObject",
-              "url": "{{ profile.image_url | default: '/img/placeholder.png'   }}"
-            },
-            "url": "{{ '/profiles/' | append: profile.id | append: '/'   }}"
-          }
-        }{% unless forloop.last %},{% endunless %}
-        {% endfor %}
-      ]
-    }
-  }
+layout: base
+title: Профили
 ---
+<h1>Профили</h1>
 
-<nav>
-  <ul class="nav-list">
-    <li><a href="{{ '/'   }}">Главная</a></li>
-    <li><a href="{{ '/region/'   }}">Регионы</a></li>
-    <li><a href="{{ '/category/'   }}">Категории</a></li>
-    <li><a href="{{ '/add-profile/'   }}">Добавить профиль</a></li>
-  </ul>
-</nav>
-
-<div class="profiles-section">
-  <h1>Свежие профили</h1>
-
-  <div class="profiles-section__intro">
-    <p>
-      Ознакомьтесь с новыми профилями профессионалов fashion-индустрии в Майами, включая модели, фотографов и стилистов.
-    </p>
-  </div>
-  <div class="profile-list">
-    {% assign unique_profiles = collections.allProfiles | uniq %}
-    {% for profile in unique_profiles %}
-    <div class="profile-card">
-      <img
-        class="profile-card__image"
-        src="{{ profile.image_url | default: '/img/placeholder.png'   }}"
-        alt="Фото профиля {{ profile.name   }}"
-      />
-      <h3>{{ profile.name   }}</h3>
-      <p>
-        {{ profile.city   }},
-        {{ profile.category | replace: 'Модель', 'Модели' | replace: 'Фотограф', 'Фотографы' | replace: 'Стилист', 'Стилисты'   }}
-      </p>
-      <p>{{ profile.date | date: "%d.%m.%Y, %H:%M" }}</p>
-      <a href="{{ '/profiles/' | append: profile.id | append: '/'   }}">Подробнее</a>
-    </div>
-    {% endfor %}
-  </div>
-</div>
-
-<div class="home-regions">
-  <h2>Регионы</h2>
-  <ul>
-    <li><a href="{{ '/region/#майами-бич'   }}">Майами-Бич</a></li>
-    <li><a href="{{ '/region/#халландейл'   }}">Халландейл</a></li>
-    <li><a href="{{ '/region/#корал-гейблс'   }}">Корал-Гейблс</a></li>
-  </ul>
-</div>
-
-<footer class="site-footer">
-  <p>© 2025 ModelConnect Miami</p>
-</footer>
+<ul class="profiles-list">
+  {% for item in collections.profiles %}
+    {% assign p = item.data.profile %}
+    <li class="profile-card">
+      <a href="{{ p.url }}">
+        <img src="{{ p.image_url | default: '/img/placeholder.png' }}" alt="{{ p.name }}" width="120" height="120" />
+        <strong>{{ p.name }}</strong>
+        <div>{{ p.city }} — {{ p.category }}</div>
+      </a>
+    </li>
+  {% endfor %}
+</ul>
