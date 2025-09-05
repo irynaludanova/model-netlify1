@@ -2,7 +2,6 @@
 layout: base
 title: "ModelConnect Miami — Свежие профили моделей и фотографов"
 description: "Платформа ModelConnect Miami: новые модели, фотографы и стилисты в Майами."
-keywords: "модели, фотографы, стилисты, Майами, fashion"
 ---
 
 <div class="profiles-section" id="profiles">
@@ -21,9 +20,33 @@ keywords: "модели, фотографы, стилисты, Майами, fas
     </p>
   </div>
 
-<div class="profile-list">
+  <!-- 🔥 Выпадающие фильтры -->
+  <div class="filters">
+    <label for="region-select"><strong>Выберите регион:</strong></label>
+    <select id="region-select">
+      <option value="все">Все регионы</option>
+      {% assign regions = collections.profiles | map: "data.profile.city" | uniq %}
+      {% for region in regions %}
+        <option value="{{ region | downcase }}">{{ region }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="category-select"><strong>Выберите категорию:</strong></label>
+    <select id="category-select">
+      <option value="все">Все категории</option>
+      {% assign categories = collections.profiles | map: "data.profile.category" | uniq %}
+      {% for category in categories %}
+        <option value="{{ category | downcase }}">{{ category }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- 🔥 Все профили -->
+  <div class="profile-list" id="profile-list">
     {% for p in collections.profiles %}
-    <div class="profile-card">
+    <div class="profile-card"
+         data-region="{{ p.data.profile.city | downcase }}"
+         data-category="{{ p.data.profile.category | downcase }}">
       <img
         class="profile-card__image"
         width="300"
@@ -41,11 +64,31 @@ keywords: "модели, фотографы, стилисты, Майами, fas
   </div>
 </div>
 
-<div class="home-regions">
-  <h2>Регионы</h2>
-  <ul>
-    <li><a href="/region/#майами-бич">Майами-Бич</a></li>
-    <li><a href="/region/#халландейл-бич">Халландейл</a></li>
-    <li><a href="/region/#корал-гейблс">Корал-Гейблс</a></li>
-  </ul>
-</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const regionSelect = document.getElementById("region-select");
+  const categorySelect = document.getElementById("category-select");
+
+  function filterProfiles() {
+    const activeRegion = regionSelect.value;
+    const activeCategory = categorySelect.value;
+
+    document.querySelectorAll(".profile-card").forEach(card => {
+      const region = card.getAttribute("data-region");
+      const category = card.getAttribute("data-category");
+
+      const regionMatch = (activeRegion === "все" || region === activeRegion);
+      const categoryMatch = (activeCategory === "все" || category === activeCategory);
+
+      if (regionMatch && categoryMatch) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+
+  regionSelect.addEventListener("change", filterProfiles);
+  categorySelect.addEventListener("change", filterProfiles);
+});
+</script>

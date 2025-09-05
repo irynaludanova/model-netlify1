@@ -1,40 +1,23 @@
 ---
 layout: base
 title: "ModelConnect Miami — Поиск по категориям"
-description: "Смотрите профили моделей, фотографов и стилистов по регионам Майами."
-keywords: "категории, Майами, fashion, ModelConnect"
-
+description: "Смотрите профили моделей, фотографов и стилистов по категориям в Майами."
 permalink: /category/index.html
-seo_title: "Категории — ModelConnect Miami"
-seo_description: "Профили профессионалов fashion-индустрии по категориям: модели, фотографы, стилисты."
-seo_keywords: "категории Майами, fashion Майами, ModelConnect"
-seo_og_title: "Категории — ModelConnect Miami"
-seo_og_description: "Найдите профессионалов по категориям: модели, фотографы, стилисты."
-seo_og_image: https://models-connect.netlify.app/img/og-image-photographers.webp
-seo_og_url: https://models-connect.netlify.app/category
-seo_og_type: website
-seo_twitter_card: summary_large_image
-seo_twitter_title: "Категории — ModelConnect Miami"
-seo_twitter_description: "Найдите профессионалов по категориям в Майами."
-seo_twitter_image: https://models-connect.netlify.app/img/og-image-photographers.webp
-seo_canonical: https://models-connect.netlify.app/category
-seo_json_ld: |
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Категории",
-    "url": "https://models-connect.netlify.app/category",
-    "description": "Профили по категориям на платформе ModelConnect."
-  }
 ---
+
+<nav class="breadcrumbs">
+  <a href="/">Главная</a> /
+  <span>Категории</span>
+</nav>
 
 <div class="categories-section" id="categories">
   <h1>Профили по категориям</h1>
- {% assign categories = collections.profiles | map: "data.profile.category" | uniq %}
+
+  {% assign categories = collections.profiles | map: "data.profile.category" | uniq %}
 
   {% for category in categories %}
-    <h2>{{ category }}</h2>
-    <div class="profile-list">
+    <h2 class="category-title" data-category="{{ category | downcase }}">{{ category }}</h2>
+    <div class="profile-list" data-category="{{ category | downcase }}">
       {% for p in collections.profiles %}
         {% if p.data.profile.category == category %}
         <div class="profile-card">
@@ -57,4 +40,18 @@ seo_json_ld: |
   {% endfor %}
 </div>
 
-
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const hash = window.location.hash.replace("#", "").toLowerCase();
+  if (hash) {
+    // Скрываем все
+    document.querySelectorAll(".category-title, .profile-list").forEach(el => {
+      el.style.display = "none";
+    });
+    // Показываем только выбранную категорию
+    document.querySelectorAll(`[data-category='${hash}']`).forEach(el => {
+      el.style.display = "block";
+    });
+  }
+});
+</script>

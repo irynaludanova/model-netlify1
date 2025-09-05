@@ -1,0 +1,12 @@
+{
+  "id": "john",
+  "name": "John",
+  "city": "Майами-Бич",
+  "category": "Стилист",
+  "description": "Опытный стилист. Работал с топ-моделями в Халландейл-Бич. Готов к новым проектам.",
+  "date": "2025-08-07T14:20:00.000Z",
+  "age": 28,
+  "email": "john@example.com",
+  "phone": "12345678",
+  "image_url": "/img/profile-low-4.webp"
+}

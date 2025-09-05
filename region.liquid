@@ -1,68 +1,57 @@
 ---
-
 layout: base
 title: "ModelConnect Miami — Поиск по регионам"
 description: "Смотрите профили моделей, фотографов и стилистов по регионам Майами."
-keywords: "регионы, Майами, fashion, ModelConnect"
-
-
 permalink: /region/index.html
-seo_title: "Регионы — ModelConnect Miami"
-seo_description: "Найдите профессионалов fashion-индустрии в разных регионах Майами: Майами-Бич, Халландейл, Корал-Гейблс."
-seo_keywords: "регионы Майами, fashion Майами, ModelConnect"
-seo_og_title: "Регионы — ModelConnect Miami"
-seo_og_description: "Найдите моделей, фотографов и стилистов в регионах Майами."
-seo_og_image: https://models-connect.netlify.app/img/og-image-region.webp
-seo_og_url: https://models-connect.netlify.app/region
-seo_og_type: website
-seo_twitter_card: summary_large_image
-seo_twitter_title: "Регионы — ModelConnect Miami"
-seo_twitter_description: "Найдите профессионалов в регионах Майами."
-seo_twitter_image: https://models-connect.netlify.app/img/og-image-region.webp
-seo_canonical: https://models-connect.netlify.app
-seo_json_ld: |
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Регионы",
-    "url": "https://models-connect.netlify.app/region",
-    "description": "Профили профессионалов fashion-индустрии по регионам Майами."
-  }
 ---
+
+<nav class="breadcrumbs">
+  <a href="/">Главная</a> /
+  <span>Регионы</span>
+</nav>
 
 <div class="regions-section" id="regions">
   <h1>Профили по регионам</h1>
 
-  {% comment %} Собираем уникальные города {% endcomment %}
-  {% assign cities = "" | split: "" %}
-  {% for p in collections.profiles %}
-    {% unless cities contains p.data.profile.city %}
-      {% assign cities = cities | push: p.data.profile.city %}
-    {% endunless %}
-  {% endfor %}
+  {% assign regions = collections.profiles | map: "data.profile.city" | uniq %}
 
-  {% comment %} Для каждого города выводим профили {% endcomment %}
-  {% for city in cities %}
-    <h2>{{ city }}</h2>
-    <div class="profile-list">
-      {% for profile in collections.profiles %}
-        {% if profile.data.profile.city == city %}
-          <div class="profile-card">
-            <img
-              class="profile-card__image"
-              width="300"
-              height="200"
-              src="{{ profile.data.profile.image_url | default: '/img/placeholder.png' }}"
-              alt="Фото профиля {{ profile.data.profile.name }}"
-            />
-            <div class="profile-card__description">
-              <h3>{{ profile.data.profile.name }}</h3>
-              <p>{{ profile.data.profile.city }}, {{ profile.data.profile.category }}</p>
-              <a href="{{ profile.url }}">Подробнее</a>
-            </div>
+  {% for region in regions %}
+    <h2 class="region-title" data-region="{{ region | downcase }}">{{ region }}</h2>
+    <div class="profile-list" data-region="{{ region | downcase }}">
+      {% for p in collections.profiles %}
+        {% if p.data.profile.city == region %}
+        <div class="profile-card">
+          <img
+            class="profile-card__image"
+            width="300"
+            height="200"
+            src="{{ p.data.profile.image_url | default: '/img/placeholder.png' }}"
+            alt="Фото профиля {{ p.data.profile.name }}"
+          />
+          <div class="profile-card__description">
+            <h3>{{ p.data.profile.name }}</h3>
+            <p>{{ p.data.profile.city }}, {{ p.data.profile.category }}</p>
+            <a href="{{ p.url }}">Подробнее</a>
           </div>
+        </div>
         {% endif %}
       {% endfor %}
     </div>
   {% endfor %}
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const hash = window.location.hash.replace("#", "").toLowerCase();
+  if (hash) {
+    // Скрываем все
+    document.querySelectorAll(".region-title, .profile-list").forEach(el => {
+      el.style.display = "none";
+    });
+    // Показываем только выбранный регион
+    document.querySelectorAll(`[data-region='${hash}']`).forEach(el => {
+      el.style.display = "block";
+    });
+  }
+});
+</script>

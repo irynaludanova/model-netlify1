@@ -1,0 +1,12 @@
+{
+  "id": "tim",
+  "name": "Tim",
+  "city": "Корал-Гейблс",
+  "category": "Фотограф",
+  "description": "Опытный фотограф для fashion-съемок.",
+  "date": "2025-08-08T11:43:00.000Z",
+  "age": 28,
+  "email": "tim@example.com",
+  "phone": "09876543",
+  "image_url": "/img/profile-low-6.webp"
+}

@@ -7,7 +7,6 @@
 
   <title>ModelConnect Miami — Свежие профили моделей и фотографов</title>
   <meta name="description" content="Платформа ModelConnect Miami: новые модели, фотографы и стилисты в Майами.">
-  <meta name="keywords" content="модели, фотографы, стилисты, Майами, fashion">
 
   <!-- Open Graph -->
   <meta property="og:title" content="ModelConnect Miami — Свежие профили моделей и фотографов">
@@ -92,11 +91,11 @@
   "position": 2,
   "item": {
     "@type": "Person",
-    "name": "Maria",
+    "name": "John",
     "jobTitle": "Стилист",
-    "address": { "@type": "PostalAddress", "addressLocality": "Корал-Гейблс" },
-    "image": "/img/profile-low-2.webp",
-    "url": "https://models-connect.netlify.app/profiles/maria/"
+    "address": { "@type": "PostalAddress", "addressLocality": "Майами-Бич" },
+    "image": "/img/profile-low-4.webp",
+    "url": "https://models-connect.netlify.app/profiles/john/"
   }
 },
 
@@ -105,11 +104,50 @@
   "position": 3,
   "item": {
     "@type": "Person",
+    "name": "Kate",
+    "jobTitle": "Модель",
+    "address": { "@type": "PostalAddress", "addressLocality": "Корал-Гейблс" },
+    "image": "/img/profile-low-5.webp",
+    "url": "https://models-connect.netlify.app/profiles/kate/"
+  }
+},
+
+{
+  "@type": "ListItem",
+  "position": 4,
+  "item": {
+    "@type": "Person",
+    "name": "Maria",
+    "jobTitle": "Стилист",
+    "address": { "@type": "PostalAddress", "addressLocality": "Халландейл" },
+    "image": "/img/profile-low-2.webp",
+    "url": "https://models-connect.netlify.app/profiles/maria/"
+  }
+},
+
+{
+  "@type": "ListItem",
+  "position": 5,
+  "item": {
+    "@type": "Person",
     "name": "Nika",
     "jobTitle": "Модель",
     "address": { "@type": "PostalAddress", "addressLocality": "Майами-Бич" },
     "image": "/img/profile-low-3.webp",
     "url": "https://models-connect.netlify.app/profiles/nika/"
+  }
+},
+
+{
+  "@type": "ListItem",
+  "position": 6,
+  "item": {
+    "@type": "Person",
+    "name": "Tim",
+    "jobTitle": "Фотограф",
+    "address": { "@type": "PostalAddress", "addressLocality": "Корал-Гейблс" },
+    "image": "/img/profile-low-6.webp",
+    "url": "https://models-connect.netlify.app/profiles/tim/"
   }
 }
 
@@ -162,9 +200,41 @@
     </p>
   </div>
 
-<div class="profile-list">
+  <!-- 🔥 Выпадающие фильтры -->
+  <div class="filters">
+    <label for="region-select"><strong>Выберите регион:</strong></label>
+    <select id="region-select">
+      <option value="все">Все регионы</option>
+      
+      
+        <option value="халландейл">Халландейл</option>
+      
+        <option value="майами-бич">Майами-Бич</option>
+      
+        <option value="корал-гейблс">Корал-Гейблс</option>
+      
+    </select>
+
+    <label for="category-select"><strong>Выберите категорию:</strong></label>
+    <select id="category-select">
+      <option value="все">Все категории</option>
+      
+      
+        <option value="фотограф">Фотограф</option>
+      
+        <option value="стилист">Стилист</option>
+      
+        <option value="модель">Модель</option>
+      
+    </select>
+  </div>
+
+  <!-- 🔥 Все профили -->
+  <div class="profile-list" id="profile-list">
     
-    <div class="profile-card">
+    <div class="profile-card"
+         data-region="халландейл"
+         data-category="фотограф">
       <img
         class="profile-card__image"
         width="300"
@@ -179,7 +249,43 @@
       </div>
     </div>
     
-    <div class="profile-card">
+    <div class="profile-card"
+         data-region="майами-бич"
+         data-category="стилист">
+      <img
+        class="profile-card__image"
+        width="300"
+        height="200"
+        src="/img/profile-low-4.webp"
+        alt="Фото профиля John"
+      />
+      <div class="profile-card__description">
+        <h3>John</h3>
+        <p>Майами-Бич, Стилист</p>
+        <a href="/profiles/john/">Подробнее</a>
+      </div>
+    </div>
+    
+    <div class="profile-card"
+         data-region="корал-гейблс"
+         data-category="модель">
+      <img
+        class="profile-card__image"
+        width="300"
+        height="200"
+        src="/img/profile-low-5.webp"
+        alt="Фото профиля Kate"
+      />
+      <div class="profile-card__description">
+        <h3>Kate</h3>
+        <p>Корал-Гейблс, Модель</p>
+        <a href="/profiles/kate/">Подробнее</a>
+      </div>
+    </div>
+    
+    <div class="profile-card"
+         data-region="халландейл"
+         data-category="стилист">
       <img
         class="profile-card__image"
         width="300"
@@ -189,12 +295,14 @@
       />
       <div class="profile-card__description">
         <h3>Maria</h3>
-        <p>Корал-Гейблс, Стилист</p>
+        <p>Халландейл, Стилист</p>
         <a href="/profiles/maria/">Подробнее</a>
       </div>
     </div>
     
-    <div class="profile-card">
+    <div class="profile-card"
+         data-region="майами-бич"
+         data-category="модель">
       <img
         class="profile-card__image"
         width="300"
@@ -209,17 +317,54 @@
       </div>
     </div>
     
+    <div class="profile-card"
+         data-region="корал-гейблс"
+         data-category="фотограф">
+      <img
+        class="profile-card__image"
+        width="300"
+        height="200"
+        src="/img/profile-low-6.webp"
+        alt="Фото профиля Tim"
+      />
+      <div class="profile-card__description">
+        <h3>Tim</h3>
+        <p>Корал-Гейблс, Фотограф</p>
+        <a href="/profiles/tim/">Подробнее</a>
+      </div>
+    </div>
+    
   </div>
 </div>
 
-<div class="home-regions">
-  <h2>Регионы</h2>
-  <ul>
-    <li><a href="/region/#майами-бич">Майами-Бич</a></li>
-    <li><a href="/region/#халландейл-бич">Халландейл</a></li>
-    <li><a href="/region/#корал-гейблс">Корал-Гейблс</a></li>
-  </ul>
-</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const regionSelect = document.getElementById("region-select");
+  const categorySelect = document.getElementById("category-select");
+
+  function filterProfiles() {
+    const activeRegion = regionSelect.value;
+    const activeCategory = categorySelect.value;
+
+    document.querySelectorAll(".profile-card").forEach(card => {
+      const region = card.getAttribute("data-region");
+      const category = card.getAttribute("data-category");
+
+      const regionMatch = (activeRegion === "все" || region === activeRegion);
+      const categoryMatch = (activeCategory === "все" || category === activeCategory);
+
+      if (regionMatch && categoryMatch) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+
+  regionSelect.addEventListener("change", filterProfiles);
+  categorySelect.addEventListener("change", filterProfiles);
+});
+</script>
 
   </main>
 

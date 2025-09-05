@@ -9,7 +9,6 @@ permalink: /profiles/{{ profile.id }}/
 eleventyComputed:
   title: "{{ profile.name }} — {{ profile.category }} | ModelConnect Miami"
   description: "{{ profile.description }}"
-  keywords: "{{ profile.name }}, {{ profile.category }}, {{ profile.city }}, fashion Майами, ModelConnect"
   ogTitle: "{{ profile.name }} — {{ profile.category }} | ModelConnect Miami"
   ogDescription: "{{ profile.description }}"
   ogImage: "{{ profile.image_url | default: '/img/og-image-main.webp' }}"

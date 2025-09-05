@@ -6,14 +6,13 @@
   <meta name="robots" content="index, follow" />
 
   <title>ModelConnect Miami — Поиск по категориям</title>
-  <meta name="description" content="Смотрите профили моделей, фотографов и стилистов по регионам Майами.">
-  <meta name="keywords" content="категории, Майами, fashion, ModelConnect">
+  <meta name="description" content="Смотрите профили моделей, фотографов и стилистов по категориям в Майами.">
 
   <!-- Open Graph -->
   <meta property="og:title" content="ModelConnect Miami — Поиск по категориям">
   <meta property="og:site_name" content="ModelConnect Miami" />
   <meta property="og:locale" content="ru_RU" />
-  <meta property="og:description" content="Смотрите профили моделей, фотографов и стилистов по регионам Майами.">
+  <meta property="og:description" content="Смотрите профили моделей, фотографов и стилистов по категориям в Майами.">
   <meta property="og:image" content="https://models-connect.netlify.app/img/og-image-main.webp ">
   <meta property="og:image:alt" content="ModelConnect Miami — Поиск по категориям"/>
   <meta property="og:image:width" content="300" />
@@ -25,7 +24,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ModelConnect Miami — Поиск по категориям">
-  <meta name="twitter:description" content="Смотрите профили моделей, фотографов и стилистов по регионам Майами.">
+  <meta name="twitter:description" content="Смотрите профили моделей, фотографов и стилистов по категориям в Майами.">
   <meta name="twitter:image" content="https://models-connect.netlify.app/img/og-image-main.webp ">
 
   <!-- Canonical -->
@@ -67,7 +66,7 @@
     
       "@type": "CollectionPage",
       "name": "ModelConnect Miami — Поиск по категориям",
-      "description": "Смотрите профили моделей, фотографов и стилистов по регионам Майами.",
+      "description": "Смотрите профили моделей, фотографов и стилистов по категориям в Майами.",
       "url": "https://models-connect.netlify.app/category/",
       "datePublished": "2025-08-17T19:31:38Z",
       "mainEntity": {
@@ -92,11 +91,11 @@
   "position": 2,
   "item": {
     "@type": "Person",
-    "name": "Maria",
+    "name": "John",
     "jobTitle": "Стилист",
-    "address": { "@type": "PostalAddress", "addressLocality": "Корал-Гейблс" },
-    "image": "/img/profile-low-2.webp",
-    "url": "https://models-connect.netlify.app/profiles/maria/"
+    "address": { "@type": "PostalAddress", "addressLocality": "Майами-Бич" },
+    "image": "/img/profile-low-4.webp",
+    "url": "https://models-connect.netlify.app/profiles/john/"
   }
 },
 
@@ -105,11 +104,50 @@
   "position": 3,
   "item": {
     "@type": "Person",
+    "name": "Kate",
+    "jobTitle": "Модель",
+    "address": { "@type": "PostalAddress", "addressLocality": "Корал-Гейблс" },
+    "image": "/img/profile-low-5.webp",
+    "url": "https://models-connect.netlify.app/profiles/kate/"
+  }
+},
+
+{
+  "@type": "ListItem",
+  "position": 4,
+  "item": {
+    "@type": "Person",
+    "name": "Maria",
+    "jobTitle": "Стилист",
+    "address": { "@type": "PostalAddress", "addressLocality": "Халландейл" },
+    "image": "/img/profile-low-2.webp",
+    "url": "https://models-connect.netlify.app/profiles/maria/"
+  }
+},
+
+{
+  "@type": "ListItem",
+  "position": 5,
+  "item": {
+    "@type": "Person",
     "name": "Nika",
     "jobTitle": "Модель",
     "address": { "@type": "PostalAddress", "addressLocality": "Майами-Бич" },
     "image": "/img/profile-low-3.webp",
     "url": "https://models-connect.netlify.app/profiles/nika/"
+  }
+},
+
+{
+  "@type": "ListItem",
+  "position": 6,
+  "item": {
+    "@type": "Person",
+    "name": "Tim",
+    "jobTitle": "Фотограф",
+    "address": { "@type": "PostalAddress", "addressLocality": "Корал-Гейблс" },
+    "image": "/img/profile-low-6.webp",
+    "url": "https://models-connect.netlify.app/profiles/tim/"
   }
 }
 
@@ -146,13 +184,19 @@
 
   <main>
     
+<nav class="breadcrumbs">
+  <a href="/">Главная</a> /
+  <span>Категории</span>
+</nav>
+
 <div class="categories-section" id="categories">
   <h1>Профили по категориям</h1>
- 
 
   
-    <h2>Фотограф</h2>
-    <div class="profile-list">
+
+  
+    <h2 class="category-title" data-category="фотограф">Фотограф</h2>
+    <div class="profile-list" data-category="фотограф">
       
         
         <div class="profile-card">
@@ -175,10 +219,50 @@
       
         
       
+        
+      
+        
+      
+        
+        <div class="profile-card">
+          <img
+            class="profile-card__image"
+            width="300"
+            height="200"
+            src="/img/profile-low-6.webp"
+            alt="Фото профиля Tim"
+          />
+          <div class="profile-card__description">
+            <h3>Tim</h3>
+            <p>Корал-Гейблс, Фотограф</p>
+            <a href="/profiles/tim/">Подробнее</a>
+          </div>
+        </div>
+        
+      
     </div>
   
-    <h2>Стилист</h2>
-    <div class="profile-list">
+    <h2 class="category-title" data-category="стилист">Стилист</h2>
+    <div class="profile-list" data-category="стилист">
+      
+        
+      
+        
+        <div class="profile-card">
+          <img
+            class="profile-card__image"
+            width="300"
+            height="200"
+            src="/img/profile-low-4.webp"
+            alt="Фото профиля John"
+          />
+          <div class="profile-card__description">
+            <h3>John</h3>
+            <p>Майами-Бич, Стилист</p>
+            <a href="/profiles/john/">Подробнее</a>
+          </div>
+        </div>
+        
       
         
       
@@ -193,7 +277,7 @@
           />
           <div class="profile-card__description">
             <h3>Maria</h3>
-            <p>Корал-Гейблс, Стилист</p>
+            <p>Халландейл, Стилист</p>
             <a href="/profiles/maria/">Подробнее</a>
           </div>
         </div>
@@ -201,11 +285,32 @@
       
         
       
+        
+      
     </div>
   
-    <h2>Модель</h2>
-    <div class="profile-list">
+    <h2 class="category-title" data-category="модель">Модель</h2>
+    <div class="profile-list" data-category="модель">
       
+        
+      
+        
+      
+        
+        <div class="profile-card">
+          <img
+            class="profile-card__image"
+            width="300"
+            height="200"
+            src="/img/profile-low-5.webp"
+            alt="Фото профиля Kate"
+          />
+          <div class="profile-card__description">
+            <h3>Kate</h3>
+            <p>Корал-Гейблс, Модель</p>
+            <a href="/profiles/kate/">Подробнее</a>
+          </div>
+        </div>
         
       
         
@@ -227,11 +332,27 @@
         </div>
         
       
+        
+      
     </div>
   
 </div>
 
-
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const hash = window.location.hash.replace("#", "").toLowerCase();
+  if (hash) {
+    // Скрываем все
+    document.querySelectorAll(".category-title, .profile-list").forEach(el => {
+      el.style.display = "none";
+    });
+    // Показываем только выбранную категорию
+    document.querySelectorAll(`[data-category='${hash}']`).forEach(el => {
+      el.style.display = "block";
+    });
+  }
+});
+</script>
 
   </main>
 

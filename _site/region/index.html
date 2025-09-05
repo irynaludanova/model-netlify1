@@ -7,7 +7,6 @@
 
   <title>ModelConnect Miami — Поиск по регионам</title>
   <meta name="description" content="Смотрите профили моделей, фотографов и стилистов по регионам Майами.">
-  <meta name="keywords" content="регионы, Майами, fashion, ModelConnect">
 
   <!-- Open Graph -->
   <meta property="og:title" content="ModelConnect Miami — Поиск по регионам">
@@ -92,11 +91,11 @@
   "position": 2,
   "item": {
     "@type": "Person",
-    "name": "Maria",
+    "name": "John",
     "jobTitle": "Стилист",
-    "address": { "@type": "PostalAddress", "addressLocality": "Корал-Гейблс" },
-    "image": "/img/profile-low-2.webp",
-    "url": "https://models-connect.netlify.app/profiles/maria/"
+    "address": { "@type": "PostalAddress", "addressLocality": "Майами-Бич" },
+    "image": "/img/profile-low-4.webp",
+    "url": "https://models-connect.netlify.app/profiles/john/"
   }
 },
 
@@ -105,11 +104,50 @@
   "position": 3,
   "item": {
     "@type": "Person",
+    "name": "Kate",
+    "jobTitle": "Модель",
+    "address": { "@type": "PostalAddress", "addressLocality": "Корал-Гейблс" },
+    "image": "/img/profile-low-5.webp",
+    "url": "https://models-connect.netlify.app/profiles/kate/"
+  }
+},
+
+{
+  "@type": "ListItem",
+  "position": 4,
+  "item": {
+    "@type": "Person",
+    "name": "Maria",
+    "jobTitle": "Стилист",
+    "address": { "@type": "PostalAddress", "addressLocality": "Халландейл" },
+    "image": "/img/profile-low-2.webp",
+    "url": "https://models-connect.netlify.app/profiles/maria/"
+  }
+},
+
+{
+  "@type": "ListItem",
+  "position": 5,
+  "item": {
+    "@type": "Person",
     "name": "Nika",
     "jobTitle": "Модель",
     "address": { "@type": "PostalAddress", "addressLocality": "Майами-Бич" },
     "image": "/img/profile-low-3.webp",
     "url": "https://models-connect.netlify.app/profiles/nika/"
+  }
+},
+
+{
+  "@type": "ListItem",
+  "position": 6,
+  "item": {
+    "@type": "Person",
+    "name": "Tim",
+    "jobTitle": "Фотограф",
+    "address": { "@type": "PostalAddress", "addressLocality": "Корал-Гейблс" },
+    "image": "/img/profile-low-6.webp",
+    "url": "https://models-connect.netlify.app/profiles/tim/"
   }
 }
 
@@ -146,45 +184,56 @@
 
   <main>
     
+<nav class="breadcrumbs">
+  <a href="/">Главная</a> /
+  <span>Регионы</span>
+</nav>
+
 <div class="regions-section" id="regions">
   <h1>Профили по регионам</h1>
 
   
-  
-  
-    
-      
-    
-  
-    
-      
-    
-  
-    
-      
-    
-  
 
   
-  
-    <h2>Халландейл</h2>
-    <div class="profile-list">
+    <h2 class="region-title" data-region="халландейл">Халландейл</h2>
+    <div class="profile-list" data-region="халландейл">
       
         
-          <div class="profile-card">
-            <img
-              class="profile-card__image"
-              width="300"
-              height="200"
-              src="/img/profile-low-1.webp"
-              alt="Фото профиля Ivan"
-            />
-            <div class="profile-card__description">
-              <h3>Ivan</h3>
-              <p>Халландейл, Фотограф</p>
-              <a href="/profiles/ivan/">Подробнее</a>
-            </div>
+        <div class="profile-card">
+          <img
+            class="profile-card__image"
+            width="300"
+            height="200"
+            src="/img/profile-low-1.webp"
+            alt="Фото профиля Ivan"
+          />
+          <div class="profile-card__description">
+            <h3>Ivan</h3>
+            <p>Халландейл, Фотограф</p>
+            <a href="/profiles/ivan/">Подробнее</a>
           </div>
+        </div>
+        
+      
+        
+      
+        
+      
+        
+        <div class="profile-card">
+          <img
+            class="profile-card__image"
+            width="300"
+            height="200"
+            src="/img/profile-low-2.webp"
+            alt="Фото профиля Maria"
+          />
+          <div class="profile-card__description">
+            <h3>Maria</h3>
+            <p>Халландейл, Стилист</p>
+            <a href="/profiles/maria/">Подробнее</a>
+          </div>
+        </div>
         
       
         
@@ -193,59 +242,117 @@
       
     </div>
   
-    <h2>Корал-Гейблс</h2>
-    <div class="profile-list">
+    <h2 class="region-title" data-region="майами-бич">Майами-Бич</h2>
+    <div class="profile-list" data-region="майами-бич">
       
         
       
         
-          <div class="profile-card">
-            <img
-              class="profile-card__image"
-              width="300"
-              height="200"
-              src="/img/profile-low-2.webp"
-              alt="Фото профиля Maria"
-            />
-            <div class="profile-card__description">
-              <h3>Maria</h3>
-              <p>Корал-Гейблс, Стилист</p>
-              <a href="/profiles/maria/">Подробнее</a>
-            </div>
+        <div class="profile-card">
+          <img
+            class="profile-card__image"
+            width="300"
+            height="200"
+            src="/img/profile-low-4.webp"
+            alt="Фото профиля John"
+          />
+          <div class="profile-card__description">
+            <h3>John</h3>
+            <p>Майами-Бич, Стилист</p>
+            <a href="/profiles/john/">Подробнее</a>
           </div>
+        </div>
+        
+      
+        
+      
+        
+      
+        
+        <div class="profile-card">
+          <img
+            class="profile-card__image"
+            width="300"
+            height="200"
+            src="/img/profile-low-3.webp"
+            alt="Фото профиля Nika"
+          />
+          <div class="profile-card__description">
+            <h3>Nika</h3>
+            <p>Майами-Бич, Модель</p>
+            <a href="/profiles/nika/">Подробнее</a>
+          </div>
+        </div>
         
       
         
       
     </div>
   
-    <h2>Майами-Бич</h2>
-    <div class="profile-list">
+    <h2 class="region-title" data-region="корал-гейблс">Корал-Гейблс</h2>
+    <div class="profile-list" data-region="корал-гейблс">
       
         
       
         
       
         
-          <div class="profile-card">
-            <img
-              class="profile-card__image"
-              width="300"
-              height="200"
-              src="/img/profile-low-3.webp"
-              alt="Фото профиля Nika"
-            />
-            <div class="profile-card__description">
-              <h3>Nika</h3>
-              <p>Майами-Бич, Модель</p>
-              <a href="/profiles/nika/">Подробнее</a>
-            </div>
+        <div class="profile-card">
+          <img
+            class="profile-card__image"
+            width="300"
+            height="200"
+            src="/img/profile-low-5.webp"
+            alt="Фото профиля Kate"
+          />
+          <div class="profile-card__description">
+            <h3>Kate</h3>
+            <p>Корал-Гейблс, Модель</p>
+            <a href="/profiles/kate/">Подробнее</a>
           </div>
+        </div>
+        
+      
+        
+      
+        
+      
+        
+        <div class="profile-card">
+          <img
+            class="profile-card__image"
+            width="300"
+            height="200"
+            src="/img/profile-low-6.webp"
+            alt="Фото профиля Tim"
+          />
+          <div class="profile-card__description">
+            <h3>Tim</h3>
+            <p>Корал-Гейблс, Фотограф</p>
+            <a href="/profiles/tim/">Подробнее</a>
+          </div>
+        </div>
         
       
     </div>
   
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const hash = window.location.hash.replace("#", "").toLowerCase();
+  if (hash) {
+    // Скрываем все
+    document.querySelectorAll(".region-title, .profile-list").forEach(el => {
+      el.style.display = "none";
+    });
+    // Показываем только выбранный регион
+    document.querySelectorAll(`[data-region='${hash}']`).forEach(el => {
+      el.style.display = "block";
+    });
+  }
+});
+</script>
 
   </main>
 
