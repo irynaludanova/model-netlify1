@@ -342,11 +342,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   const hash = window.location.hash.replace("#", "").toLowerCase();
   if (hash) {
-    // Скрываем все
+
     document.querySelectorAll(".region-title, .profile-list").forEach(el => {
       el.style.display = "none";
     });
-    // Показываем только выбранный регион
+
     document.querySelectorAll(`[data-region='${hash}']`).forEach(el => {
       el.style.display = "block";
     });

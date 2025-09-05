@@ -4,7 +4,6 @@ const fetch = require("node-fetch")
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.addCollection("profiles", async function () {
-    // 1. Загружаем локальные профили (из all-profiles.js)
     const localProfiles = await require("./_data/all-profiles.js")()
 
     const localMapped = localProfiles.map((p) => ({
@@ -12,7 +11,6 @@ module.exports = function (eleventyConfig) {
       url: p.url,
     }))
 
-    // 2. Загружаем профили из Supabase
     const SUPABASE_URL = process.env.SUPABASE_URL
     const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
 
@@ -26,7 +24,7 @@ module.exports = function (eleventyConfig) {
       })
 
       if (!res.ok) {
-        console.error("❌ Ошибка Supabase:", res.status, res.statusText)
+        console.error(" Ошибка Supabase:", res.status, res.statusText)
       } else {
         const rows = await res.json()
 
@@ -36,14 +34,12 @@ module.exports = function (eleventyConfig) {
         }))
       }
     } catch (err) {
-      console.error("❌ Ошибка при запросе Supabase:", err)
+      console.error(" Ошибка при запросе Supabase:", err)
     }
 
-    // 3. Возвращаем объединённый массив
     return [...localMapped, ...remoteMapped]
   })
 
-  // Копируем статические файлы
   eleventyConfig.addPassthroughCopy("img")
   eleventyConfig.addPassthroughCopy("css")
   eleventyConfig.addPassthroughCopy("favicon.ico")
