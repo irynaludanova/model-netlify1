@@ -2,9 +2,7 @@ const fs = require("fs")
 const path = require("path")
 
 module.exports = function (eleventyConfig) {
-  // Создаём коллекцию profiles из static + form submissions
   eleventyConfig.addCollection("profiles", function () {
-    // 1. Static profiles
     const staticDir = "./_data/static-profiles"
     const staticFiles = fs.existsSync(staticDir)
       ? fs.readdirSync(staticDir).filter((f) => f.endsWith(".json"))
@@ -17,7 +15,6 @@ module.exports = function (eleventyConfig) {
       }
     })
 
-    // 2. Form submissions
     const submissionsDir = path.join(__dirname, "_data/form-submissions")
     const submissionFiles = fs.existsSync(submissionsDir)
       ? fs.readdirSync(submissionsDir).filter((f) => f.endsWith(".json"))
@@ -32,11 +29,9 @@ module.exports = function (eleventyConfig) {
       }
     })
 
-    // 3. Объединяем
     return [...staticProfiles, ...submissionProfiles]
   })
 
-  // Копируем статические файлы
   eleventyConfig.addPassthroughCopy("img")
   eleventyConfig.addPassthroughCopy("css")
   eleventyConfig.addPassthroughCopy("favicon.ico")

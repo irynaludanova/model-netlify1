@@ -213,59 +213,65 @@ form.addEventListener("submit", async (e) => {
 </script>
 <div class="add-profile-section">
   <h1>Добавить профиль</h1>
-  <form  name="add-profile"
-    name="add-profile"
-    method="POST"
-    netlify
-    data-netlify="true"
-    enctype="multipart/form-data"
-    action="/.netlify/functions/add-profile"
-    <input type="hidden" name="form-name" value="add-profile" />
-    <div class="form-group">
-      <label for="name">Имя:</label>
-      <input type="text" id="name" name="name" required />
-    </div>
-    <div class="form-group">
-      <label for="city">Город:</label>
-      <select id="city" name="city" required>
-        <option value="Майами-Бич">Майами-Бич</option>
-        <option value="Халландейл">Халландейл</option>
-        <option value="Корал-Гейблс">Корал-Гейблс</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="category">Категория:</label>
-      <select id="category" name="category" required>
-        <option value="Модель">Модель</option>
-        <option value="Фотограф">Фотограф</option>
-        <option value="Стилист">Стилист</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="description">Описание:</label>
-      <textarea id="description" name="description" required></textarea>
-    </div>
-    <div class="form-group">
-      <label for="age">Возраст:</label>
-      <input type="number" id="age" name="age" required />
-    </div>
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required />
-    </div>
-    <div class="form-group">
-      <label for="phone">Телефон (опционально):</label>
-      <input type="tel" id="phone" name="phone" />
-    </div>
-    <div class="form-group">
-      <label for="image">Фото профиля:</label>
-      <input type="file" id="image" name="image" accept="img/*" />
-      <p class="form-note">
-        Рекомендуемый размер: 300x300px, формат: JPG, PNG, WEBP.
-      </p>
-    </div>
-    <button type="submit">Отправить</button>
-  </form>
+  <form name="add-profile"
+      method="POST"
+      netlify
+      data-netlify="true"
+      enctype="multipart/form-data">
+  <input type="hidden" name="form-name" value="add-profile" />
+
+  <div class="form-group">
+    <label for="name">Имя:</label>
+    <input type="text" id="name" name="name" required />
+  </div>
+
+  <div class="form-group">
+    <label for="city">Город:</label>
+    <select id="city" name="city" required>
+      <option value="Майами-Бич">Майами-Бич</option>
+      <option value="Халландейл">Халландейл</option>
+      <option value="Корал-Гейблс">Корал-Гейблс</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="category">Категория:</label>
+    <select id="category" name="category" required>
+      <option value="Модель">Модель</option>
+      <option value="Фотограф">Фотограф</option>
+      <option value="Стилист">Стилист</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Описание:</label>
+    <textarea id="description" name="description" required></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="age">Возраст:</label>
+    <input type="number" id="age" name="age" required />
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required />
+  </div>
+
+  <div class="form-group">
+    <label for="phone">Телефон (опционально):</label>
+    <input type="tel" id="phone" name="phone" />
+  </div>
+
+  <div class="form-group">
+    <label for="image">Фото профиля:</label>
+    <input type="file" id="image" name="image" accept="image/*" />
+    <p class="form-note">Рекомендуемый размер: 300x300px, формат: JPG, PNG, WEBP.</p>
+  </div>
+
+  <button type="submit">Отправить</button>
+</form>
+
 </div>
 
 
