@@ -73,6 +73,84 @@
         "@type": "ItemList",
         "itemListElement": [
          
+{
+  "@type": "ListItem",
+  "position": 1,
+  "item": {
+    "@type": "Person",
+    "name": "Ivan",
+    "jobTitle": "Фотограф",
+    "address": { "@type": "PostalAddress", "addressLocality": "Халландейл" },
+    "image": "/img/profile-low-1.webp",
+    "url": "https://models-connect.netlify.app/profiles/ivan/"
+  }
+},
+
+{
+  "@type": "ListItem",
+  "position": 2,
+  "item": {
+    "@type": "Person",
+    "name": "John",
+    "jobTitle": "Стилист",
+    "address": { "@type": "PostalAddress", "addressLocality": "Майами-Бич" },
+    "image": "/img/profile-low-4.webp",
+    "url": "https://models-connect.netlify.app/profiles/john/"
+  }
+},
+
+{
+  "@type": "ListItem",
+  "position": 3,
+  "item": {
+    "@type": "Person",
+    "name": "Kate",
+    "jobTitle": "Модель",
+    "address": { "@type": "PostalAddress", "addressLocality": "Корал-Гейблс" },
+    "image": "/img/profile-low-5.webp",
+    "url": "https://models-connect.netlify.app/profiles/kate/"
+  }
+},
+
+{
+  "@type": "ListItem",
+  "position": 4,
+  "item": {
+    "@type": "Person",
+    "name": "Maria",
+    "jobTitle": "Стилист",
+    "address": { "@type": "PostalAddress", "addressLocality": "Халландейл" },
+    "image": "/img/profile-low-2.webp",
+    "url": "https://models-connect.netlify.app/profiles/maria/"
+  }
+},
+
+{
+  "@type": "ListItem",
+  "position": 5,
+  "item": {
+    "@type": "Person",
+    "name": "Nika",
+    "jobTitle": "Модель",
+    "address": { "@type": "PostalAddress", "addressLocality": "Майами-Бич" },
+    "image": "/img/profile-low-3.webp",
+    "url": "https://models-connect.netlify.app/profiles/nika/"
+  }
+},
+
+{
+  "@type": "ListItem",
+  "position": 6,
+  "item": {
+    "@type": "Person",
+    "name": "Tim",
+    "jobTitle": "Фотограф",
+    "address": { "@type": "PostalAddress", "addressLocality": "Корал-Гейблс" },
+    "image": "/img/profile-low-6.webp",
+    "url": "https://models-connect.netlify.app/profiles/tim/"
+  }
+}
+
 
         ]
       }
@@ -129,6 +207,12 @@
       <option value="все">Все регионы</option>
       
       
+        <option value="халландейл">Халландейл</option>
+      
+        <option value="майами-бич">Майами-Бич</option>
+      
+        <option value="корал-гейблс">Корал-Гейблс</option>
+      
     </select>
 
     <label for="category-select"><strong>Выберите категорию:</strong></label>
@@ -136,11 +220,119 @@
       <option value="все">Все категории</option>
       
       
+        <option value="фотограф">Фотограф</option>
+      
+        <option value="стилист">Стилист</option>
+      
+        <option value="модель">Модель</option>
+      
     </select>
   </div>
 
 
   <div class="profile-list" id="profile-list">
+    
+    <div class="profile-card"
+         data-region="халландейл"
+         data-category="фотограф">
+      <img
+        class="profile-card__image"
+        width="300"
+        height="200"
+        src="/img/profile-low-1.webp"
+        alt="Фото профиля Ivan"
+      />
+      <div class="profile-card__description">
+        <h3>Ivan</h3>
+        <p>Халландейл, Фотограф</p>
+        <a href="/profiles/ivan/">Подробнее</a>
+      </div>
+    </div>
+    
+    <div class="profile-card"
+         data-region="майами-бич"
+         data-category="стилист">
+      <img
+        class="profile-card__image"
+        width="300"
+        height="200"
+        src="/img/profile-low-4.webp"
+        alt="Фото профиля John"
+      />
+      <div class="profile-card__description">
+        <h3>John</h3>
+        <p>Майами-Бич, Стилист</p>
+        <a href="/profiles/john/">Подробнее</a>
+      </div>
+    </div>
+    
+    <div class="profile-card"
+         data-region="корал-гейблс"
+         data-category="модель">
+      <img
+        class="profile-card__image"
+        width="300"
+        height="200"
+        src="/img/profile-low-5.webp"
+        alt="Фото профиля Kate"
+      />
+      <div class="profile-card__description">
+        <h3>Kate</h3>
+        <p>Корал-Гейблс, Модель</p>
+        <a href="/profiles/kate/">Подробнее</a>
+      </div>
+    </div>
+    
+    <div class="profile-card"
+         data-region="халландейл"
+         data-category="стилист">
+      <img
+        class="profile-card__image"
+        width="300"
+        height="200"
+        src="/img/profile-low-2.webp"
+        alt="Фото профиля Maria"
+      />
+      <div class="profile-card__description">
+        <h3>Maria</h3>
+        <p>Халландейл, Стилист</p>
+        <a href="/profiles/maria/">Подробнее</a>
+      </div>
+    </div>
+    
+    <div class="profile-card"
+         data-region="майами-бич"
+         data-category="модель">
+      <img
+        class="profile-card__image"
+        width="300"
+        height="200"
+        src="/img/profile-low-3.webp"
+        alt="Фото профиля Nika"
+      />
+      <div class="profile-card__description">
+        <h3>Nika</h3>
+        <p>Майами-Бич, Модель</p>
+        <a href="/profiles/nika/">Подробнее</a>
+      </div>
+    </div>
+    
+    <div class="profile-card"
+         data-region="корал-гейблс"
+         data-category="фотограф">
+      <img
+        class="profile-card__image"
+        width="300"
+        height="200"
+        src="/img/profile-low-6.webp"
+        alt="Фото профиля Tim"
+      />
+      <div class="profile-card__description">
+        <h3>Tim</h3>
+        <p>Корал-Гейблс, Фотограф</p>
+        <a href="/profiles/tim/">Подробнее</a>
+      </div>
+    </div>
     
   </div>
 </div>
