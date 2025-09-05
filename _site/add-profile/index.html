@@ -145,7 +145,34 @@
   </nav>
 
   <main>
-    
+    <script>
+const form = document.querySelector("form");
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const data = {
+    name: form.name.value,
+    city: form.city.value,
+    category: form.category.value,
+    description: form.description.value,
+    age: form.age.value,
+    email: form.email.value,
+    phone: form.phone.value,
+    image: "/img/placeholder.png"
+  };
+
+  const res = await fetch("/.netlify/functions/add-profile", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+
+  if (res.ok) {
+    window.location.href = "/submit-profile/";
+  } else {
+    alert("Ошибка при отправке формы");
+  }
+});
+</script>
 <div class="add-profile-section">
   <h1>Добавить профиль</h1>
   <form  name="add-profile"
@@ -154,7 +181,7 @@
     netlify
     data-netlify="true"
     enctype="multipart/form-data"
-    action="/submit-profile/">
+    action="/.netlify/functions/add-profile"
     <input type="hidden" name="form-name" value="add-profile" />
     <div class="form-group">
       <label for="name">Имя:</label>
