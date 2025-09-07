@@ -2,15 +2,6 @@ import dotenv from "dotenv"
 dotenv.config()
 
 export default function (eleventyConfig) {
-  console.log(
-    "SUPABASE_URL:",
-    process.env.SUPABASE_URL ? "✅ задано" : "❌ пусто"
-  )
-  console.log(
-    "SUPABASE_SERVICE_ROLE_KEY:",
-    process.env.SUPABASE_SERVICE_ROLE_KEY ? "✅ задан" : "❌ пусто"
-  )
-
   eleventyConfig.addGlobalData("env", {
     SUPABASE_URL: process.env.SUPABASE_URL || null,
     SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY || null,

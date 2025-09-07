@@ -16,9 +16,8 @@ title: "Профиль"
 
   const container = document.getElementById("profile-container")
 
-  const params = new URLSearchParams(window.location.search)
-  const id = params.get("id")
-
+  const pathSegments = window.location.pathname.split("/").filter(Boolean)
+  const id = pathSegments[pathSegments.length - 1]
   if (!id) {
     container.innerHTML = "<p>ID профиля не указан</p>"
   } else {
@@ -28,7 +27,7 @@ title: "Профиль"
       .eq("id", id)
       .single()
     if (error || !data) {
-      container.innerHTML = `<p>Профиль не найден</p>`
+      container.innerHTML = "<p>Профиль не найден</p>"
     } else {
       container.innerHTML = `
       <h1>${data.name}</h1>

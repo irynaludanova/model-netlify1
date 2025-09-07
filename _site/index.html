@@ -111,86 +111,46 @@
   </div>
 
   <div class="profile-list" id="profile-list">
-    <p>Загрузка профилей...</p>
-  </div>
+  <p>Загрузка профилей...</p>
 </div>
 
 <script type="module">
-  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-  const supabaseUrl = "https://zftnzsbflzfhfyfnyqza.supabase.co";
-  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdG56c2JmbHpmaGZ5Zm55cXphIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NzA4NDIyNCwiZXhwIjoyMDcyNjYwMjI0fQ.Wd1QLDVjJFEUjh4BEn9mR-wR6Abi-ldyvWRtqDL8W5M"; // Можно использовать anon ключ
-  const supabase = createClient(supabaseUrl, supabaseKey);
+const supabaseUrl = "https://zftnzsbflzfhfyfnyqza.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdG56c2JmbHpmaGZ5Zm55cXphIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NzA4NDIyNCwiZXhwIjoyMDcyNjYwMjI0fQ.Wd1QLDVjJFEUjh4BEn9mR-wR6Abi-ldyvWRtqDL8W5M";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-  const profileList = document.getElementById("profile-list");
-  const regionSelect = document.getElementById("region-select");
-  const categorySelect = document.getElementById("category-select");
+const profileList = document.getElementById("profile-list");
 
-  let allProfiles = [];
-
-  async function fetchProfiles() {
-    const { data, error } = await supabase.from("profiles").select("*");
-    if (error) {
-      profileList.innerHTML = `<p>Ошибка загрузки профилей: ${error.message}</p>`;
-      return;
-    }
-
-    allProfiles = data;
-    populateFilters();
-    renderProfiles();
+async function fetchProfiles() {
+  const { data, error } = await supabase.from("profiles").select("*");
+  if (error) {
+    profileList.innerHTML = `<p>Ошибка загрузки профилей: ${error.message}</p>`;
+    return;
   }
 
-  function populateFilters() {
-    const regions = [...new Set(allProfiles.map(p => p.city).filter(Boolean))];
-    const categories = [...new Set(allProfiles.map(p => p.category).filter(Boolean))];
+  profileList.innerHTML = "";
 
-    regionSelect.innerHTML = `<option value="все">Все регионы</option>` +
-      regions.map(r => `<option value="${r}">${r}</option>`).join("");
-    categorySelect.innerHTML = `<option value="все">Все категории</option>` +
-      categories.map(c => `<option value="${c}">${c}</option>`).join("");
-  }
+  data.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "profile-card";
+    card.innerHTML = `
+      <img class="profile-card__image" width="300" height="200"
+        src="${p.image_url || '/img/placeholder.png'}"
+        alt="Фото профиля ${p.name}" />
+      <div class="profile-card__description">
+        <h3>${p.name}</h3>
+        <p>${p.city}, ${p.category}</p>
+        <a href="/profiles/${p.id}/">Подробнее</a>
+      </div>
+    `;
+    profileList.appendChild(card);
+  });
+}
 
-  function renderProfiles() {
-    profileList.innerHTML = "";
-
-    const activeRegion = regionSelect.value;
-    const activeCategory = categorySelect.value;
-
-    const filtered = allProfiles.filter(p =>
-      (activeRegion === "все" || p.city === activeRegion) &&
-      (activeCategory === "все" || p.category === activeCategory)
-    );
-
-    if (filtered.length === 0) {
-      profileList.innerHTML = "<p>Профили не найдены</p>";
-      return;
-    }
-
-    filtered.forEach(p => {
-      const card = document.createElement("div");
-      card.className = "profile-card";
-      card.dataset.region = p.city;
-      card.dataset.category = p.category;
-      card.innerHTML = `
-        <img class="profile-card__image" width="300" height="200"
-          src="${p.image_url || '/img/placeholder.png'}"
-          alt="Фото профиля ${p.name}" />
-        <div class="profile-card__description">
-          <h3>${p.name}</h3>
-          <p>${p.city}, ${p.category}</p>
-          <a href="/profiles/?id=">Подробнее</a>
-        </div>
-      `;
-      profileList.appendChild(card);
-    });
-  }
-
-  regionSelect.addEventListener("change", renderProfiles);
-  categorySelect.addEventListener("change", renderProfiles);
-
-  fetchProfiles();
+fetchProfiles();
 </script>
-
   </main>
 
   <footer class="site-footer">
