@@ -1,8 +1,11 @@
 const { createClient } = require("@supabase/supabase-js")
 
-exports.handler = async (event) => {
+exports.handler = async function (event, context) {
   if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Метод не поддерживается" }
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ error: "Метод не поддерживается" }),
+    }
   }
 
   try {
@@ -16,8 +19,11 @@ exports.handler = async (event) => {
     const { error } = await supabase.from("profiles").insert([data])
 
     if (error) {
-      console.error("Ошибка добавления профиля:", error.message)
-      return { statusCode: 500, body: JSON.stringify({ error: error.message }) }
+      console.error("❌ Ошибка добавления профиля:", error.message)
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: error.message }),
+      }
     }
 
     return {
@@ -25,7 +31,7 @@ exports.handler = async (event) => {
       body: JSON.stringify({ success: true }),
     }
   } catch (err) {
-    console.error("Ошибка сервера:", err)
+    console.error("❌ Ошибка сервера:", err)
     return {
       statusCode: 500,
       body: JSON.stringify({ error: err.message }),
