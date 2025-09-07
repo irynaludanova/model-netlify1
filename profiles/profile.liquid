@@ -1,18 +1,23 @@
 ---
-
-pagination:
-  data: collections.profiles
-  size: 1
-  alias: profileItem
-permalink: "{{ profile.url | default: '/profiles/placeholder/' }}"
+layout: base
+title: "{{ profile.name }}"
+description: "{{ profile.description }}"
 ---
-{% assign p = profileItem.data.profile %}
-<article class="profile-single">
-  <h1>{{ p.name }}</h1>
-  <img src="{{ p.image_url | default: '/img/placeholder.png' }}" alt="{{ p.name }}" />
-  <p><strong>Город:</strong> {{ p.city }}</p>
-  <p><strong>Категория:</strong> {{ p.category }}</p>
-  <p><strong>Возраст:</strong> {{ p.age }}</p>
-  <p>{{ p.description }}</p>
-  <p><strong>Контакты:</strong> {{ p.email }} {% if p.phone %} / {{ p.phone }} {% endif %}</p>
-</article>
+
+<div class="profile-page">
+  <h1>{{ profile.name }}</h1>
+  <p><strong>Категория:</strong> {{ profile.category }}</p>
+  <p><strong>Город:</strong> {{ profile.city }}</p>
+  {% if profile.age %}
+    <p><strong>Возраст:</strong> {{ profile.age }}</p>
+  {% endif %}
+  {% if profile.email %}
+    <p><strong>Email:</strong> <a href="mailto:{{ profile.email }}">{{ profile.email }}</a></p>
+  {% endif %}
+  {% if profile.phone %}
+    <p><strong>Телефон:</strong> {{ profile.phone }}</p>
+  {% endif %}
+  {% if profile.description %}
+    <p><strong>Описание:</strong> {{ profile.description }}</p>
+  {% endif %}
+</div>

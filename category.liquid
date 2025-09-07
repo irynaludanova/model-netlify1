@@ -13,30 +13,32 @@ permalink: /category/index.html
 <div class="categories-section" id="categories">
   <h1>Профили по категориям</h1>
 
-  {% assign categories = collections.profiles | map: "data.profile.category" | uniq %}
+  {% assign categories = profiles | map: "category" | uniq %}
 
   {% for category in categories %}
-    <h2 class="category-title" data-category="{{ category | downcase }}">{{ category }}</h2>
-    <div class="profile-list" data-category="{{ category | downcase }}">
-      {% for p in collections.profiles %}
-        {% if p.data.profile.category == category %}
-        <div class="profile-card">
-          <img
-            class="profile-card__image"
-            width="300"
-            height="200"
-            src="{{ p.data.profile.image_url | default: '/img/placeholder.png' }}"
-            alt="Фото профиля {{ p.data.profile.name }}"
-          />
-          <div class="profile-card__description">
-            <h3>{{ p.data.profile.name }}</h3>
-            <p>{{ p.data.profile.city }}, {{ p.data.profile.category }}</p>
-            <a href="{{ p.url }}">Подробнее</a>
-          </div>
-        </div>
-        {% endif %}
-      {% endfor %}
-    </div>
+    {% if category %}
+      <h2 class="category-title" data-category="{{ category | downcase }}">{{ category }}</h2>
+      <div class="profile-list" data-category="{{ category | downcase }}">
+        {% for p in profiles %}
+          {% if p.category == category %}
+            <div class="profile-card" data-region="{{ p.region }}" data-category="{{ p.category }}">
+              <img
+                class="profile-card__image"
+                width="300"
+                height="200"
+                src="{{ p.image_url | default: '/img/placeholder.png' }}"
+                alt="Фото профиля {{ p.name }}"
+              />
+              <div class="profile-card__description">
+                <h3>{{ p.name }}</h3>
+                <p>{{ p.city }}, {{ p.category }}</p>
+                <a href="{{ p.url }}">Подробнее</a>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
   {% endfor %}
 </div>
 

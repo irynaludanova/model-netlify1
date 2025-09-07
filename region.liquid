@@ -1,57 +1,74 @@
 ---
 layout: base
-title: "ModelConnect Miami — Поиск по регионам"
-description: "Смотрите профили моделей, фотографов и стилистов по регионам Майами."
-permalink: /region/index.html
+title: "Профили по региону/категории"
 ---
 
-<nav class="breadcrumbs">
-  <a href="/">Главная</a> /
-  <span>Регионы</span>
-</nav>
+<h1>Фильтр профилей</h1>
 
-<div class="regions-section" id="regions">
-  <h1>Профили по регионам</h1>
+<div class="filters">
+  <label for="region-select">Выберите регион:</label>
+  <select id="region-select">
+    <option value="все">Все регионы</option>
+    {% assign regions = profiles | map: "region" | uniq %}
+    {% for r in regions %}
+      {% if r %}
+        <option value="{{ r }}">{{ r }}</option>
+      {% endif %}
+    {% endfor %}
+  </select>
 
-  {% assign regions = collections.profiles | map: "data.profile.city" | uniq %}
+  <label for="category-select">Выберите категорию:</label>
+  <select id="category-select">
+    <option value="все">Все категории</option>
+    {% assign categories = profiles | map: "category" | uniq %}
+    {% for c in categories %}
+      {% if c %}
+        <option value="{{ c }}">{{ c }}</option>
+      {% endif %}
+    {% endfor %}
+  </select>
+</div>
 
-  {% for region in regions %}
-    <h2 class="region-title" data-region="{{ region | downcase }}">{{ region }}</h2>
-    <div class="profile-list" data-region="{{ region | downcase }}">
-      {% for p in collections.profiles %}
-        {% if p.data.profile.city == region %}
-        <div class="profile-card">
-          <img
-            class="profile-card__image"
-            width="300"
-            height="200"
-            src="{{ p.data.profile.image_url | default: '/img/placeholder.png' }}"
-            alt="Фото профиля {{ p.data.profile.name }}"
-          />
-          <div class="profile-card__description">
-            <h3>{{ p.data.profile.name }}</h3>
-            <p>{{ p.data.profile.city }}, {{ p.data.profile.category }}</p>
-            <a href="{{ p.url }}">Подробнее</a>
-          </div>
-        </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-  {% endfor %}
+<div class="profile-list" id="profile-list">
+{% for p in profiles %}
+
+   <div class="profile-card" data-region="{{ p.region }}" data-category="{{ p.category }}">
+              <img
+                class="profile-card__image"
+                width="300"
+                height="200"
+                src="{{ p.image_url | default: '/img/placeholder.png' }}"
+                alt="Фото профиля {{ p.name }}"
+              />
+              <div class="profile-card__description">
+                <h3>{{ p.name }}</h3>
+                <p>{{ p.city }}, {{ p.category }}</p>
+                <a href="{{ p.url }}">Подробнее</a>
+              </div>
+            </div>
+
+{% endfor %}
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const hash = window.location.hash.replace("#", "").toLowerCase();
-  if (hash) {
+  const regionSelect = document.getElementById("region-select");
+  const categorySelect = document.getElementById("category-select");
 
-    document.querySelectorAll(".region-title, .profile-list").forEach(el => {
-      el.style.display = "none";
-    });
+  function filterProfiles() {
+    const activeRegion = regionSelect.value;
+    const activeCategory = categorySelect.value;
 
-    document.querySelectorAll(`[data-region='${hash}']`).forEach(el => {
-      el.style.display = "block";
+    document.querySelectorAll(".profile-card").forEach(card => {
+      const region = card.getAttribute("data-region");
+      const category = card.getAttribute("data-category");
+      card.style.display = (activeRegion === "все" || region === activeRegion) &&
+                           (activeCategory === "все" || category === activeCategory)
+                           ? "block" : "none";
     });
   }
+
+  regionSelect.addEventListener("change", filterProfiles);
+  categorySelect.addEventListener("change", filterProfiles);
 });
 </script>

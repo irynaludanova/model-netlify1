@@ -1,3 +1,6 @@
+import dotenv from "dotenv"
+dotenv.config()
+
 import allProfiles from "./_data/all-profiles.js"
 
 export default function (eleventyConfig) {
@@ -7,28 +10,28 @@ export default function (eleventyConfig) {
   )
   console.log(
     "SUPABASE_SERVICE_ROLE_KEY:",
-    process.env.SUPABASE_SERVICE_ROLE_KEY ? "✅ задан" : "❌ пусто"
+    process.env.SUPABASE_SERVICE_ROLE_KEY ? "✅ задан" : "❌ пуст"
   )
 
   eleventyConfig.addGlobalData("env", {
     SUPABASE_URL: process.env.SUPABASE_URL || null,
     SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY || null,
   })
-  eleventyConfig.addGlobalData("allProfiles", async () => {
-    return allProfiles()
-  })
-  eleventyConfig.addCollection("profilePages", async function (collectionApi) {
-    const profiles = await allProfiles()
 
+  eleventyConfig.addCollection("profiles", async function () {
+    const profiles = await allProfiles()
+    return profiles
+  })
+
+  eleventyConfig.addCollection("profilePages", async function () {
+    const profiles = await allProfiles()
     return profiles
       .filter((p) => p.url)
-      .map((p) => {
-        return {
-          template: "profiles/profile.liquid",
-          data: { profile: p },
-          outputPath: p.url.replace(/^\//, ""),
-        }
-      })
+      .map((p) => ({
+        template: "profiles/profile.liquid",
+        data: { profile: p },
+        outputPath: p.url.replace(/^\//, ""),
+      }))
   })
 
   eleventyConfig.addPassthroughCopy("img")

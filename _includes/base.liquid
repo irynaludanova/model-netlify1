@@ -13,11 +13,11 @@
   <meta property="og:site_name" content="ModelConnect Miami" />
   <meta property="og:locale" content="ru_RU" />
   <meta property="og:description" content="{{ ogDescription | default: description }}">
-  <meta property="og:image" content="{{ site.url }}/img/og-image-main.webp ">
+  <meta property="og:image" content="{{ site.url }}/img/og-image-main.webp">
   <meta property="og:image:alt" content="{{ title }}"/>
   <meta property="og:image:width" content="300" />
   <meta property="og:image:height" content="200" />
-  <meta property="og:url" content="{{ site.url  }}">
+  <meta property="og:url" content="{{ site.url }}">
   <meta property="og:type" content="{% if profile %}profile{% else %}website{% endif %}">
   <meta property="og:locale" content="ru_RU" />
 
@@ -25,39 +25,18 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ twitterTitle | default: title }}">
   <meta name="twitter:description" content="{{ twitterDescription | default: description }}">
-  <meta name="twitter:image" content="{{ site.url }}/img/og-image-main.webp ">
+  <meta name="twitter:image" content="{{ site.url }}/img/og-image-main.webp">
 
   <!-- Canonical -->
- <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
 
   <!-- Favicon -->
- <link
-      rel="icon"
-      type="image/x-icon"
-      href="{{ site.url }}/favicon.ico"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="{{ site.url }}/img/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="{{ site.url }}/img/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="{{ site.url }}/img/favicon-16x16.png"
-    />
-    <link
-      rel="manifest"
-      href="{{ site.url }}/img/site.webmanifest"
-    />
-    <link rel="stylesheet" href="{{ site.url }}/css/style.css">
+  <link rel="icon" type="image/x-icon" href="{{ site.url }}/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ site.url }}/img/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ site.url }}/img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ site.url }}/img/favicon-16x16.png" />
+  <link rel="manifest" href="{{ site.url }}/img/site.webmanifest" />
+  <link rel="stylesheet" href="{{ site.url }}/css/style.css">
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
@@ -71,7 +50,7 @@
         "@type": "PostalAddress",
         "addressLocality": "{{ profile.city }}"
       },
-     "image": "{{ profile.image_url | default: site.url }}/img/placeholder.png",
+      "image": "{{ profile.image_url | default: site.url | append: '/img/placeholder.png' }}",
       "url": "{{ site.url }}/profiles/{{ profile.id | slugify }}/"
     {% else %}
       "@type": "CollectionPage",
@@ -82,36 +61,35 @@
       "mainEntity": {
         "@type": "ItemList",
         "itemListElement": [
-         {% for p in collections.profiles %}
-{
-  "@type": "ListItem",
-  "position": {{ forloop.index }},
-  "item": {
-    "@type": "Person",
-    "name": "{{ p.data.profile.name }}",
-    "jobTitle": "{{ p.data.profile.category }}",
-    "address": { "@type": "PostalAddress", "addressLocality": "{{ p.data.profile.city }}" },
-    "image": "{{ p.data.profile.image_url | default: '{{ site.url }}/img/placeholder.png' }}",
-    "url": "{{ site.url }}{{ p.url }}"
-  }
-}{% unless forloop.last %},{% endunless %}
-{% endfor %}
-
+          {% for p in collections.profiles %}
+          {
+            "@type": "ListItem",
+            "position": {{ forloop.index }},
+            "item": {
+              "@type": "Person",
+              "name": "{{ p.data.profile.name }}",
+              "jobTitle": "{{ p.data.profile.category }}",
+              "address": { "@type": "PostalAddress", "addressLocality": "{{ p.data.profile.city }}" },
+              "image": "{{ p.data.profile.image_url | default: site.url | append: '/img/placeholder.png' }}",
+              "url": "{{ site.url }}{{ p.url }}"
+            }
+          }{% unless forloop.last %},{% endunless %}
+          {% endfor %}
         ]
       }
     {% endif %},
-     "breadcrumb": {
-          "@type": "BreadcrumbList",
-          "@id": "{{ site.url }}/#breadcrumb",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Главная",
-              "item": "{{ site.url }}"
-            }
-          ]
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "@id": "{{ site.url }}/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Главная",
+          "item": "{{ site.url }}"
         }
+      ]
+    }
   }
   </script>
 

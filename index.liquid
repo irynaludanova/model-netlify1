@@ -18,41 +18,50 @@ description: "Платформа ModelConnect Miami: новые модели, ф
     </p>
   </div>
 
-  <div class="filters">
-    <label for="region-select"><strong>Выберите регион:</strong></label>
-    <select id="region-select">
-      <option value="все">Все регионы</option>
-      {% assign regions = profiles | map: "region" | uniq %}
-      {% for r in regions %}
-        {% if r %}
-          <option value="{{ r }}">{{ r }}</option>
-        {% endif %}
-      {% endfor %}
-    </select>
+  {% assign regions = allProfiles | map: "region" | uniq %}
+{% assign categories = profiles | map: "category" | uniq %}
 
-    <label for="category-select"><strong>Выберите категорию:</strong></label>
-    <select id="category-select">
-      <option value="все">Все категории</option>
-      {% assign categories = profiles | map: "category" | uniq %}
-      {% for c in categories %}
-        {% if c %}
-          <option value="{{ c }}">{{ c }}</option>
-        {% endif %}
-      {% endfor %}
-    </select>
-  </div>
+<div class="filters">
+  <label for="region-select"><strong>Выберите регион:</strong></label>
+  <select id="region-select">
+    <option value="все">Все регионы</option>
+    {% for r in regions %}
+      {% if r %}
+        <option value="{{ r }}">{{ r }}</option>
+      {% endif %}
+    {% endfor %}
+  </select>
 
-  <div class="profile-list" id="profile-list">
-{% for p in allProfiles %}
-  <div class="profile-card" data-region="{{ p.region }}" data-category="{{ p.category }}">
-    <h3>{{ p.name }}</h3>
-    <p>{{ p.description }}</p>
-  </div>
-{% endfor %}
-
-
-  </div>
+  <label for="category-select"><strong>Выберите категорию:</strong></label>
+  <select id="category-select">
+    <option value="все">Все категории</option>
+    {% for c in categories %}
+      {% if c %}
+        <option value="{{ c }}">{{ c }}</option>
+      {% endif %}
+    {% endfor %}
+  </select>
 </div>
+
+<div class="profile-list" id="profile-list">
+  {% for p in profiles %}
+  <div class="profile-card" data-region="{{ p.region }}" data-category="{{ p.category }}">
+              <img
+                class="profile-card__image"
+                width="300"
+                height="200"
+                src="{{ p.image_url | default: '/img/placeholder.png' }}"
+                alt="Фото профиля {{ p.name }}"
+              />
+              <div class="profile-card__description">
+                <h3>{{ p.name }}</h3>
+                <p>{{ p.city }}, {{ p.category }}</p>
+                <a href="{{ p.url }}">Подробнее</a>
+              </div>
+            </div>
+  {% endfor %}
+</div>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
