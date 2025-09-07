@@ -3,13 +3,13 @@ layout: base
 title: "Профили по региону/категории"
 ---
 
-<h1>Фильтр профилей</h1>
+<h1>Профили по регионам</h1>
 
 <div class="filters">
   <label for="region-select">Выберите регион:</label>
   <select id="region-select">
     <option value="все">Все регионы</option>
-    {% assign regions = profiles | map: "region" | uniq %}
+    {% assign regions = all-profiles | map: "city" | uniq %}
     {% for r in regions %}
       {% if r %}
         <option value="{{ r }}">{{ r }}</option>
@@ -20,7 +20,7 @@ title: "Профили по региону/категории"
   <label for="category-select">Выберите категорию:</label>
   <select id="category-select">
     <option value="все">Все категории</option>
-    {% assign categories = profiles | map: "category" | uniq %}
+    {% assign categories = all-profiles | map: "category" | uniq %}
     {% for c in categories %}
       {% if c %}
         <option value="{{ c }}">{{ c }}</option>
@@ -30,7 +30,7 @@ title: "Профили по региону/категории"
 </div>
 
 <div class="profile-list" id="profile-list">
-{% for p in profiles %}
+{% for p in all-profiles %}
 
    <div class="profile-card" data-region="{{ p.region }}" data-category="{{ p.category }}">
               <img
@@ -43,7 +43,7 @@ title: "Профили по региону/категории"
               <div class="profile-card__description">
                 <h3>{{ p.name }}</h3>
                 <p>{{ p.city }}, {{ p.category }}</p>
-                <a href="{{ p.url }}">Подробнее</a>
+               <a href="/profiles/{{ p.id | slugify }}/">Подробнее </a>
               </div>
             </div>
 

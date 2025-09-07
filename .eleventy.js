@@ -1,6 +1,5 @@
 import dotenv from "dotenv"
 dotenv.config()
-
 import allProfiles from "./_data/all-profiles.js"
 
 export default function (eleventyConfig) {
@@ -23,17 +22,6 @@ export default function (eleventyConfig) {
     return profiles
   })
 
-  eleventyConfig.addCollection("profilePages", async function () {
-    const profiles = await allProfiles()
-    return profiles
-      .filter((p) => p.url)
-      .map((p) => ({
-        template: "profiles/profile.liquid",
-        data: { profile: p },
-        outputPath: p.url.replace(/^\//, ""),
-      }))
-  })
-
   eleventyConfig.addPassthroughCopy("img")
   eleventyConfig.addPassthroughCopy("css")
   eleventyConfig.addPassthroughCopy("favicon.ico")
@@ -41,12 +29,12 @@ export default function (eleventyConfig) {
   return {
     dir: {
       input: ".",
+      output: "_site",
       includes: "_includes",
       data: "_data",
-      output: "_site",
     },
+    templateFormats: ["liquid", "html", "njk"],
     htmlTemplateEngine: "liquid",
     markdownTemplateEngine: "liquid",
-    dataTemplateEngine: "liquid",
   }
 }

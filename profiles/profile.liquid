@@ -1,15 +1,13 @@
 ---
 layout: base
-title: "{{ profile.name }} — ModelConnect Miami"
-description: "{{ profile.description }}"
 pagination:
-  data: profiles
+  data: all-profiles
   size: 1
   alias: profile
-permalink: "/profiles/{{ profile.id | slugify }}/index.html"
+permalink: "/profiles/{{ profile.id }}/"
 ---
 
-<div class="profile-page">
+<div class="profile-page"p
   <h1>{{ profile.name }}</h1>
   <p><strong>Категория:</strong> {{ profile.category }}</p>
   <p><strong>Город:</strong> {{ profile.city }}</p>

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "26fed455f36b",
+    "name": "Kate",
+    "city": "Корал-Гейблс",
+    "category": "Модель",
+    "description": "Профессиональная модель с 3-летним опытом.",
+    "date": "2025-08-06T09:15:00.000Z",
+    "age": 30,
+    "email": "kate@example.com",
+    "phone": "3456789",
+    "image_url": "/img/profile-low-5.webp"
+  },
+  {
+    "id": "4166f5d9324e",
+    "name": "Ivan",
+    "category": "Фотограф",
+    "city": "Miami",
+    "description": "Опытный фотограф с фокусом на fashion-съемки. Работал с топ-моделями в Халландейл-Бич. Готов к новым проектам.",
+    "date": "2025-08-07T14:20:00.000Z",
+    "age": 25,
+    "email": "ivan@example.com",
+    "phone": "12345678",
+    "image_url": "/img/profile-low-1.webp"
+  },
+  {
+    "id": "26fed455f38b",
+    "name": "Nika",
+    "city": "Майами-Бич",
+    "category": "Модель",
+    "description": "Опытная модель для fashion-съемок.",
+    "date": "2025-08-08T11:43:00.000Z",
+    "age": 28,
+    "email": "nika@example.com",
+    "phone": "09876543",
+    "image_url": "/img/profile-low-3.webp"
+  }
+]

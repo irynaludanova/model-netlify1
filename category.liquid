@@ -12,14 +12,36 @@ permalink: /category/index.html
 
 <div class="categories-section" id="categories">
   <h1>Профили по категориям</h1>
+<div class="filters">
+  <label for="region-select">Выберите регион:</label>
+  <select id="region-select">
+    <option value="все">Все регионы</option>
+    {% assign regions = all-profiles | map: "city" | uniq %}
+    {% for r in regions %}
+      {% if r %}
+        <option value="{{ r }}">{{ r }}</option>
+      {% endif %}
+    {% endfor %}
+  </select>
 
-  {% assign categories = profiles | map: "category" | uniq %}
+  <label for="category-select">Выберите категорию:</label>
+  <select id="category-select">
+    <option value="все">Все категории</option>
+    {% assign categories = all-profiles | map: "category" | uniq %}
+    {% for c in categories %}
+      {% if c %}
+        <option value="{{ c }}">{{ c }}</option>
+      {% endif %}
+    {% endfor %}
+  </select>
+</div>
+  {% assign categories = all-profiles | map: "category" | uniq %}
 
   {% for category in categories %}
     {% if category %}
       <h2 class="category-title" data-category="{{ category | downcase }}">{{ category }}</h2>
       <div class="profile-list" data-category="{{ category | downcase }}">
-        {% for p in profiles %}
+        {% for p in all-profiles %}
           {% if p.category == category %}
             <div class="profile-card" data-region="{{ p.region }}" data-category="{{ p.category }}">
               <img
@@ -32,7 +54,7 @@ permalink: /category/index.html
               <div class="profile-card__description">
                 <h3>{{ p.name }}</h3>
                 <p>{{ p.city }}, {{ p.category }}</p>
-                <a href="{{ p.url }}">Подробнее</a>
+                <a href="/profiles/{{ p.id | slugify }}/">Подробнее </a>
               </div>
             </div>
           {% endif %}
@@ -46,11 +68,11 @@ permalink: /category/index.html
 document.addEventListener("DOMContentLoaded", function () {
   const hash = window.location.hash.replace("#", "").toLowerCase();
   if (hash) {
-    // Скрываем все
+
     document.querySelectorAll(".category-title, .profile-list").forEach(el => {
       el.style.display = "none";
     });
-    // Показываем только выбранную категорию
+
     document.querySelectorAll(`[data-category='${hash}']`).forEach(el => {
       el.style.display = "block";
     });
