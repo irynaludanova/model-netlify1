@@ -2,6 +2,10 @@
 layout: base
 title: "{{ profile.name }} — ModelConnect Miami"
 description: "{{ profile.description }}"
+pagination:
+  data: profiles
+  size: 1
+  alias: profile
 permalink: "/profiles/{{ profile.id | slugify }}/index.html"
 ---
 

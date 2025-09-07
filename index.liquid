@@ -56,7 +56,7 @@ description: "Платформа ModelConnect Miami: новые модели, ф
               <div class="profile-card__description">
                 <h3>{{ p.name }}</h3>
                 <p>{{ p.city }}, {{ p.category }}</p>
-                <a href="{{ p.url }}">Подробнее</a>
+             <a href="/profiles/{{ p.id | slugify }}/">Подробнее{{ p.name }}</a>
               </div>
             </div>
   {% endfor %}
