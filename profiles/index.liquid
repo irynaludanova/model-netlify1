@@ -1,6 +1,52 @@
 ---
 layout: base
 title: "Профиль"
+permalink: /profiles/index.html
+seo_title: "Свежие профили — ModelConnect Miami"
+seo_description: "Найдите свежие профили моделей, фотографов и стилистов в Майами."
+seo_og_title: "{{ profile.name   }} — {{ profile.category   }}"
+seo_og_description: "Найдите свежие профили моделей, фотографов и стилистов в Майами."
+seo_og_image: https://models-connect.netlify.app/profiles/img/og-image-main.webp
+seo_og_url: https://models-connect.netlify.app/profiles
+seo_og_type: website
+seo_twitter_card: summary_large_image
+seo_twitter_title: "Свежие профили — ModelConnect Miami"
+seo_twitter_description: "Найдите свежие профили моделей, фотографов и стилистов в Майами."
+seo_twitter_image: https://models-connect.netlify.app/profiles/img/og-image-main.webp
+seo_canonical: https://models-connect.netlify.app/profiles
+seo_json_ld: |
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Свежие профили",
+    "url": "https://models-connect.netlify.app/profiles",
+    "description": "Найдите свежие профили моделей, фотографов и стилистов в Майами.",
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": [
+        {% for profile in collections.allProfiles %}
+        {
+          "@type": "ListItem",
+          "position": {{ forloop.index }},
+          "item": {
+            "@type": "Person",
+            "name": "{{ profile.name   }}",
+            "jobTitle": "{{ profile.category   }}",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "{{ profile.city   }}"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "{{ profile.image_url | default: '/img/placeholder.png'   }}"
+            },
+            "url": "{{ '/profiles/' | append: profile.id | append: '/'   }}"
+          }
+        }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
+    }
+  }
 ---
 
 <div id="profile-container">

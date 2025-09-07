@@ -1,0 +1,51 @@
+---
+pagination:
+  data: collections.categories
+  size: 1
+  alias: category
+permalink: "category/{{ category.slug }}/index.html"
+---
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ category.name }} — Модели и фотографы | ModelConnect Miami</title>
+  <meta name="description" content="Профили моделей, фотографов и стилистов из категории {{ category.name }}. ModelConnect Miami — платформа для творческих людей.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Главная</a> ›
+      <a href="/category/">Категории</a> ›
+      <span>{{ category.name }}</span>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Категория: {{ category.name }}</h1>
+
+    {% if category.profiles.size > 0 %}
+      <ul class="profiles-list">
+        {% for profile in category.profiles %}
+          <div class="profile-card" style="display:flex">
+              <img src="{{ profile.image_url | default: '/img/no-avatar.png' }}" alt="{{ profile.name }}"  class="profile-card__image"
+          width="300"
+          height="200">
+          <div class="profile-card__description">
+              <h2>{{ profile.name }}</h2>
+              <p>{{ profile.city | default: 'Регион не указан' }}</p>
+              <p>{{ profile.description | truncate: 100 }}</p>
+               <a href="/profiles/{{ profile.id }}/">Подробнее</a>
+               </div>
+          </div>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>В этой категории пока нет профилей.</p>
+    {% endif %}
+  </main>
+</body>
+</html>

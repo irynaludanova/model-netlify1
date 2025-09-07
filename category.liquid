@@ -1,81 +1,77 @@
 ---
 layout: base
-title: "ModelConnect Miami — Поиск по категориям"
-description: "Смотрите профили моделей, фотографов и стилистов по категориям в Майами."
-permalink: /category/index.html
+title: "ModelConnect Miami — Свежие профили моделей и фотографов"
+description: "Платформа ModelConnect Miami: новые модели, фотографы и стилисты в Майами."
+seo_title: "ModelConnect Miami — Свежие профили моделей и фотографов"
+seo_description: "Найдите новых моделей, фотографов и стилистов в Майами: свежие анкеты 2025 года."
+seo_og_title: "Свежие профили — ModelConnect Miami"
+seo_og_description: "Ежедневные новые профили моделей, фотографов и стилистов Майами."
+seo_og_image: https://models-connect.netlify.app/img/og-image-main.webp
+seo_og_url: https://models-connect.netlify.app
+seo_og_type: website
+seo_twitter_card: summary_large_image
+seo_twitter_title: "Свежие профили — ModelConnect Miami"
+seo_twitter_description: "ModelConnect Miami: новые профессионалы fashion-индустрии."
+seo_twitter_image: https://models-connect.netlify.app/img/og-image-main.webp
+seo_canonical: https://models-connect.netlify.app/
 ---
 
-<nav class="breadcrumbs">
-  <a href="/">Главная</a> /
-  <span>Категории</span>
-</nav>
+<div class="profiles-section" id="profiles">
+  <h1>ModelConnect Miami</h1>
+  <h2>Свежие Профили Моделей, Фотографов и Стилистов в 2025</h2>
 
-<div class="categories-section" id="categories">
-  <h1>Профили по категориям</h1>
-<div class="filters">
-  <label for="region-select">Выберите регион:</label>
-  <select id="region-select">
-    <option value="все">Все регионы</option>
-    {% assign regions = all-profiles | map: "city" | uniq %}
-    {% for r in regions %}
-      {% if r %}
-        <option value="{{ r }}">{{ r }}</option>
-      {% endif %}
-    {% endfor %}
-  </select>
+  <div class="home-section__intro">
+    <p>
+      Добро пожаловать на ModelConnect Miami — ведущую платформу для поиска
+      свежих профилей в fashion-индустрии Майами. Мы соединяем моделей,
+      фотографов и стилистов из Майами-Бич, Халландейл, Корал-Гейблс и других
+      районов. Наши ежедневные обновления помогают вам найти идеальных
+      профессионалов для съемок, показов и креативных проектов.
+    </p>
+  </div>
 
-  <label for="category-select">Выберите категорию:</label>
-  <select id="category-select">
-    <option value="все">Все категории</option>
-    {% assign categories = all-profiles | map: "category" | uniq %}
-    {% for c in categories %}
-      {% if c %}
-        <option value="{{ c }}">{{ c }}</option>
-      {% endif %}
-    {% endfor %}
-  </select>
-</div>
-  {% assign categories = all-profiles | map: "category" | uniq %}
-
-  {% for category in categories %}
-    {% if category %}
-      <h2 class="category-title" data-category="{{ category | downcase }}">{{ category }}</h2>
-      <div class="profile-list" data-category="{{ category | downcase }}">
-        {% for p in all-profiles %}
-          {% if p.category == category %}
-            <div class="profile-card" data-region="{{ p.region }}" data-category="{{ p.category }}">
-              <img
-                class="profile-card__image"
-                width="300"
-                height="200"
-                src="{{ p.image_url | default: '/img/placeholder.png' }}"
-                alt="Фото профиля {{ p.name }}"
-              />
-              <div class="profile-card__description">
-                <h3>{{ p.name }}</h3>
-                <p>{{ p.city }}, {{ p.category }}</p>
-                <a href="/profiles/{{ p.id | slugify }}/">Подробнее </a>
-              </div>
-            </div>
-          {% endif %}
-        {% endfor %}
-      </div>
-    {% endif %}
+  <ul class="category-links">
+  {% for c in allProfiles %}
+    <li><a href="/category/{{ c.category }}/">{{ c.category }}</a></li>
   {% endfor %}
+</ul>
+  <div class="profile-list" id="profile-list">
+    {% for p in allProfiles %}
+      <div class="profile-card" data-region="{{ p.city }}" data-category="{{ p.category }}">
+        <img
+          class="profile-card__image"
+          width="300"
+          height="200"
+          src="{{ p.image_url | default: '/img/placeholder.png' }}"
+          alt="Фото профиля {{ p.name }}"
+        />
+        <div class="profile-card__description">
+          <h3>{{ p.name }}</h3>
+          <p>{{ p.city }}, {{ p.category }}</p>
+          <a href="/profiles/{{ p.id | slugify }}/">Подробнее</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const hash = window.location.hash.replace("#", "").toLowerCase();
-  if (hash) {
+const regionSelect = document.getElementById('region-select');
+const categorySelect = document.getElementById('category-select');
+const profileList = document.getElementById('profile-list');
+const profiles = profileList.querySelectorAll('.profile-card');
 
-    document.querySelectorAll(".category-title, .profile-list").forEach(el => {
-      el.style.display = "none";
-    });
+function filterProfiles() {
+  const region = regionSelect.value;
+  const category = categorySelect.value;
 
-    document.querySelectorAll(`[data-category='${hash}']`).forEach(el => {
-      el.style.display = "block";
-    });
-  }
-});
+  profiles.forEach(profile => {
+    const matchRegion = region === 'все' || profile.dataset.region === region;
+    const matchCategory = category === 'все' || profile.dataset.category === category;
+    profile.style.display = matchRegion && matchCategory ? 'block' : 'none';
+  });
+}
+
+regionSelect.addEventListener('change', filterProfiles);
+categorySelect.addEventListener('change', filterProfiles);
 </script>

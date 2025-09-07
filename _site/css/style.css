@@ -126,7 +126,6 @@ nav {
 
 .profile-list {
   display: flex;
-  flex-direction: column;
 }
 
 .profile-card {
@@ -275,6 +274,11 @@ nav {
   max-width: 600px;
   margin: 2rem auto;
   padding: 1rem;
+}
+
+.profile-page {
+  display: flex;
+  justify-content: space-around;
 }
 
 .profile-form {

@@ -7,8 +7,14 @@ pagination:
 permalink: "/profiles/{{ profile.id }}/"
 ---
 
-<div class="profile-page"p
+
   <h1>{{ profile.name }}</h1>
+  <div class="profile-page" style="display:flex;justify-content: space-around">
+{% if profile.image_url %}
+    <img src="{{ profile.image_url | default: '/img/placeholder.png' }}" alt="{{ profile.name }}" width="400">
+  {% endif %}
+
+  <div class="profile-card__description">
   <p><strong>Категория:</strong> {{ profile.category }}</p>
   <p><strong>Город:</strong> {{ profile.city }}</p>
   {% if profile.age %}
@@ -23,5 +29,6 @@ permalink: "/profiles/{{ profile.id }}/"
   {% if profile.description %}
     <p><strong>Описание:</strong> {{ profile.description }}</p>
   {% endif %}
-  <img src="{{ profile.image_url | default: '/img/placeholder.png' }}" alt="{{ profile.name }}" width="400">
+  </div>
+</div>
 </div>

@@ -1,53 +1,62 @@
 ---
 layout: base
-title: "Профили по региону/категории"
+title: "ModelConnect Miami — Поиск по регионам"
+description: "Смотрите профили моделей, фотографов и стилистов по регионам Майами."
+permalink: /region/index.html
+
+seo_title: "Регионы — ModelConnect Miami"
+seo_description: "Найдите профессионалов fashion-индустрии в разных регионах Майами: Майами-Бич, Халландейл, Корал-Гейблс."
+seo_keywords: "регионы Майами, fashion Майами, ModelConnect"
+seo_og_title: "Регионы — ModelConnect Miami"
+seo_og_description: "Найдите моделей, фотографов и стилистов в регионах Майами."
+seo_og_image: https://models-connect.netlify.app/img/og-image-region.webp
+seo_og_url: https://models-connect.netlify.app/region
+seo_og_type: website
+seo_twitter_card: summary_large_image
+seo_twitter_title: "Регионы — ModelConnect Miami"
+seo_twitter_description: "Найдите профессионалов в регионах Майами."
+seo_twitter_image: https://models-connect.netlify.app/img/og-image-region.webp
+seo_canonical: https://models-connect.netlify.app/region
+seo_json_ld: |
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Регионы",
+    "url": "https://models-connect.netlify.app/region",
+    "description": "Профили профессионалов fashion-индустрии по регионам Майами."
+  }
 ---
+
+<nav class="breadcrumbs">
+  <a href="/">Главная</a> ›
+  <span>Регионы</span>
+</nav>
 
 <h1>Профили по регионам</h1>
 
-<div class="filters">
-  <label for="region-select">Выберите регион:</label>
-  <select id="region-select">
-    <option value="все">Все регионы</option>
-    {% assign regions = all-profiles | map: "city" | uniq %}
-    {% for r in regions %}
-      {% if r %}
-        <option value="{{ r }}">{{ r }}</option>
-      {% endif %}
-    {% endfor %}
-  </select>
-
-  <label for="category-select">Выберите категорию:</label>
-  <select id="category-select">
-    <option value="все">Все категории</option>
-    {% assign categories = all-profiles | map: "category" | uniq %}
-    {% for c in categories %}
-      {% if c %}
-        <option value="{{ c }}">{{ c }}</option>
-      {% endif %}
-    {% endfor %}
-  </select>
-</div>
+<ul class="region-links">
+  {% for r in allProfiles %}
+    <li><a href="/region/{{ r.city }}/">{{ r.city }}</a></li>
+  {% endfor %}
+</ul>
 
 <div class="profile-list" id="profile-list">
-{% for p in all-profiles %}
-
-   <div class="profile-card" data-region="{{ p.region }}" data-category="{{ p.category }}">
-              <img
-                class="profile-card__image"
-                width="300"
-                height="200"
-                src="{{ p.image_url | default: '/img/placeholder.png' }}"
-                alt="Фото профиля {{ p.name }}"
-              />
-              <div class="profile-card__description">
-                <h3>{{ p.name }}</h3>
-                <p>{{ p.city }}, {{ p.category }}</p>
-               <a href="/profiles/{{ p.id | slugify }}/">Подробнее </a>
-              </div>
-            </div>
-
-{% endfor %}
+  {% for p in allProfiles %}
+    <div class="profile-card" data-region="{{ p.city }}" data-category="{{ p.category }}">
+      <img
+        class="profile-card__image"
+        width="300"
+        height="200"
+        src="{{ p.image_url | default: '/img/placeholder.png' }}"
+        alt="Фото профиля {{ p.name }}"
+      />
+      <div class="profile-card__description">
+        <h3>{{ p.name }}</h3>
+        <p>{{ p.city }}, {{ p.category }}</p>
+        <a href="/profiles/{{ p.id | slugify }}/">Подробнее</a>
+      </div>
+    </div>
+  {% endfor %}
 </div>
 
 <script>
@@ -62,9 +71,10 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".profile-card").forEach(card => {
       const region = card.getAttribute("data-region");
       const category = card.getAttribute("data-category");
-      card.style.display = (activeRegion === "все" || region === activeRegion) &&
-                           (activeCategory === "все" || category === activeCategory)
-                           ? "block" : "none";
+      card.style.display =
+        (activeRegion === "все" || region === activeRegion) &&
+        (activeCategory === "все" || category === activeCategory)
+          ? "block" : "none";
     });
   }
 

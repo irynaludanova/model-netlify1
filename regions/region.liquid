@@ -1,0 +1,49 @@
+---
+pagination:
+  data: collections.regions
+  size: 1
+  alias: region
+permalink: "region/{{ region.slug }}/index.html"
+---
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ region.name }} — Модели и фотографы | ModelConnect Miami</title>
+  <meta name="description" content="Профили моделей и фотографов из региона {{ region.name }}. ModelConnect Miami — платформа для творческих людей.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Главная</a> ›
+      <a href="/region/">Регионы</a> ›
+      <span>{{ region.name }}</span>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Регион: {{ region.name }}</h1>
+
+    {% if region.profiles.size > 0 %}
+      <div class="profiles-list">
+        {% for profile in region.profiles %}
+          <div class="profile-card">
+               <img src="{{ profile.avatar | default: '/img/no-avatar.png' }}" alt="{{ profile.name }}">
+                <div class="profile-card__description">
+              <h2>{{ profile.name }}</h2>
+              <p>{{ profile.category }}</p>
+               <a href="/profiles/{{ profile.id }}/">Подробнее</a>
+</div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>В этом регионе пока нет профилей.</p>
+    {% endif %}
+  </main>
+</body>
+</html>

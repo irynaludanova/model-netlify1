@@ -2,6 +2,18 @@
 layout: base
 title: "ModelConnect Miami — Свежие профили моделей и фотографов"
 description: "Платформа ModelConnect Miami: новые модели, фотографы и стилисты в Майами."
+seo_title: "ModelConnect Miami — Свежие профили моделей и фотографов"
+seo_description: "Найдите новых моделей, фотографов и стилистов в Майами: свежие анкеты 2025 года."
+seo_og_title: "Свежие профили — ModelConnect Miami"
+seo_og_description: "Ежедневные новые профили моделей, фотографов и стилистов Майами."
+seo_og_image: https://models-connect.netlify.app/img/og-image-main.webp
+seo_og_url: https://models-connect.netlify.app
+seo_og_type: website
+seo_twitter_card: summary_large_image
+seo_twitter_title: "Свежие профили — ModelConnect Miami"
+seo_twitter_description: "ModelConnect Miami: новые профессионалы fashion-индустрии."
+seo_twitter_image: https://models-connect.netlify.app/img/og-image-main.webp
+seo_canonical: https://models-connect.netlify.app/
 ---
 
 <div class="profiles-section" id="profiles">
@@ -19,55 +31,66 @@ description: "Платформа ModelConnect Miami: новые модели, ф
   </div>
 
   <div class="filters">
-    <label for="region-select"><strong>Выберите регион:</strong></label>
+    <label for="region-select">Выберите регион:</label>
     <select id="region-select">
       <option value="все">Все регионы</option>
+      {% assign regions = allProfiles | map: "city" | uniq %}
+      {% for r in regions %}
+        {% if r %}
+          <option value="{{ r }}">{{ r }}</option>
+        {% endif %}
+      {% endfor %}
     </select>
 
-    <label for="category-select"><strong>Выберите категорию:</strong></label>
+    <label for="category-select">Выберите категорию:</label>
     <select id="category-select">
       <option value="все">Все категории</option>
+      {% assign categories = allProfiles | map: "category" | uniq %}
+      {% for c in categories %}
+        {% if c %}
+          <option value="{{ c }}">{{ c }}</option>
+        {% endif %}
+      {% endfor %}
     </select>
   </div>
 
   <div class="profile-list" id="profile-list">
-  <p>Загрузка профилей...</p>
+    {% for p in allProfiles %}
+      <div class="profile-card"  data-region="{{ p.city }}" data-category="{{ p.category }}">
+        <img
+          class="profile-card__image"
+          width="300"
+          height="200"
+          src="{{ p.image_url | default: '/img/placeholder.png' }}"
+          alt="Фото профиля {{ p.name }}"
+        />
+        <div class="profile-card__description">
+          <h3>{{ p.name }}</h3>
+          <p>{{ p.city }}, {{ p.category }}</p>
+          <a href="/profiles/{{ p.id | slugify }}/">Подробнее</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
 
-<script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+<script>
+const regionSelect = document.getElementById('region-select');
+const categorySelect = document.getElementById('category-select');
+const profileList = document.getElementById('profile-list');
+const profiles = profileList.querySelectorAll('.profile-card');
 
-const supabaseUrl = "{{ env.SUPABASE_URL }}";
-const supabaseKey = "{{ env.SUPABASE_SERVICE_ROLE_KEY }}";
-const supabase = createClient(supabaseUrl, supabaseKey);
+function filterProfiles() {
+  const region = regionSelect.value;
+  const category = categorySelect.value;
 
-const profileList = document.getElementById("profile-list");
-
-async function fetchProfiles() {
-  const { data, error } = await supabase.from("profiles").select("*");
-  if (error) {
-    profileList.innerHTML = `<p>Ошибка загрузки профилей: ${error.message}</p>`;
-    return;
-  }
-
-  profileList.innerHTML = "";
-
-  data.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "profile-card";
-    card.innerHTML = `
-      <img class="profile-card__image" width="300" height="200"
-        src="${p.image_url || '/img/placeholder.png'}"
-        alt="Фото профиля ${p.name}" />
-      <div class="profile-card__description">
-        <h3>${p.name}</h3>
-        <p>${p.city}, ${p.category}</p>
-        <a href="/profiles/${p.id}/">Подробнее</a>
-      </div>
-    `;
-    profileList.appendChild(card);
+  profiles.forEach(profile => {
+    const matchRegion = region === 'все' || profile.dataset.region === region;
+    const matchCategory = category === 'все' || profile.dataset.category === category;
+    profile.style.display = matchRegion && matchCategory ? 'flex' : 'none';
   });
 }
 
-fetchProfiles();
+regionSelect.addEventListener('change', filterProfiles);
+categorySelect.addEventListener('change', filterProfiles);
 </script>
