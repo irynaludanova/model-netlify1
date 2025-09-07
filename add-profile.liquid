@@ -55,8 +55,8 @@ form.addEventListener("submit", async (e) => {
   async function cloudinaryUpload(file) {
     const form = new FormData();
     form.append('file', file);
-    form.append('upload_preset', 'YOUR_UNSIGNED_UPLOAD_PRESET'); // поставь из Cloudinary
-    const res = await fetch('https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/upload', {
+    form.append('upload_preset', 'unsigned_profiles');
+    const res = await fetch('https://api.cloudinary.com/v1_1/dimallvw3/upload', {
       method: 'POST',
       body: form
     });
@@ -168,7 +168,7 @@ form.addEventListener("submit", async (e) => {
 
   <div class="form-group">
     <label for="image">Фото профиля:</label>
-    <input type="file" id="image" name="image" accept="image/*" />
+    <input type="file" name="image" accept="image/*" required />
     <p class="form-note">Рекомендуемый размер: 300x300px, формат: JPG, PNG, WEBP.</p>
   </div>
 

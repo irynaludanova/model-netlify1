@@ -25,4 +25,5 @@ permalink: "/profiles/{{ profile.id | slugify }}/index.html"
   {% if profile.description %}
     <p><strong>Описание:</strong> {{ profile.description }}</p>
   {% endif %}
+  <img src="{{ profile.image_url | default: '/img/placeholder.png' }}" alt="{{ profile.name }}" width="400">
 </div>

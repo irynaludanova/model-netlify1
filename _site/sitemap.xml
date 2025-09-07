@@ -33,26 +33,5 @@
 
   <!-- Динамические профили -->
   
-  <url>
-    <loc>https://models-connect.netlify.app/profiles/85b11b6e-5e24-40a9-9dac-4166f5d9694e/</loc>
-    <lastmod>2025-09-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://models-connect.netlify.app/profiles/60875a4f-c3b1-4306-8049-26fed455f35b/</loc>
-    <lastmod>2025-09-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://models-connect.netlify.app/profiles/e48b24f3-2738-4842-8597-9e180d3aeb49/</loc>
-    <lastmod>2025-09-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
 
 </urlset>

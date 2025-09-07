@@ -46,11 +46,12 @@ description: "Платформа ModelConnect Miami: новые модели, ф
 <div class="profile-list" id="profile-list">
   {% for p in profiles %}
   <div class="profile-card" data-region="{{ p.region }}" data-category="{{ p.category }}">
+
               <img
                 class="profile-card__image"
                 width="300"
                 height="200"
-                src="{{ p.image_url | default: '/img/placeholder.png' }}"
+               src="{{ p.image_url | default: '/img/placeholder.png' }}" alt="{{ p.name }}" width="200"
                 alt="Фото профиля {{ p.name }}"
               />
               <div class="profile-card__description">
