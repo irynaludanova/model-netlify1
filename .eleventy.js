@@ -1,9 +1,10 @@
-const fetch = require("node-fetch")
-const dotenv = require("dotenv")
-dotenv.config() // ← подтянет .env локально
+import dotenv from "dotenv"
+dotenv.config() // Подгрузка .env
 
-module.exports = function (eleventyConfig) {
-  // Отладка переменных
+import allProfiles from "./_data/all-profiles.js"
+
+export default function (eleventyConfig) {
+  // Лог переменных окружения
   console.log(
     "SUPABASE_URL:",
     process.env.SUPABASE_URL ? "✅ задано" : "❌ пусто"
@@ -13,7 +14,7 @@ module.exports = function (eleventyConfig) {
     process.env.SUPABASE_SERVICE_ROLE_KEY ? "✅ задан" : "❌ пусто"
   )
 
-  // Глобальные данные для отладки (можно удалить потом)
+  // Глобальные данные для отладки
   eleventyConfig.addGlobalData("env", {
     SUPABASE_URL: process.env.SUPABASE_URL || null,
     SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -21,12 +22,12 @@ module.exports = function (eleventyConfig) {
       : null,
   })
 
-  // Коллекция профилей
+  // Коллекция профилей (берем напрямую allProfiles)
   eleventyConfig.addCollection("profiles", async function () {
-    const allProfiles = await require("./_data/all-profiles.js")()
-    return allProfiles.map((p) => ({
+    const profiles = await allProfiles()
+    return profiles.map((p) => ({
       data: { profile: p },
-      url: p.url,
+      url: p.url || null,
     }))
   })
 
