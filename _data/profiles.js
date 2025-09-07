@@ -1,11 +1,5 @@
-const fetchAllProfiles = require("./all-profiles")
+import allProfiles from "./all-profiles.js"
 
-module.exports = async function () {
-  try {
-    const allProfiles = await fetchAllProfiles()
-    return allProfiles
-  } catch (err) {
-    console.error("Ошибка загрузки профилей:", err)
-    return []
-  }
+export default async function () {
+  return await allProfiles()
 }

@@ -14,44 +14,43 @@ description: "Платформа ModelConnect Miami: новые модели, ф
       свежих профилей в fashion-индустрии Майами. Мы соединяем моделей,
       фотографов и стилистов из Майами-Бич, Халландейл, Корал-Гейблс и других
       районов. Наши ежедневные обновления помогают вам найти идеальных
-      профессионалов для съемок, показов и креативных проектов. Майами — центр
-      моды и искусства, и мы предлагаем доступ к самым актуальным контактам в
-      индустрии.
+      профессионалов для съемок, показов и креативных проектов.
     </p>
   </div>
 
-
   <div class="filters">
-   <label for="region-select"><strong>Выберите регион:</strong></label>
-<select id="region-select">
-  <option value="все">Все регионы</option>
-  {% assign regions = profiles | map: "region" | uniq %}
-  {% for r in regions %}
-    <option value="{{ r }}">{{ r }}</option>
-  {% endfor %}
-</select>
+    <label for="region-select"><strong>Выберите регион:</strong></label>
+    <select id="region-select">
+      <option value="все">Все регионы</option>
+      {% assign regions = profiles | map: "region" | uniq %}
+      {% for r in regions %}
+        {% if r %}
+          <option value="{{ r }}">{{ r }}</option>
+        {% endif %}
+      {% endfor %}
+    </select>
 
-<label for="category-select"><strong>Выберите категорию:</strong></label>
-<select id="category-select">
-  <option value="все">Все категории</option>
-  {% assign categories = profiles | map: "category" | uniq %}
-  {% for c in categories %}
-    <option value="{{ c }}">{{ c }}</option>
-  {% endfor %}
-</select>
-
+    <label for="category-select"><strong>Выберите категорию:</strong></label>
+    <select id="category-select">
+      <option value="все">Все категории</option>
+      {% assign categories = profiles | map: "category" | uniq %}
+      {% for c in categories %}
+        {% if c %}
+          <option value="{{ c }}">{{ c }}</option>
+        {% endif %}
+      {% endfor %}
+    </select>
   </div>
 
-
   <div class="profile-list" id="profile-list">
-   {% for p in profiles %}
-<div class="profile-card"
-     data-region="{{ p.region }}"
-     data-category="{{ p.category }}">
-  <h3>{{ p.name }}</h3>
-  <p>{{ p.description }}</p>
-</div>
+{% for p in allProfiles %}
+  <div class="profile-card" data-region="{{ p.region }}" data-category="{{ p.category }}">
+    <h3>{{ p.name }}</h3>
+    <p>{{ p.description }}</p>
+  </div>
 {% endfor %}
+
+
   </div>
 </div>
 
@@ -71,11 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const regionMatch = (activeRegion === "все" || region === activeRegion);
       const categoryMatch = (activeCategory === "все" || category === activeCategory);
 
-      if (regionMatch && categoryMatch) {
-        card.style.display = "block";
-      } else {
-        card.style.display = "none";
-      }
+      card.style.display = (regionMatch && categoryMatch) ? "block" : "none";
     });
   }
 

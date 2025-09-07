@@ -116,33 +116,53 @@
       свежих профилей в fashion-индустрии Майами. Мы соединяем моделей,
       фотографов и стилистов из Майами-Бич, Халландейл, Корал-Гейблс и других
       районов. Наши ежедневные обновления помогают вам найти идеальных
-      профессионалов для съемок, показов и креативных проектов. Майами — центр
-      моды и искусства, и мы предлагаем доступ к самым актуальным контактам в
-      индустрии.
+      профессионалов для съемок, показов и креативных проектов.
     </p>
   </div>
 
-
   <div class="filters">
-   <label for="region-select"><strong>Выберите регион:</strong></label>
-<select id="region-select">
-  <option value="все">Все регионы</option>
-  
-  
-</select>
+    <label for="region-select"><strong>Выберите регион:</strong></label>
+    <select id="region-select">
+      <option value="все">Все регионы</option>
+      
+      
+        
+          <option value=""></option>
+        
+      
+    </select>
 
-<label for="category-select"><strong>Выберите категорию:</strong></label>
-<select id="category-select">
-  <option value="все">Все категории</option>
-  
-  
-</select>
+    <label for="category-select"><strong>Выберите категорию:</strong></label>
+    <select id="category-select">
+      <option value="все">Все категории</option>
+      
+      
+        
+          <option value="Модель">Модель</option>
+        
+      
+    </select>
+  </div>
 
+  <div class="profile-list" id="profile-list">
+
+  <div class="profile-card" data-region="" data-category="Модель">
+    <h3>watseg</h3>
+    <p>sedgsxdh</p>
+  </div>
+
+  <div class="profile-card" data-region="" data-category="Модель">
+    <h3>test2</h3>
+    <p>qwretrytuyiuo</p>
+  </div>
+
+  <div class="profile-card" data-region="" data-category="Модель">
+    <h3>test user</h3>
+    <p>test desc</p>
   </div>
 
 
-  <div class="profile-list" id="profile-list">
-   
+
   </div>
 </div>
 
@@ -162,11 +182,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const regionMatch = (activeRegion === "все" || region === activeRegion);
       const categoryMatch = (activeCategory === "все" || category === activeCategory);
 
-      if (regionMatch && categoryMatch) {
-        card.style.display = "block";
-      } else {
-        card.style.display = "none";
-      }
+      card.style.display = (regionMatch && categoryMatch) ? "block" : "none";
     });
   }
 

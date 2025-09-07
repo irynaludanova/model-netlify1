@@ -1,9 +1,10 @@
 ---
+
 pagination:
   data: collections.profiles
   size: 1
   alias: profileItem
-permalink: "{{ profileItem.data.profile.url }}"
+permalink: "{{ profile.url | default: '/profiles/placeholder/' }}"
 ---
 {% assign p = profileItem.data.profile %}
 <article class="profile-single">

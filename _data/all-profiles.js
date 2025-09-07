@@ -1,10 +1,16 @@
+import dotenv from "dotenv"
+dotenv.config()
 import fetch from "node-fetch"
-
 const SUPABASE_URL = process.env.SUPABASE_URL
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
 
 export default async function allProfiles() {
-  const url = `${SUPABASE_URL}/rest/v1/profiles?select=*&approved=eq.true&order=created_at.desc`
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+    console.error("Supabase URL или ключ не заданы!")
+    return []
+  }
+
+  const url = `${SUPABASE_URL}/rest/v1/profiles?select=*&order=created_at.desc`
 
   try {
     const res = await fetch(url, {
@@ -21,15 +27,20 @@ export default async function allProfiles() {
     }
 
     const profiles = await res.json()
+    console.log("Supabase returned profiles:", profiles.length)
 
-    return profiles.map((p) => {
-      const id =
-        p.slug || (p.name ? p.name.toLowerCase().replace(/\s+/g, "-") : p.id)
+    return profiles.map((profile) => {
+      const idBase = profile.slug || profile.name || profile.id || ""
+      const id = idBase.toString().toLowerCase().replace(/\s+/g, "-")
 
       return {
-        ...p,
+        ...profile,
         id,
-        url: `/profiles/${id}/`,
+        url: id ? `/profiles/${id}/` : null,
+        name: profile.name || "",
+        description: profile.description || "",
+        region: profile.region || "",
+        category: profile.category || "",
       }
     })
   } catch (err) {
