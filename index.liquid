@@ -9,7 +9,6 @@ description: "Платформа ModelConnect Miami: новые модели, ф
   <h2>Свежие Профили Моделей, Фотографов и Стилистов в 2025</h2>
 
   <div class="home-section__intro">
-
     <p>
       Добро пожаловать на ModelConnect Miami — ведущую платформу для поиска
       свежих профилей в fashion-индустрии Майами. Мы соединяем моделей,
@@ -19,72 +18,95 @@ description: "Платформа ModelConnect Miami: новые модели, ф
     </p>
   </div>
 
-  {% assign regions = all-profiles | map: "city" | uniq %}
-  {% assign categories = all-profiles | map: "category" | uniq %}
-
   <div class="filters">
     <label for="region-select"><strong>Выберите регион:</strong></label>
     <select id="region-select">
       <option value="все">Все регионы</option>
-      {% for r in regions %}
-        {% if r %}
-          <option value="{{ r }}">{{ r }}</option>
-        {% endif %}
-      {% endfor %}
     </select>
 
     <label for="category-select"><strong>Выберите категорию:</strong></label>
     <select id="category-select">
       <option value="все">Все категории</option>
-      {% for c in categories %}
-        {% if c %}
-          <option value="{{ c }}">{{ c }}</option>
-        {% endif %}
-      {% endfor %}
     </select>
   </div>
 
   <div class="profile-list" id="profile-list">
-    {% for p in all-profiles %}
-      <div class="profile-card" data-region="{{ p.city }}" data-category="{{ p.category }}">
-        <img
-          class="profile-card__image"
-          width="300"
-          height="200"
-          src="{{ p.image_url | default: '/img/placeholder.png' }}"
-          alt="Фото профиля {{ p.name }}"
-        />
-        <div class="profile-card__description">
-          <h3>{{ p.name }}</h3>
-          <p>{{ p.city }}, {{ p.category }}</p>
-          <a href="/profiles/{{ p.id | slugify }}/">Подробнее </a>
-        </div>
-      </div>
-    {% endfor %}
+    <p>Загрузка профилей...</p>
   </div>
 </div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+  const supabaseUrl = "{{ env.SUPABASE_URL }}";
+  const supabaseKey = "{{ env.SUPABASE_SERVICE_ROLE_KEY }}"; // Можно использовать anon ключ
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  const profileList = document.getElementById("profile-list");
   const regionSelect = document.getElementById("region-select");
   const categorySelect = document.getElementById("category-select");
 
-  function filterProfiles() {
+  let allProfiles = [];
+
+  async function fetchProfiles() {
+    const { data, error } = await supabase.from("profiles").select("*");
+    if (error) {
+      profileList.innerHTML = `<p>Ошибка загрузки профилей: ${error.message}</p>`;
+      return;
+    }
+
+    allProfiles = data;
+    populateFilters();
+    renderProfiles();
+  }
+
+  function populateFilters() {
+    const regions = [...new Set(allProfiles.map(p => p.city).filter(Boolean))];
+    const categories = [...new Set(allProfiles.map(p => p.category).filter(Boolean))];
+
+    regionSelect.innerHTML = `<option value="все">Все регионы</option>` +
+      regions.map(r => `<option value="${r}">${r}</option>`).join("");
+    categorySelect.innerHTML = `<option value="все">Все категории</option>` +
+      categories.map(c => `<option value="${c}">${c}</option>`).join("");
+  }
+
+  function renderProfiles() {
+    profileList.innerHTML = "";
+
     const activeRegion = regionSelect.value;
     const activeCategory = categorySelect.value;
 
-    document.querySelectorAll(".profile-card").forEach(card => {
-      const region = card.getAttribute("data-region");
-      const category = card.getAttribute("data-category");
+    const filtered = allProfiles.filter(p =>
+      (activeRegion === "все" || p.city === activeRegion) &&
+      (activeCategory === "все" || p.category === activeCategory)
+    );
 
-      const regionMatch = (activeRegion === "все" || region === activeRegion);
-      const categoryMatch = (activeCategory === "все" || category === activeCategory);
+    if (filtered.length === 0) {
+      profileList.innerHTML = "<p>Профили не найдены</p>";
+      return;
+    }
 
-      card.style.display = (regionMatch && categoryMatch) ? "block" : "none";
+    filtered.forEach(p => {
+      const card = document.createElement("div");
+      card.className = "profile-card";
+      card.dataset.region = p.city;
+      card.dataset.category = p.category;
+      card.innerHTML = `
+        <img class="profile-card__image" width="300" height="200"
+          src="${p.image_url || '/img/placeholder.png'}"
+          alt="Фото профиля ${p.name}" />
+        <div class="profile-card__description">
+          <h3>${p.name}</h3>
+          <p>${p.city}, ${p.category}</p>
+          <a href="/profiles/${p.id}/">Подробнее</a>
+        </div>
+      `;
+      profileList.appendChild(card);
     });
   }
 
-  regionSelect.addEventListener("change", filterProfiles);
-  categorySelect.addEventListener("change", filterProfiles);
-});
+  regionSelect.addEventListener("change", renderProfiles);
+  categorySelect.addEventListener("change", renderProfiles);
+
+  fetchProfiles();
 </script>
