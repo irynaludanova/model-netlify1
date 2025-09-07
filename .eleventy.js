@@ -1,10 +1,9 @@
 import dotenv from "dotenv"
-dotenv.config() // Подгрузка .env
+dotenv.config()
 
 import allProfiles from "./_data/all-profiles.js"
 
 export default function (eleventyConfig) {
-  // Лог переменных окружения
   console.log(
     "SUPABASE_URL:",
     process.env.SUPABASE_URL ? "✅ задано" : "❌ пусто"
@@ -14,7 +13,6 @@ export default function (eleventyConfig) {
     process.env.SUPABASE_SERVICE_ROLE_KEY ? "✅ задан" : "❌ пусто"
   )
 
-  // Глобальные данные для отладки
   eleventyConfig.addGlobalData("env", {
     SUPABASE_URL: process.env.SUPABASE_URL || null,
     SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -22,16 +20,11 @@ export default function (eleventyConfig) {
       : null,
   })
 
-  // Коллекция профилей (берем напрямую allProfiles)
-  eleventyConfig.addCollection("profiles", async function () {
-    const profiles = await allProfiles()
-    return profiles.map((p) => ({
-      data: { profile: p },
-      url: p.url || null,
-    }))
-  })
+eleventyConfig.addCollection("profiles", async function () {
+  return await allProfiles()
+})
 
-  // Статичные файлы
+
   eleventyConfig.addPassthroughCopy("img")
   eleventyConfig.addPassthroughCopy("css")
   eleventyConfig.addPassthroughCopy("favicon.ico")

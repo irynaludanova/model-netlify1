@@ -44,14 +44,14 @@ description: "Платформа ModelConnect Miami: новые модели, ф
 
 
   <div class="profile-list" id="profile-list">
-    {% for p in profiles %}
-    <div class="profile-card"
-         data-region="{{ p.region }}"
-         data-category="{{ p.category }}">
-      <h3>{{ p.name }}</h3>
-      <p>{{ p.description }}</p>
-    </div>
-  {% endfor %}
+   {% for p in profiles %}
+<div class="profile-card"
+     data-region="{{ p.region }}"
+     data-category="{{ p.category }}">
+  <h3>{{ p.name }}</h3>
+  <p>{{ p.description }}</p>
+</div>
+{% endfor %}
   </div>
 </div>
 

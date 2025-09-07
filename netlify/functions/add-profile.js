@@ -11,7 +11,6 @@ export async function handler(event) {
 
     const body = JSON.parse(event.body)
 
-    // Вставляем запись в Supabase
     const res = await fetch(`${SUPABASE_URL}/rest/v1/profiles`, {
       method: "POST",
       headers: {
