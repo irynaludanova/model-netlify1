@@ -29,3 +29,7 @@
   from = "/submit-profile"
   to = "/submit-profile/"
   status = 301
+  [build]
+  command = "npx @11ty/eleventy"
+  publish = "_site"
+  functions = "functions"
