@@ -5,30 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow" />
 
-  <title></title>
+  <title>Профиль</title>
   <meta name="description" content="">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="">
+  <meta property="og:title" content="Профиль">
   <meta property="og:site_name" content="ModelConnect Miami" />
   <meta property="og:locale" content="ru_RU" />
   <meta property="og:description" content="">
   <meta property="og:image" content="https://models-connect.netlify.app/img/og-image-main.webp">
-  <meta property="og:image:alt" content=""/>
+  <meta property="og:image:alt" content="Профиль"/>
   <meta property="og:image:width" content="300" />
   <meta property="og:image:height" content="200" />
   <meta property="og:url" content="https://models-connect.netlify.app">
-  <meta property="og:type" content="profile">
+  <meta property="og:type" content="website">
   <meta property="og:locale" content="ru_RU" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="">
+  <meta name="twitter:title" content="Профиль">
   <meta name="twitter:description" content="">
   <meta name="twitter:image" content="https://models-connect.netlify.app/img/og-image-main.webp">
 
   <!-- Canonical -->
-  <link rel="canonical" href="https://models-connect.netlify.app/profiles/85b11b6e-5e24-40a9-9dac-4166f5d9694e/">
+  <link rel="canonical" href="https://models-connect.netlify.app/profiles/">
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="https://models-connect.netlify.app/favicon.ico" />
@@ -43,15 +43,17 @@
   {
     "@context": "https://schema.org",
     
-      "@type": "Person",
-      "name": "watseg",
-      "jobTitle": "Модель",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Майами-Бич"
-      },
-      "image": "https://models-connect.netlify.app/img/placeholder.png",
-      "url": "https://models-connect.netlify.app/profiles/85b11b6e-5e24-40a9-9dac-4166f5d9694e/"
+      "@type": "CollectionPage",
+      "name": "Профиль",
+      "description": "",
+      "url": "https://models-connect.netlify.app/profiles/",
+      "datePublished": "2025-09-07T15:19:38Z",
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": [
+          
+        ]
+      }
     ,
     "breadcrumb": {
       "@type": "BreadcrumbList",
@@ -82,24 +84,45 @@
 
   <main>
     
-<div class="profile-page"p
-  <h1>watseg</h1>
-  <p><strong>Категория:</strong> Модель</p>
-  <p><strong>Город:</strong> Майами-Бич</p>
-  
-    <p><strong>Возраст:</strong> 33</p>
-  
-  
-    <p><strong>Email:</strong> <a href="mailto:xdc@dg.sxr">xdc@dg.sxr</a></p>
-  
-  
-    <p><strong>Телефон:</strong> 324357</p>
-  
-  
-    <p><strong>Описание:</strong> sedgsxdh</p>
-  
-  <img src="/img/placeholder.png" alt="watseg" width="400">
+<div id="profile-container">
+  <p>Загрузка профиля...</p>
 </div>
+
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+
+  const supabaseUrl = "https://zftnzsbflzfhfyfnyqza.supabase.co"
+  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdG56c2JmbHpmaGZ5Zm55cXphIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NzA4NDIyNCwiZXhwIjoyMDcyNjYwMjI0fQ.Wd1QLDVjJFEUjh4BEn9mR-wR6Abi-ldyvWRtqDL8W5M"
+  const supabase = createClient(supabaseUrl, supabaseKey)
+
+  const container = document.getElementById("profile-container")
+
+  const params = new URLSearchParams(window.location.search)
+  const id = params.get("id")
+
+  if (!id) {
+    container.innerHTML = "<p>ID профиля не указан</p>"
+  } else {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", id)
+      .single()
+    if (error || !data) {
+      container.innerHTML = `<p>Профиль не найден</p>`
+    } else {
+      container.innerHTML = `
+      <h1>${data.name}</h1>
+      <p>${data.city}, ${data.category}</p>
+      <img src="${data.image_url || "/img/placeholder.png"}" alt="${
+        data.name
+      }" style="max-width:400px;"/>
+      <p>${data.description || ""}</p>
+      <a href="/">← Вернуться на главную</a>
+    `
+    }
+  }
+</script>
 
   </main>
 

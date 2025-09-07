@@ -1,0 +1,44 @@
+---
+layout: base
+title: "Профиль"
+---
+
+<div id="profile-container">
+  <p>Загрузка профиля...</p>
+</div>
+
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+
+  const supabaseUrl = "{{ env.SUPABASE_URL }}"
+  const supabaseKey = "{{ env.SUPABASE_SERVICE_ROLE_KEY }}"
+  const supabase = createClient(supabaseUrl, supabaseKey)
+
+  const container = document.getElementById("profile-container")
+
+  const params = new URLSearchParams(window.location.search)
+  const id = params.get("id")
+
+  if (!id) {
+    container.innerHTML = "<p>ID профиля не указан</p>"
+  } else {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", id)
+      .single()
+    if (error || !data) {
+      container.innerHTML = `<p>Профиль не найден</p>`
+    } else {
+      container.innerHTML = `
+      <h1>${data.name}</h1>
+      <p>${data.city}, ${data.category}</p>
+      <img src="${data.image_url || "/img/placeholder.png"}" alt="${
+        data.name
+      }" style="max-width:400px;"/>
+      <p>${data.description || ""}</p>
+      <a href="/">← Вернуться на главную</a>
+    `
+    }
+  }
+</script>

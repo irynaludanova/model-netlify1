@@ -98,7 +98,7 @@ description: "Платформа ModelConnect Miami: новые модели, ф
         <div class="profile-card__description">
           <h3>${p.name}</h3>
           <p>${p.city}, ${p.category}</p>
-          <a href="/profiles/${p.id}/">Подробнее</a>
+          <a href="/profiles/?id={{ p.id }}">Подробнее</a>
         </div>
       `;
       profileList.appendChild(card);
