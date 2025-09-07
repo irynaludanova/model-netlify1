@@ -22,45 +22,36 @@ description: "Платформа ModelConnect Miami: новые модели, ф
 
 
   <div class="filters">
-    <label for="region-select"><strong>Выберите регион:</strong></label>
-    <select id="region-select">
-      <option value="все">Все регионы</option>
-      {% assign regions = collections.profiles | map: "data.profile.city" | uniq %}
-      {% for region in regions %}
-        <option value="{{ region | downcase }}">{{ region }}</option>
-      {% endfor %}
-    </select>
+   <label for="region-select"><strong>Выберите регион:</strong></label>
+<select id="region-select">
+  <option value="все">Все регионы</option>
+  {% assign regions = profiles | map: "region" | uniq %}
+  {% for r in regions %}
+    <option value="{{ r }}">{{ r }}</option>
+  {% endfor %}
+</select>
 
-    <label for="category-select"><strong>Выберите категорию:</strong></label>
-    <select id="category-select">
-      <option value="все">Все категории</option>
-      {% assign categories = collections.profiles | map: "data.profile.category" | uniq %}
-      {% for category in categories %}
-        <option value="{{ category | downcase }}">{{ category }}</option>
-      {% endfor %}
-    </select>
+<label for="category-select"><strong>Выберите категорию:</strong></label>
+<select id="category-select">
+  <option value="все">Все категории</option>
+  {% assign categories = profiles | map: "category" | uniq %}
+  {% for c in categories %}
+    <option value="{{ c }}">{{ c }}</option>
+  {% endfor %}
+</select>
+
   </div>
 
 
   <div class="profile-list" id="profile-list">
-    {% for p in collections.profiles %}
+    {% for p in profiles %}
     <div class="profile-card"
-         data-region="{{ p.data.profile.city | downcase }}"
-         data-category="{{ p.data.profile.category | downcase }}">
-      <img
-        class="profile-card__image"
-        width="300"
-        height="200"
-        src="{{ p.data.profile.image_url | default: '/img/placeholder.png' }}"
-        alt="Фото профиля {{ p.data.profile.name }}"
-      />
-      <div class="profile-card__description">
-        <h3>{{ p.data.profile.name }}</h3>
-        <p>{{ p.data.profile.city }}, {{ p.data.profile.category }}</p>
-        <a href="{{ p.url }}">Подробнее</a>
-      </div>
+         data-region="{{ p.region }}"
+         data-category="{{ p.category }}">
+      <h3>{{ p.name }}</h3>
+      <p>{{ p.description }}</p>
     </div>
-    {% endfor %}
+  {% endfor %}
   </div>
 </div>
 

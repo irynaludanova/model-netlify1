@@ -1,45 +1,36 @@
-const fs = require("fs")
-const path = require("path")
 const fetch = require("node-fetch")
+const dotenv = require("dotenv")
+dotenv.config() // ← подтянет .env локально
 
 module.exports = function (eleventyConfig) {
-  eleventyConfig.addCollection("profiles", async function () {
-    const localProfiles = await require("./_data/all-profiles.js")()
+  // Отладка переменных
+  console.log(
+    "SUPABASE_URL:",
+    process.env.SUPABASE_URL ? "✅ задано" : "❌ пусто"
+  )
+  console.log(
+    "SUPABASE_SERVICE_ROLE_KEY:",
+    process.env.SUPABASE_SERVICE_ROLE_KEY ? "✅ задан" : "❌ пусто"
+  )
 
-    const localMapped = localProfiles.map((p) => ({
+  // Глобальные данные для отладки (можно удалить потом)
+  eleventyConfig.addGlobalData("env", {
+    SUPABASE_URL: process.env.SUPABASE_URL || null,
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY
+      ? "✅ задан"
+      : null,
+  })
+
+  // Коллекция профилей
+  eleventyConfig.addCollection("profiles", async function () {
+    const allProfiles = await require("./_data/all-profiles.js")()
+    return allProfiles.map((p) => ({
       data: { profile: p },
       url: p.url,
     }))
-
-    const SUPABASE_URL = process.env.SUPABASE_URL
-    const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
-
-    let remoteMapped = []
-    try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/profiles?select=*`, {
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${SUPABASE_KEY}`,
-        },
-      })
-
-      if (!res.ok) {
-        console.error(" Ошибка Supabase:", res.status, res.statusText)
-      } else {
-        const rows = await res.json()
-
-        remoteMapped = rows.map((profile) => ({
-          data: { profile },
-          url: `/profiles/${profile.id || profile.name.toLowerCase()}/`,
-        }))
-      }
-    } catch (err) {
-      console.error(" Ошибка при запросе Supabase:", err)
-    }
-
-    return [...localMapped, ...remoteMapped]
   })
 
+  // Статичные файлы
   eleventyConfig.addPassthroughCopy("img")
   eleventyConfig.addPassthroughCopy("css")
   eleventyConfig.addPassthroughCopy("favicon.ico")

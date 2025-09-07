@@ -1,71 +1,52 @@
+require("dotenv").config()
+
+const fs = require("fs")
+const path = require("path")
 const fetch = (...args) => import("node-fetch").then((m) => m.default(...args))
 
 const SUPABASE_URL = process.env.SUPABASE_URL
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
 
-function slugify(s = "") {
-  return s
-    .toString()
-    .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[^\w\s-]+/g, "")
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-}
-
-exports.handler = async function (event) {
-  if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed" }
+module.exports = async function () {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+    console.warn("⚠️ SUPABASE env not found — using local fallback if present.")
+    const localFile = path.join(__dirname, "profiles.json")
+    if (fs.existsSync(localFile)) {
+      const raw = fs.readFileSync(localFile)
+      const profiles = JSON.parse(raw)
+      return profiles.map((p) => {
+        const id =
+          p.slug || (p.name ? p.name.toLowerCase().replace(/\s+/g, "-") : p.id)
+        return { ...p, id, url: `/profiles/${id}/` }
+      })
+    }
+    return []
   }
 
-  let body
-  try {
-    body = JSON.parse(event.body)
-  } catch (err) {
-    return { statusCode: 400, body: "Invalid JSON" }
-  }
-
-  const name = body.name || ""
-  const profile = {
-    slug: body.slug || slugify(name),
-    name: name,
-    city: body.city || null,
-    category: body.category || null,
-    description: body.description || null,
-    age: body.age ? Number(body.age) : null,
-    email: body.email || null,
-    phone: body.phone || null,
-    image_url: body.image_url || null,
-    created_at: new Date().toISOString(),
-  }
+  const url = `${SUPABASE_URL}/rest/v1/profiles?select=*&approved=is.true&order=created_at.desc`
 
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/profiles`, {
-      method: "POST",
+    const res = await fetch(url, {
       headers: {
-        "Content-Type": "application/json",
         apikey: SUPABASE_SERVICE_ROLE_KEY,
         Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-        Prefer: "return=representation",
+        Accept: "application/json",
       },
-      body: JSON.stringify(profile),
     })
 
-    const data = await res.json()
-
     if (!res.ok) {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({
-          message: "Supabase insert failed",
-          detail: data,
-        }),
-      }
+      console.error("❌ Supabase fetch failed:", res.status, await res.text())
+      return []
     }
 
-    return { statusCode: 200, body: JSON.stringify(data) }
+    const profiles = await res.json()
+    return profiles.map((p) => {
+      const id =
+        p.slug || (p.name ? p.name.toLowerCase().replace(/\s+/g, "-") : p.id)
+      return { ...p, id, url: `/profiles/${id}/` }
+    })
   } catch (err) {
-    return { statusCode: 500, body: "Server error: " + err.message }
+    console.error("❌ Supabase fetch error:", err)
+    return []
   }
 }
