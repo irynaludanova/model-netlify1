@@ -1,89 +1,72 @@
 ---
 layout: base
 title: "Профиль"
-permalink: /profiles/index.html
-seo_title: "Свежие профили — ModelConnect Miami"
-seo_description: "Найдите свежие профили моделей, фотографов и стилистов в Майами."
-seo_og_title: "{{ profile.name   }} — {{ profile.category   }}"
-seo_og_description: "Найдите свежие профили моделей, фотографов и стилистов в Майами."
-seo_og_image: https://models-connect.netlify.app/profiles/img/og-image-main.webp
-seo_og_url: https://models-connect.netlify.app/profiles
+seo_title: "Профиль — ModelConnect Miami"
+seo_description: "Профиль модели, фотографа или стилиста в Майами"
+seo_og_image: "/profiles/img/og-image-main.webp"
+seo_og_url: "https://models-connect.netlify.app/profiles"
 seo_og_type: website
 seo_twitter_card: summary_large_image
-seo_twitter_title: "Свежие профили — ModelConnect Miami"
-seo_twitter_description: "Найдите свежие профили моделей, фотографов и стилистов в Майами."
-seo_twitter_image: https://models-connect.netlify.app/profiles/img/og-image-main.webp
-seo_canonical: https://models-connect.netlify.app/profiles
-seo_json_ld: |
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Свежие профили",
-    "url": "https://models-connect.netlify.app/profiles",
-    "description": "Найдите свежие профили моделей, фотографов и стилистов в Майами.",
-    "mainEntity": {
-      "@type": "ItemList",
-      "itemListElement": [
-        {% for profile in collections.allProfiles %}
-        {
-          "@type": "ListItem",
-          "position": {{ forloop.index }},
-          "item": {
-            "@type": "Person",
-            "name": "{{ profile.name   }}",
-            "jobTitle": "{{ profile.category   }}",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "{{ profile.city   }}"
-            },
-            "image": {
-              "@type": "ImageObject",
-              "url": "{{ profile.image_url | default: '/img/placeholder.png'   }}"
-            },
-            "url": "{{ '/profiles/' | append: profile.id | append: '/'   }}"
-          }
-        }{% unless forloop.last %},{% endunless %}
-        {% endfor %}
-      ]
-    }
-  }
+seo_twitter_image: "/profiles/img/og-image-main.webp"
+seo_canonical: "https://models-connect.netlify.app/profiles"
 ---
-
 <div id="profile-container">
   <p>Загрузка профиля...</p>
 </div>
 
 <script type="module">
-  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-  const supabaseUrl = "{{ env.SUPABASE_URL }}"
-  const supabaseKey = "{{ env.SUPABASE_SERVICE_ROLE_KEY }}"
-  const supabase = createClient(supabaseUrl, supabaseKey)
+(async () => {
+  const container = document.getElementById("profile-container");
 
-  const container = document.getElementById("profile-container")
+  const SUPABASE_URL = "{{ env.SUPABASE_URL }}";
+  const SUPABASE_ANON_KEY = "{{ env.SUPABASE_ANON_KEY }}"; // безопасно для фронтенда
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    container.innerHTML = "<p>Ошибка: ключи Supabase не заданы</p>";
+    return;
+  }
 
-  const pathSegments = window.location.pathname.split("/").filter(Boolean)
-  const id = pathSegments[pathSegments.length - 1]
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+   let id = null;
+
+  const pathSegments = window.location.pathname.split("/").filter(Boolean);
+  if (pathSegments[pathSegments.length - 2] === "profiles") {
+    id = pathSegments[pathSegments.length - 1];
+  }
+
+  const queryParams = new URLSearchParams(window.location.search);
+  if (!id) id = queryParams.get("id");
+
   if (!id) {
-    container.innerHTML = "<p>ID профиля не указан</p>"
-  } else {
+    container.innerHTML = "<p>ID профиля не указан</p>";
+    return;
+  }
+
+  try {
     const { data, error } = await supabase
       .from("profiles")
       .select("*")
       .eq("id", id)
-      .single()
+      .single();
+
     if (error || !data) {
-      container.innerHTML = "<p>Профиль не найден</p>"
-    } else {
-      container.innerHTML = `
+      container.innerHTML = "<p>Профиль не найден</p>";
+      return;
+    }
+
+    document.title = `${data.name} — ${data.category}`;
+
+    container.innerHTML = `
       <h1>${data.name}</h1>
-      <p>${data.city}, ${data.category}</p>
-      <img src="${data.image_url || "/img/placeholder.png"}" alt="${
-        data.name
-      }" style="max-width:400px;"/>
+      <p>${data.city || ""}, ${data.category || ""}</p>
+      <img src="${data.image_url || "/img/placeholder.png"}" alt="${data.name}" style="max-width:400px;"/>
       <p>${data.description || ""}</p>
       <a href="/">← Вернуться на главную</a>
-    `
-    }
+    `;
+  } catch (err) {
+    container.innerHTML = `<p>Ошибка загрузки профиля: ${err.message}</p>`;
   }
+})();
 </script>

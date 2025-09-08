@@ -5,22 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow" />
 
-   <title>Свежие профили — ModelConnect Miami</title>
-  <meta name="description" content="Найдите свежие профили моделей, фотографов и стилистов в Майами.">
+   <title>Профиль — ModelConnect Miami</title>
+  <meta name="description" content="Профиль модели, фотографа или стилиста в Майами">
     <!-- Open Graph -->
-  <meta property="og:title" content="{{ profile.name   }} — {{ profile.category   }}">
+  <meta property="og:title" content="Профиль">
   <meta property="og:site_name" content="ModelConnect Miami" />
   <meta property="og:locale" content="ru_RU" />
-  <meta property="og:description" content="Найдите свежие профили моделей, фотографов и стилистов в Майами.">
-  <meta property="og:image" content="https://models-connect.netlify.app/profiles/img/og-image-main.webp/img/og-image-main.webp">
+  <meta property="og:description" content="">
+  <meta property="og:image" content="/profiles/img/og-image-main.webp/img/og-image-main.webp">
   <meta property="og:url" content="https://models-connect.netlify.app/profiles">
   <meta property="og:type" content="website">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Свежие профили — ModelConnect Miami">
-  <meta name="twitter:description" content="Найдите свежие профили моделей, фотографов и стилистов в Майами.">
-  <meta name="twitter:image" content="https://models-connect.netlify.app/profiles/img/og-image-main.webp/img/og-image-main.webp">
+  <meta name="twitter:title" content="Профиль">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="/profiles/img/og-image-main.webp/img/og-image-main.webp">
 
   <!-- Canonical -->
   <link rel="canonical" href="https://models-connect.netlify.app/profiles/profiles/">
@@ -39,8 +39,8 @@
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     
-      "name": "Свежие профили — ModelConnect Miami",
-      "description": "Найдите свежие профили моделей, фотографов и стилистов в Майами.",
+      "name": "Профиль — ModelConnect Miami",
+      "description": "Профиль модели, фотографа или стилиста в Майами",
       "url": "https://models-connect.netlify.app/profiles/",
       "mainEntity": {
         "@type": "ItemList",
@@ -122,6 +122,19 @@
               "image": "https://res.cloudinary.com/dimallvw3/image/upload/v1757334672/agvnwemqynntxfc5ku5e.jpg/img/placeholder.png",
               "url": "https://models-connect.netlify.app/profiles/b4fe21c6-ee77-4ed8-a36b-5ed1453024d6/"
             }
+          },
+          
+          {
+            "@type": "ListItem",
+            "position": 7,
+            "item": {
+              "@type": "Person",
+              "name": "Anna",
+              "jobTitle": "Модель",
+              "address": { "@type": "PostalAddress", "addressLocality": "Халландейл" },
+              "image": "https://res.cloudinary.com/dimallvw3/image/upload/v1757342206/pho5f1nncqprm4faucjc.jpg/img/placeholder.png",
+              "url": "https://models-connect.netlify.app/profiles/50ba7c00-1993-4e21-9eef-b0474cc920a0/"
+            }
           }
           
         ]
@@ -143,44 +156,65 @@
   </nav>
 
   <main>
-    
-<div id="profile-container">
+    <div id="profile-container">
   <p>Загрузка профиля...</p>
 </div>
 
 <script type="module">
-  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-  const supabaseUrl = "https://zftnzsbflzfhfyfnyqza.supabase.co"
-  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdG56c2JmbHpmaGZ5Zm55cXphIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NzA4NDIyNCwiZXhwIjoyMDcyNjYwMjI0fQ.Wd1QLDVjJFEUjh4BEn9mR-wR6Abi-ldyvWRtqDL8W5M"
-  const supabase = createClient(supabaseUrl, supabaseKey)
+(async () => {
+  const container = document.getElementById("profile-container");
 
-  const container = document.getElementById("profile-container")
+  const SUPABASE_URL = "https://zftnzsbflzfhfyfnyqza.supabase.co";
+  const SUPABASE_ANON_KEY = ""; // безопасно для фронтенда
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    container.innerHTML = "<p>Ошибка: ключи Supabase не заданы</p>";
+    return;
+  }
 
-  const pathSegments = window.location.pathname.split("/").filter(Boolean)
-  const id = pathSegments[pathSegments.length - 1]
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+   let id = null;
+
+  const pathSegments = window.location.pathname.split("/").filter(Boolean);
+  if (pathSegments[pathSegments.length - 2] === "profiles") {
+    id = pathSegments[pathSegments.length - 1];
+  }
+
+  const queryParams = new URLSearchParams(window.location.search);
+  if (!id) id = queryParams.get("id");
+
   if (!id) {
-    container.innerHTML = "<p>ID профиля не указан</p>"
-  } else {
+    container.innerHTML = "<p>ID профиля не указан</p>";
+    return;
+  }
+
+  try {
     const { data, error } = await supabase
       .from("profiles")
       .select("*")
       .eq("id", id)
-      .single()
+      .single();
+
     if (error || !data) {
-      container.innerHTML = "<p>Профиль не найден</p>"
-    } else {
-      container.innerHTML = `
+      container.innerHTML = "<p>Профиль не найден</p>";
+      return;
+    }
+
+    document.title = `${data.name} — ${data.category}`;
+
+    container.innerHTML = `
       <h1>${data.name}</h1>
-      <p>${data.city}, ${data.category}</p>
-      <img src="${data.image_url || "/img/placeholder.png"}" alt="${
-        data.name
-      }" style="max-width:400px;"/>
+      <p>${data.city || ""}, ${data.category || ""}</p>
+      <img src="${data.image_url || "/img/placeholder.png"}" alt="${data.name}" style="max-width:400px;"/>
       <p>${data.description || ""}</p>
       <a href="/">← Вернуться на главную</a>
-    `
-    }
+    `;
+  } catch (err) {
+    container.innerHTML = `<p>Ошибка загрузки профиля: ${err.message}</p>`;
   }
+})();
 </script>
 
   </main>
