@@ -124,10 +124,6 @@ nav {
   gap: 1rem;
 }
 
-.profile-list {
-  display: flex;
-}
-
 .profile-card {
   background-color: #fff;
   border: 1px solid #ddd;

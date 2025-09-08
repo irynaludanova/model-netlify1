@@ -5,28 +5,28 @@
   <!-- Статические страницы -->
   <url>
     <loc>https://models-connect.netlify.app/</loc>
-    <lastmod>2025-09-07</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://models-connect.netlify.app/region/</loc>
-    <lastmod>2025-09-07</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://models-connect.netlify.app/category/</loc>
-    <lastmod>2025-09-07</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://models-connect.netlify.app/add-profile/</loc>
-    <lastmod>2025-09-07</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

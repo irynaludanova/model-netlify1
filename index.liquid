@@ -16,7 +16,7 @@ seo_twitter_image: https://models-connect.netlify.app/img/og-image-main.webp
 seo_canonical: https://models-connect.netlify.app/
 ---
 
-<div class="profiles-section" id="profiles">
+<div class="profiles-section">
   <h1>ModelConnect Miami</h1>
   <h2>Свежие Профили Моделей, Фотографов и Стилистов в 2025</h2>
 
@@ -34,63 +34,127 @@ seo_canonical: https://models-connect.netlify.app/
     <label for="region-select">Выберите регион:</label>
     <select id="region-select">
       <option value="все">Все регионы</option>
-      {% assign regions = allProfiles | map: "city" | uniq %}
-      {% for r in regions %}
-        {% if r %}
-          <option value="{{ r }}">{{ r }}</option>
-        {% endif %}
-      {% endfor %}
     </select>
 
     <label for="category-select">Выберите категорию:</label>
     <select id="category-select">
       <option value="все">Все категории</option>
-      {% assign categories = allProfiles | map: "category" | uniq %}
-      {% for c in categories %}
-        {% if c %}
-          <option value="{{ c }}">{{ c }}</option>
-        {% endif %}
-      {% endfor %}
     </select>
   </div>
 
   <div class="profile-list" id="profile-list">
-    {% for p in allProfiles %}
-      <div class="profile-card"  data-region="{{ p.city }}" data-category="{{ p.category }}">
-        <img
-          class="profile-card__image"
-          width="300"
-          height="200"
-          src="{{ p.image_url | default: '/img/placeholder.png' }}"
-          alt="Фото профиля {{ p.name }}"
-        />
-        <div class="profile-card__description">
-          <h3>{{ p.name }}</h3>
-          <p>{{ p.city }}, {{ p.category }}</p>
-          <a href="/profiles/{{ p.id | slugify }}/">Подробнее</a>
-        </div>
-      </div>
-    {% endfor %}
+    <p>Загрузка профилей...</p>
   </div>
 </div>
 
-<script>
-const regionSelect = document.getElementById('region-select');
-const categorySelect = document.getElementById('category-select');
-const profileList = document.getElementById('profile-list');
-const profiles = profileList.querySelectorAll('.profile-card');
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+
+const SUPABASE_URL = "https://zftnzsbflzfhfyfnyqza.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdG56c2JmbHpmaGZ5Zm55cXphIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NzA4NDIyNCwiZXhwIjoyMDcyNjYwMjI0fQ.Wd1QLDVjJFEUjh4BEn9mR-wR6Abi-ldyvWRtqDL8W5M";
+
+
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  document.getElementById("profile-list").innerHTML = "<p>Ошибка: ключи Supabase не заданы</p>";
+  throw new Error("SUPABASE_URL или SUPABASE_ANON_KEY отсутствуют");
+}
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const profileList = document.getElementById("profile-list");
+const regionSelect = document.getElementById("region-select");
+const categorySelect = document.getElementById("category-select");
+
+let allProfiles = [];
+
+async function fetchProfiles() {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    profileList.innerHTML = `<p>Ошибка загрузки профилей: ${error.message}</p>`;
+    return;
+  }
+
+  allProfiles = data;
+  renderProfiles(allProfiles);
+  populateFilters(allProfiles);
+}
+
+function renderProfiles(profiles) {
+  profileList.innerHTML = "";
+
+  if (!profiles.length) {
+    profileList.innerHTML = "<p>Профили не найдены.</p>";
+    return;
+  }
+
+  profiles.forEach((p) => {
+    const div = document.createElement("div");
+    div.className = "profile-card";
+    div.dataset.region = p.city || "";
+    div.dataset.category = p.category || "";
+    div.innerHTML = `
+      <img
+        class="profile-card__image"
+        width="300"
+        height="200"
+        src="${p.image_url || '/img/placeholder.png'}"
+        alt="Фото профиля ${p.name}"
+      />
+      <div class="profile-card__description">
+        <h3>${p.name}</h3>
+        <p>${p.city || ""}, ${p.category || ""}</p>
+        <a href="/profiles/${p.id}/">Подробнее</a>
+      </div>
+    `;
+    profileList.appendChild(div);
+  });
+}
+
+function populateFilters(profiles) {
+  const regions = [...new Set(profiles.map(p => p.city).filter(Boolean))];
+  const categories = [...new Set(profiles.map(p => p.category).filter(Boolean))];
+
+  regions.forEach(r => {
+    if (![...regionSelect.options].some(opt => opt.value === r)) {
+      const option = document.createElement("option");
+      option.value = r;
+      option.textContent = r;
+      regionSelect.appendChild(option);
+    }
+  });
+
+  categories.forEach(c => {
+    if (![...categorySelect.options].some(opt => opt.value === c)) {
+      const option = document.createElement("option");
+      option.value = c;
+      option.textContent = c;
+      categorySelect.appendChild(option);
+    }
+  });
+}
 
 function filterProfiles() {
   const region = regionSelect.value;
   const category = categorySelect.value;
 
-  profiles.forEach(profile => {
-    const matchRegion = region === 'все' || profile.dataset.region === region;
-    const matchCategory = category === 'все' || profile.dataset.category === category;
-    profile.style.display = matchRegion && matchCategory ? 'flex' : 'none';
+  const filtered = allProfiles.filter(p => {
+    const matchRegion = region === "все" || p.city === region;
+    const matchCategory = category === "все" || p.category === category;
+    return matchRegion && matchCategory;
   });
+
+  renderProfiles(filtered);
 }
 
-regionSelect.addEventListener('change', filterProfiles);
-categorySelect.addEventListener('change', filterProfiles);
+regionSelect.addEventListener("change", filterProfiles);
+categorySelect.addEventListener("change", filterProfiles);
+
+fetchProfiles();
 </script>
+
+
