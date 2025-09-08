@@ -1,82 +1,118 @@
 ---
 layout: base
 permalink: /region/index.html
-
 eleventyComputed:
   title: '{{site.name}} — {{site.title2}}'
   description: '{{site.description2}}'
-  seo_title: '{{site.name2}} —{{site.name}}'
+  seo_title: '{{site.name}} — {{site.title2}}'
   seo_description: '{{site.description2}}'
-  seo_og_title: '{{site.name2}} —{{site.name}}'
+  seo_og_title: '{{site.name}} — {{site.title2}}'
   seo_og_description: '{{site.description2}}'
-  seo_og_image: '{{site.url}}{{site.seo_og-region}}'
+  seo_og_image: '{{site.url}}{{site.seo_og_image}}'
   seo_og_url: '{{site.url}}/region'
-  seo_twitter_title: '{{site.name2}} —{{site.name}}'
+  seo_twitter_title: '{{site.name}} — {{site.title2}}'
   seo_twitter_description: '{{site.description2}}'
-  seo_twitter_image: '{{site.url}}{{site.seo_og-region}}'
+  seo_twitter_image: '{{site.url}}{{site.seo_og_image}}'
   seo_canonical: '{{site.url}}/region'
   seo_json_ld: |
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": '{{site.name2}}',
-      "url": '{{site.url}}/region',
-      "description": '{{site.description2}}'
+      "name": "{{site.name}} — {{site.title2}}",
+      "url": "{{site.url}}/region",
+      "description": "{{site.description2}}"
     }
 ---
+<div class="profiles-section" id="profiles">
+  <nav class="breadcrumbs">
+    <a href="/">Главная</a> ›
+    <span>Регионы</span>
+  </nav>
 
-<nav class="breadcrumbs">
-  <a href="/">Главная</a> ›
-  <span>Регионы</span>
-</nav>
+  <h1>{{site.title2}}</h1>
+  <ul class="region-links">
+    {% if collections.regions and collections.regions.length > 0 %}
+      {% for r in collections.regions %}
+        <li><a href="/region/{{ r.name | slugify }}/">{{ r.name }}</a></li>
+      {% endfor %}
+    {% else %}
+      <li>Нет регионов</li>
+    {% endif %}
+  </ul>
 
-<h1>Профили по регионам</h1>
-
-<ul class="region-links">
-  {% for r in allProfiles %}
-    <li><a href="/region/{{ r.city }}/">{{ r.city }}</a></li>
-  {% endfor %}
-</ul>
-
-<div class="profile-list" id="profile-list">
-  {% for p in allProfiles %}
-    <div class="profile-card" data-region="{{ p.city }}" data-category="{{ p.category }}">
-      <img
-        class="profile-card__image"
-        width="300"
-        height="200"
-        src="{{ p.image_url | default: '/img/placeholder.png' }}"
-        alt="Фото профиля {{ p.name }}"
-      />
-      <div class="profile-card__description">
-        <h3>{{ p.name }}</h3>
-        <p>{{ p.city }}, {{ p.category }}</p>
-        <a href="/profiles/{{ p.id | slugify }}/">Подробнее</a>
-      </div>
-    </div>
-  {% endfor %}
+  <div class="profile-list" id="profile-list">
+    {% if collections.regions and collections.regions.length > 0 %}
+      {% for region in collections.regions %}
+        {% if region.profiles and region.profiles.length > 0 %}
+          {% for p in region.profiles %}
+            <div class="profile-card" data-region="{{ p.city | slugify | default: '' }}" data-category="{{ p.category | slugify | default: '' }}">
+              <img
+                class="profile-card__image"
+                width="300"
+                height="200"
+                src="{{ p.image_url | default: '/img/placeholder.png' }}"
+                alt="Фото профиля {{ p.name | default: 'Без имени' }}"
+              />
+              <div class="profile-card__description">
+                <h3>{{ p.name | default: 'Без имени' }}</h3>
+                <p>{{ p.city | default: 'Регион не указан' }}, {{ p.category | default: 'Категория не указана' }}</p>
+                <a href="/profiles/{{ p.id | slugify }}/index.html">Подробнее</a>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <p>Нет профилей для отображения.</p>
+    {% endif %}
+  </div>
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const regionSelect = document.getElementById("region-select");
-  const categorySelect = document.getElementById("category-select");
+  document.addEventListener("DOMContentLoaded", function () {
+    const regionSelect = document.getElementById("region-select");
+    const categorySelect = document.getElementById("category-select");
+    const profileList = document.getElementById("profile-list");
+    const profiles = profileList.querySelectorAll(".profile-card");
 
-  function filterProfiles() {
-    const activeRegion = regionSelect.value;
-    const activeCategory = categorySelect.value;
+    function populateFilters() {
+      while (regionSelect.options.length > 1) regionSelect.remove(1);
+      while (categorySelect.options.length > 1) categorySelect.remove(1);
 
-    document.querySelectorAll(".profile-card").forEach(card => {
-      const region = card.getAttribute("data-region");
-      const category = card.getAttribute("data-category");
-      card.style.display =
-        (activeRegion === "все" || region === activeRegion) &&
-        (activeCategory === "все" || category === activeCategory)
-          ? "block" : "none";
-    });
-  }
+      const regions = [...new Set(Array.from(profiles).map(p => p.dataset.region).filter(Boolean))];
+      const categories = [...new Set(Array.from(profiles).map(p => p.dataset.category).filter(Boolean))];
 
-  regionSelect.addEventListener("change", filterProfiles);
-  categorySelect.addEventListener("change", filterProfiles);
-});
+      regions.forEach(r => {
+        const option = document.createElement("option");
+        option.value = r;
+        option.textContent = r;
+        regionSelect.appendChild(option);
+      });
+
+      categories.forEach(c => {
+        const option = document.createElement("option");
+        option.value = c;
+        option.textContent = c;
+        categorySelect.appendChild(option);
+      });
+    }
+
+    function filterProfiles() {
+      const activeRegion = regionSelect.value;
+      const activeCategory = categorySelect.value;
+
+      profiles.forEach(card => {
+        const region = card.dataset.region;
+        const category = card.dataset.category;
+        card.style.display =
+          (activeRegion === "все" || region === activeRegion) &&
+          (activeCategory === "все" || category === activeCategory)
+            ? "block" : "none";
+      });
+    }
+
+    populateFilters();
+    regionSelect.addEventListener("change", filterProfiles);
+    categorySelect.addEventListener("change", filterProfiles);
+  });
 </script>

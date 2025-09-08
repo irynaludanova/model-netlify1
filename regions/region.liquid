@@ -1,19 +1,21 @@
 ---
+layout: base
 pagination:
   data: collections.regions
   size: 1
   alias: region
-permalink: "region/{{ region.slug }}/index.html"
+permalink: "region/{{ region.name | slugify }}/index.html"
+eleventyComputed:
+  title: "{{ region.name | default: 'Регион' }} — Модели и фотографы | ModelConnect Miami"
+  description: "Профили моделей, фотографов и стилистов из региона {{ region.name | default: 'не указан' }}. ModelConnect Miami — платформа для творческих людей."
 ---
-
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ region.name }} — Модели и фотографы | ModelConnect Miami</title>
-  <meta name="description" content="Профили моделей и фотографов из региона {{ region.name }}. ModelConnect Miami — платформа для творческих людей.">
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -21,26 +23,33 @@ permalink: "region/{{ region.slug }}/index.html"
     <nav>
       <a href="/">Главная</a> ›
       <a href="/region/">Регионы</a> ›
-      <span>{{ region.name }}</span>
+      <span>{{ region.name | default: 'Регион' }}</span>
     </nav>
   </header>
 
   <main>
-    <h1>Регион: {{ region.name }}</h1>
+    <h1>Регион: {{ region.name | default: 'Не указан' }}</h1>
 
-    {% if region.profiles.size > 0 %}
-      <div class="profiles-list">
+    {% if region and region.profiles and region.profiles.length > 0 %}
+      <ul class="profiles-list">
         {% for profile in region.profiles %}
-          <div class="profile-card">
-               <img src="{{ profile.avatar | default: '/img/no-avatar.png' }}" alt="{{ profile.name }}">
-                <div class="profile-card__description">
-              <h2>{{ profile.name }}</h2>
-              <p>{{ profile.category }}</p>
-               <a href="/profiles/{{ profile.id }}/">Подробнее</a>
-</div>
-          </div>
+          <li class="profile-card" style="display: flex;">
+            <img
+              src="{{ profile.image_url | default: '/img/no-avatar.png' }}"
+              alt="{{ profile.name | default: 'Без имени' }}"
+              class="profile-card__image"
+              width="300"
+              height="200"
+            >
+            <div class="profile-card__description">
+              <h2>{{ profile.name | default: 'Без имени' }}</h2>
+              <p>{{ profile.city | default: 'Регион не указан' }}</p>
+              <p>{{ profile.description | truncate: 100 }}</p>
+              <a href="/profiles/{{ profile.id | slugify }}/index.html">Подробнее</a>
+            </div>
+          </li>
         {% endfor %}
-      </div>
+      </ul>
     {% else %}
       <p>В этом регионе пока нет профилей.</p>
     {% endif %}

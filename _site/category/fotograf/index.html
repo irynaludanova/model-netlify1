@@ -5,25 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow" />
 
-   <title>Добавить профиль — ModelConnect Miami</title>
-  <meta name="description" content="Добавьте свой профиль модели, фотографа или стилиста на платформу ModelConnect Miami.">
+   <title>Фотограф — Модели и фотографы | ModelConnect Miami</title>
+  <meta name="description" content="Профили моделей, фотографов и стилистов из категории Фотограф. ModelConnect Miami — платформа для творческих людей.">
     <!-- Open Graph -->
-  <meta property="og:title" content="Добавить профиль — ModelConnect Miami">
+  <meta property="og:title" content="Фотограф — Модели и фотографы | ModelConnect Miami">
   <meta property="og:site_name" content="ModelConnect Miami" />
   <meta property="og:locale" content="ru_RU" />
-  <meta property="og:description" content="Добавьте свой профиль модели, фотографа или стилиста на платформу ModelConnect Miami.">
+  <meta property="og:description" content="Профили моделей, фотографов и стилистов из категории Фотограф. ModelConnect Miami — платформа для творческих людей.">
   <meta property="og:image" content="https://models-connect.netlify.app/img/og-image-main.webp">
-  <meta property="og:url" content="https://models-connect.netlify.app/add-profile">
+  <meta property="og:url" content="https://models-connect.netlify.app">
   <meta property="og:type" content="website">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Добавить профиль — ModelConnect Miami">
-  <meta name="twitter:description" content="Добавьте свой профиль модели, фотографа или стилиста на платформу ModelConnect Miami.">
+  <meta name="twitter:title" content="Фотограф — Модели и фотографы | ModelConnect Miami">
+  <meta name="twitter:description" content="Профили моделей, фотографов и стилистов из категории Фотограф. ModelConnect Miami — платформа для творческих людей.">
   <meta name="twitter:image" content="https://models-connect.netlify.app/img/og-image-main.webp">
 
   <!-- Canonical -->
-  <link rel="canonical" href="https://models-connect.netlify.app/add-profile/add-profile/">
+  <link rel="canonical" href="https://models-connect.netlify.app/category/fotograf/">
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="https://models-connect.netlify.app/favicon.ico" />
@@ -39,9 +39,9 @@
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     
-      "name": "Добавить профиль — ModelConnect Miami",
-      "description": "Добавьте свой профиль модели, фотографа или стилиста на платформу ModelConnect Miami.",
-      "url": "https://models-connect.netlify.app/add-profile/",
+      "name": "Фотограф — Модели и фотографы | ModelConnect Miami",
+      "description": "Профили моделей, фотографов и стилистов из категории Фотограф. ModelConnect Miami — платформа для творческих людей.",
+      "url": "https://models-connect.netlify.app/category/fotograf/",
       "mainEntity": {
         "@type": "ItemList",
         "itemListElement": [
@@ -169,162 +169,67 @@
   </nav>
 
   <main>
-    <script>
-const form = document.querySelector("form");
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+    <!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Фотограф — Модели и фотографы | ModelConnect Miami</title>
+  <meta name="description" content="Профили моделей, фотографов и стилистов из категории Фотограф. ModelConnect Miami — платформа для творческих людей.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Главная</a> ›
+      <a href="/category/">Категории</a> ›
+      <span>Фотограф</span>
+    </nav>
+  </header>
 
-  const data = {
-    name: form.name.value,
-    city: form.city.value,
-    category: form.category.value,
-    description: form.description.value,
-    age: form.age.value,
-    email: form.email.value,
-    phone: form.phone.value,
-    image: "/img/placeholder.png"
-  };
+  <main>
+    <h1>Категория: Фотограф</h1>
 
-  const res = await fetch("/.netlify/functions/add-profile", {
-    method: "POST",
-    body: JSON.stringify(data),
-  });
-
-  if (res.ok) {
-    window.location.href = "/submit-profile/";
-  } else {
-    alert("Ошибка при отправке формы");
-  }
-});
-</script>
-<script type="module">
-
-  async function cloudinaryUpload(file) {
-    const form = new FormData();
-    form.append('file', file);
-    form.append('upload_preset', 'unsigned_profiles');
-    const res = await fetch('https://api.cloudinary.com/v1_1/dimallvw3/upload', {
-      method: 'POST',
-      body: form
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error('Cloudinary upload failed: ' + JSON.stringify(data));
-    return data.secure_url;
-  }
-
-  document.querySelector('#add-profile-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const fd = new FormData(form);
-    const name = fd.get('name');
-
-
-    let image_url = '';
-    const file = fd.get('image');
-    if (file && file.size) {
-      try {
-        image_url = await cloudinaryUpload(file);
-      } catch (err) {
-        alert('Ошибка загрузки изображения: ' + err.message);
-        return;
-      }
-    }
-
-    const payload = {
-      name,
-      city: fd.get('city'),
-      category: fd.get('category'),
-      description: fd.get('description'),
-      age: fd.get('age'),
-      email: fd.get('email'),
-      phone: fd.get('phone'),
-      image_url
-    };
-
-
-    const resp = await fetch('/.netlify/functions/add-profile', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    if (!resp.ok) {
-      const text = await resp.text();
-      alert('Ошибка сервера: ' + text);
-      return;
-    }
-
-    const result = await resp.json();
-    alert('Профиль добавлен!');
-    form.reset();
-  });
-</script>
-
-<div class="add-profile-section">
-  <h1>Добавить профиль</h1>
-  <form name="add-profile"
-      method="POST"
-      netlify
-    action="/.netlify/functions/add-profile"
-     id="add-profile-form"
-      enctype="multipart/form-data">
-  <input type="hidden" name="form-name" value="add-profile" />
-
-  <div class="form-group">
-    <label for="name">Имя:</label>
-    <input type="text" id="name" name="name" required />
-  </div>
-
-  <div class="form-group">
-    <label for="city">Город:</label>
-    <select id="city" name="city" required>
-      <option value="Майами-Бич">Майами-Бич</option>
-      <option value="Халландейл">Халландейл</option>
-      <option value="Корал-Гейблс">Корал-Гейблс</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label for="category">Категория:</label>
-    <select id="category" name="category" required>
-      <option value="Модель">Модель</option>
-      <option value="Фотограф">Фотограф</option>
-      <option value="Стилист">Стилист</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label for="description">Описание:</label>
-    <textarea id="description" name="description" required></textarea>
-  </div>
-
-  <div class="form-group">
-    <label for="age">Возраст:</label>
-    <input type="number" id="age" name="age" required />
-  </div>
-
-  <div class="form-group">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required />
-  </div>
-
-  <div class="form-group">
-    <label for="phone">Телефон (опционально):</label>
-    <input type="tel" id="phone" name="phone" />
-  </div>
-
-  <div class="form-group">
-    <label for="image">Фото профиля:</label>
-    <input type="file" name="image" accept="image/*" required />
-    <p class="form-note">Рекомендуемый размер: 300x300px, формат: JPG, PNG, WEBP.</p>
-  </div>
-
-  <button type="submit">Отправить</button>
-</form>
-
-</div>
-
-
+    
+      <ul class="profiles-list">
+        
+          <li class="profile-card" style="display: flex;">
+            <img
+              src="https://res.cloudinary.com/dimallvw3/image/upload/v1757334343/ca1h3mnfjw2vr8c4v2rq.jpg"
+              alt="Ivan"
+              class="profile-card__image"
+              width="300"
+              height="200"
+            >
+            <div class="profile-card__description">
+              <h2>Ivan</h2>
+              <p>Халландейл</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo...</p>
+              <a href="/profiles/af25b537-8bf5-46c5-85e2-ef50e7c74b41/">Подробнее</a>
+            </div>
+          </li>
+        
+          <li class="profile-card" style="display: flex;">
+            <img
+              src="https://res.cloudinary.com/dimallvw3/image/upload/v1757334672/agvnwemqynntxfc5ku5e.jpg"
+              alt="Tim"
+              class="profile-card__image"
+              width="300"
+              height="200"
+            >
+            <div class="profile-card__description">
+              <h2>Tim</h2>
+              <p>Корал-Гейблс</p>
+              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,...</p>
+              <a href="/profiles/b4fe21c6-ee77-4ed8-a36b-5ed1453024d6/">Подробнее</a>
+            </div>
+          </li>
+        
+      </ul>
+    
+  </main>
+</body>
+</html>
   </main>
 
   <footer class="site-footer">

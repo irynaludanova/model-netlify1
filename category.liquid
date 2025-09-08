@@ -1,16 +1,15 @@
 ---
 layout: base
 permalink: /category/index.html
-
 eleventyComputed:
   title: '{{site.name}} — {{site.title1}}'
   description: '{{site.description1}}'
   seo_title: '{{site.name}} — {{site.title1}}'
-  seo_description:  '{{site.description1}}'
+  seo_description: '{{site.description1}}'
   seo_og_title: '{{site.name}} — {{site.title1}}'
-  seo_og_description:  '{{site.description1}}'
+  seo_og_description: '{{site.description1}}'
   seo_og_image: '{{site.url}}{{site.seo_og_image}}'
-  seo_og_url: '{{site.url}}'
+  seo_og_url: '{{site.url}}/category'
   seo_twitter_title: '{{site.name}} — {{site.title1}}'
   seo_twitter_description: '{{site.description1}}'
   seo_twitter_image: '{{site.url}}{{site.seo_og_image}}'
@@ -18,51 +17,87 @@ eleventyComputed:
 ---
 
 <div class="profiles-section" id="profiles">
-  <h1>{{site.name}}</h1>
-  <h2>{{site.title1}}</h2>
+  <h1>{{site.title1}}</h1>
+  <ul class="category-links">
+    {% if collections.categories and collections.categories.length > 0 %}
+      {% for c in collections.categories %}
+        <li><a href="/category/{{ c.slug }}/">{{ c.name }}</a></li>
+      {% endfor %}
+    {% else %}
+      <li>Нет категорий</li>
+    {% endif %}
+  </ul>
 
-   <ul class="category-links">
-  {% for c in allProfiles %}
-    <li><a href="/category/{{ c.category }}/">{{ c.category }}</a></li>
-  {% endfor %}
-</ul>
   <div class="profile-list" id="profile-list">
-    {% for p in allProfiles %}
-      <div class="profile-card" data-region="{{ p.city }}" data-category="{{ p.category }}">
-        <img
-          class="profile-card__image"
-          width="300"
-          height="200"
-          src="{{ p.image_url | default: '/img/placeholder.png' }}"
-          alt="Фото профиля {{ p.name }}"
-        />
-        <div class="profile-card__description">
-          <h3>{{ p.name }}</h3>
-          <p>{{ p.city }}, {{ p.category }}</p>
-          <a href="/profiles/{{ p.id | slugify }}/">Подробнее</a>
-        </div>
-      </div>
-    {% endfor %}
+    {% if collections.categories and collections.categories.length > 0 %}
+      {% for category in collections.categories %}
+        {% if category.profiles and category.profiles.length > 0 %}
+          {% for p in category.profiles %}
+            <div class="profile-card" data-region="{{ p.city | default: '' }}" data-category="{{ p.category | default: '' }}">
+              <img
+                class="profile-card__image"
+                width="300"
+                height="200"
+                src="{{ p.image_url | default: '/img/placeholder.png' }}"
+                alt="Фото профиля {{ p.name | default: 'Не указано' }}"
+              />
+              <div class="profile-card__description">
+                <h3>{{ p.name | default: 'Без имени' }}</h3>
+                <p>{{ p.city | default: 'Регион не указан' }}, {{ p.category | default: 'Категория не указана' }}</p>
+                <a href="/profiles/{{ p.id | slugify }}/">Подробнее</a>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <p>Нет профилей для отображения.</p>
+    {% endif %}
   </div>
 </div>
 
 <script>
-const regionSelect = document.getElementById('region-select');
-const categorySelect = document.getElementById('category-select');
-const profileList = document.getElementById('profile-list');
-const profiles = profileList.querySelectorAll('.profile-card');
+  const regionSelect = document.getElementById('region-select');
+  const categorySelect = document.getElementById('category-select');
+  const profileList = document.getElementById('profile-list');
+  const profiles = profileList.querySelectorAll('.profile-card');
 
-function filterProfiles() {
-  const region = regionSelect.value;
-  const category = categorySelect.value;
 
-  profiles.forEach(profile => {
-    const matchRegion = region === 'все' || profile.dataset.region === region;
-    const matchCategory = category === 'все' || profile.dataset.category === category;
-    profile.style.display = matchRegion && matchCategory ? 'block' : 'none';
-  });
-}
+  function populateFilters() {
 
-regionSelect.addEventListener('change', filterProfiles);
-categorySelect.addEventListener('change', filterProfiles);
+    while (regionSelect.options.length > 1) regionSelect.remove(1);
+    while (categorySelect.options.length > 1) categorySelect.remove(1);
+
+     const regions = [...new Set(Array.from(profiles).map(p => p.dataset.region).filter(Boolean))];
+    const categories = [...new Set(Array.from(profiles).map(p => p.dataset.category).filter(Boolean))];
+
+    regions.forEach(r => {
+      const option = document.createElement('option');
+      option.value = r;
+      option.textContent = r;
+      regionSelect.appendChild(option);
+    });
+
+    categories.forEach(c => {
+      const option = document.createElement('option');
+      option.value = c;
+      option.textContent = c;
+      categorySelect.appendChild(option);
+    });
+  }
+
+  function filterProfiles() {
+    const region = regionSelect.value;
+    const category = categorySelect.value;
+
+    profiles.forEach(profile => {
+      const matchRegion = region === 'все' || profile.dataset.region === region;
+      const matchCategory = category === 'все' || profile.dataset.category === category;
+      profile.style.display = matchRegion && matchCategory ? 'block' : 'none';
+    });
+  }
+
+  populateFilters();
+  regionSelect.addEventListener('change', filterProfiles);
+  categorySelect.addEventListener('change', filterProfiles);
 </script>

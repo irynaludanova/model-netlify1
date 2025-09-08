@@ -1,9 +1,19 @@
 import dotenv from "dotenv"
 import { createClient } from "@supabase/supabase-js"
+import slugify from "slugify"
 
 dotenv.config()
 
 export default async function (eleventyConfig) {
+  eleventyConfig.addFilter("slugify", (str) => {
+    return slugify(str, {
+      lower: true,
+      strict: true,
+      remove: /[*+~.()'"!:@]/g,
+      locale: "ru",
+    })
+  })
+
   const supabase = createClient(
     process.env.SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -15,7 +25,8 @@ export default async function (eleventyConfig) {
     if (error) {
       console.error("Ошибка Supabase:", error.message)
     } else {
-      profiles = data
+      profiles = data || []
+      console.log("Загруженные профили:", JSON.stringify(profiles, null, 2))
     }
   } catch (err) {
     console.error("Ошибка загрузки профилей:", err.message)
@@ -23,36 +34,25 @@ export default async function (eleventyConfig) {
 
   eleventyConfig.addGlobalData("allProfiles", profiles)
 
-  eleventyConfig.addGlobalData("env", {
-    SUPABASE_URL: process.env.SUPABASE_URL || null,
-    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY || null,
-  })
-
-  eleventyConfig.addCollection("regions", () => {
-    if (!profiles.length) return []
-    const regions = {}
-    profiles.forEach((p) => {
-      if (p.region) {
-        const slug = p.region.toLowerCase().replace(/\s+/g, "-")
-        if (!regions[slug]) {
-          regions[slug] = {
-            name: p.region,
-            slug,
-            profiles: [],
-          }
-        }
-        regions[slug].profiles.push(p)
-      }
-    })
-    return Object.values(regions)
-  })
+  let debugCategories = null
+  let debugRegions = null
 
   eleventyConfig.addCollection("categories", () => {
-    if (!profiles.length) return []
+    if (!profiles || !profiles.length) {
+      console.log(
+        "Профили отсутствуют или пусты, возвращается пустая коллекция categories"
+      )
+      return []
+    }
     const categories = {}
     profiles.forEach((p) => {
       if (p.category) {
-        const slug = p.category.toLowerCase().replace(/\s+/g, "-")
+        const slug = slugify(p.category, {
+          lower: true,
+          strict: true,
+          remove: /[*+~.()'"!:@]/g,
+          locale: "ru",
+        })
         if (!categories[slug]) {
           categories[slug] = {
             name: p.category,
@@ -63,7 +63,70 @@ export default async function (eleventyConfig) {
         categories[slug].profiles.push(p)
       }
     })
-    return Object.values(categories)
+    const categoriesArray = Object.values(categories)
+    debugCategories = categoriesArray
+    console.log(
+      "Созданная коллекция categories:",
+      JSON.stringify(categoriesArray, null, 2)
+    )
+    return categoriesArray
+  })
+
+  eleventyConfig.addCollection("regions", () => {
+    if (!profiles || !profiles.length) {
+      console.log(
+        "Профили отсутствуют или пусты, возвращается пустая коллекция regions"
+      )
+      return []
+    }
+    const regions = {}
+    profiles.forEach((p) => {
+      if (p.city) {
+        const slug = slugify(p.city, {
+          lower: true,
+          strict: true,
+          remove: /[*+~.()'"!:@]/g,
+          locale: "ru",
+        })
+        if (!regions[slug]) {
+          regions[slug] = {
+            name: p.city,
+            slug,
+            profiles: [],
+          }
+        }
+        regions[slug].profiles.push(p)
+      }
+    })
+    const regionsArray = Object.values(regions)
+    debugRegions = regionsArray
+    console.log(
+      "Созданная коллекция regions:",
+      JSON.stringify(regionsArray, null, 2)
+    )
+    return regionsArray
+  })
+
+  eleventyConfig.on("eleventy.after", async ({ collections }) => {
+    console.log("Все коллекции:", Object.keys(collections || {}))
+    console.log(
+      "Коллекция categories после сборки:",
+      JSON.stringify(collections?.categories || [], null, 2)
+    )
+    console.log(
+      "Коллекция regions после сборки:",
+      JSON.stringify(collections?.regions || [], null, 2)
+    )
+    console.log(
+      "Debug categories:",
+      JSON.stringify(debugCategories || [], null, 2)
+    )
+    console.log("Debug regions:", JSON.stringify(debugRegions || [], null, 2))
+  })
+
+  eleventyConfig.addGlobalData("env", {
+    SUPABASE_URL: process.env.SUPABASE_URL || null,
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY || null,
   })
 
   eleventyConfig.addPassthroughCopy("img")
