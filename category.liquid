@@ -1,36 +1,27 @@
 ---
 layout: base
-title: "ModelConnect Miami — Свежие профили моделей и фотографов"
-description: "Платформа ModelConnect Miami: новые модели, фотографы и стилисты в Майами."
-seo_title: "ModelConnect Miami — Свежие профили моделей и фотографов"
-seo_description: "Найдите новых моделей, фотографов и стилистов в Майами: свежие анкеты 2025 года."
-seo_og_title: "Свежие профили — ModelConnect Miami"
-seo_og_description: "Ежедневные новые профили моделей, фотографов и стилистов Майами."
-seo_og_image: https://models-connect.netlify.app/img/og-image-main.webp
-seo_og_url: https://models-connect.netlify.app
-seo_og_type: website
-seo_twitter_card: summary_large_image
-seo_twitter_title: "Свежие профили — ModelConnect Miami"
-seo_twitter_description: "ModelConnect Miami: новые профессионалы fashion-индустрии."
-seo_twitter_image: https://models-connect.netlify.app/img/og-image-main.webp
-seo_canonical: https://models-connect.netlify.app/
+permalink: /category/index.html
+
+eleventyComputed:
+  title: '{{site.name}} — {{site.title1}}'
+  description: '{{site.description1}}'
+  seo_title: '{{site.name}} — {{site.title1}}'
+  seo_description:  '{{site.description1}}'
+  seo_og_title: '{{site.name}} — {{site.title1}}'
+  seo_og_description:  '{{site.description1}}'
+  seo_og_image: '{{site.url}}{{site.seo_og_image}}'
+  seo_og_url: '{{site.url}}'
+  seo_twitter_title: '{{site.name}} — {{site.title1}}'
+  seo_twitter_description: '{{site.description1}}'
+  seo_twitter_image: '{{site.url}}{{site.seo_og_image}}'
+  seo_canonical: '{{site.url}}/category'
 ---
 
 <div class="profiles-section" id="profiles">
-  <h1>ModelConnect Miami</h1>
-  <h2>Свежие Профили Моделей, Фотографов и Стилистов в 2025</h2>
+  <h1>{{site.name}}</h1>
+  <h2>{{site.title1}}</h2>
 
-  <div class="home-section__intro">
-    <p>
-      Добро пожаловать на ModelConnect Miami — ведущую платформу для поиска
-      свежих профилей в fashion-индустрии Майами. Мы соединяем моделей,
-      фотографов и стилистов из Майами-Бич, Халландейл, Корал-Гейблс и других
-      районов. Наши ежедневные обновления помогают вам найти идеальных
-      профессионалов для съемок, показов и креативных проектов.
-    </p>
-  </div>
-
-  <ul class="category-links">
+   <ul class="category-links">
   {% for c in allProfiles %}
     <li><a href="/category/{{ c.category }}/">{{ c.category }}</a></li>
   {% endfor %}

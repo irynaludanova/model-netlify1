@@ -1,26 +1,25 @@
 ---
 layout: base.liquid
 permalink: /add-profile/index.html
-seo_title: "Добавить профиль — ModelConnect Miami"
-seo_description: "Добавьте свой профиль модели, фотографа или стилиста на платформу ModelConnect Miami."
-seo_og_title: "Добавить профиль — ModelConnect Miami"
-seo_og_description: "Создайте профиль на платформе для профессионалов fashion-индустрии."
-seo_og_image: https://models-connect.netlify.app/img/og-image-main.webp
-seo_og_url: https://models-connect.netlify.app/add-profile
-seo_og_type: website
-seo_twitter_card: summary_large_image
-seo_twitter_title: "Добавить профиль — ModelConnect Miami"
-seo_twitter_description: "Создайте профиль на платформе для профессионалов fashion-индустрии."
-seo_twitter_image: https://models-connect.netlify.app/img/og-image-main.webp
-seo_canonical: https://models-connect.netlify.app/add-profile
-seo_json_ld:
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Добавить профиль",
-    "url": "https://models-connect.netlify.app/add-profile",
-    "description": "Форма для добавления профиля на платформу ModelConnect Miami."
-  }
+eleventyComputed:
+  seo_title: '{{site.name3}} — {{site.name}}'
+  seo_description: '{{site.description3}}'
+  seo_og_title: '{{site.name3}} — {{site.name}}'
+  seo_og_description: '{{site.description3}}'
+  seo_og_image: '{{site.url}}{{site.seo_og_image}}'
+  seo_og_url: '{{site.url}}/add-profile'
+  seo_twitter_title: '{{site.name3}} — {{site.name}}'
+  seo_twitter_description: '{{site.description3}}'
+  seo_twitter_image: '{{site.url}}{{site.seo_og_image}}'
+  seo_canonical: '{{site.url}}/add-profile'
+  seo_json_ld:
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": '{{site.name3}}',
+      "url":  '{{site.url}}/add-profile',
+      "description": '{{site.description3}}'
+    }
 ---
 <script>
 const form = document.querySelector("form");
