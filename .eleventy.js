@@ -107,25 +107,17 @@ export default async function (eleventyConfig) {
     return regionsArray
   })
 
-  eleventyConfig.on("eleventy.after", async ({ collections }) => {
-    console.log("Все коллекции:", Object.keys(collections || {}))
-    console.log(
-      "Коллекция categories после сборки:",
-      JSON.stringify(collections?.categories || [], null, 2)
-    )
-    console.log(
-      "Коллекция regions после сборки:",
-      JSON.stringify(collections?.regions || [], null, 2)
-    )
-    console.log(
-      "Debug categories:",
-      JSON.stringify(debugCategories || [], null, 2)
-    )
-    console.log("Debug regions:", JSON.stringify(debugRegions || [], null, 2))
+  eleventyConfig.addCollection("profiles", () => {
+    if (!profiles || !profiles.length) {
+      console.log("Профили отсутствуют, коллекция profiles пустая")
+      return []
+    }
+    return profiles
   })
 
   eleventyConfig.addGlobalData("env", {
     SUPABASE_URL: process.env.SUPABASE_URL || null,
+    SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY || null,
     SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY || null,
   })
 

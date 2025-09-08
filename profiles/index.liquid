@@ -1,17 +1,29 @@
 ---
 layout: base
-title: "Профиль"
-seo_title: "Профиль — ModelConnect Miami"
-seo_description: "Профиль модели, фотографа или стилиста в Майами"
-seo_og_image: "/profiles/img/og-image-main.webp"
-seo_og_url: "https://models-connect.netlify.app/profiles"
-seo_og_type: website
-seo_twitter_card: summary_large_image
-seo_twitter_image: "/profiles/img/og-image-main.webp"
-seo_canonical: "https://models-connect.netlify.app/profiles"
+eleventyComputed:
+  title: '{{site.name4}} — {{site.name}}'
+  description: '{{site.title4}}'
+  seo_title: '{{site.name4}} — {{site.name}}'
+  seo_description: '{{site.title4}}'
+  seo_og_title: '{{site.name4}} — {{site.name}}'
+  seo_og_description: '{{site.title4}}'
+  seo_og_image: '{{site.url}}{{site.seo_og_image}}'
+  seo_og_url: '{{site.url}}/profiles'
+  seo_twitter_title: '{{site.name4}} — {{site.name}}'
+  seo_twitter_description: '{{site.title4}}'
+  seo_twitter_image: '{{site.url}}{{site.seo_og_image}}'
+  seo_canonical: '{{site.url}}/profiles'
 ---
-<div id="profile-container">
-  <p>Загрузка профиля...</p>
+<div class="profile-page">
+  <nav class="breadcrumbs">
+    <a href="/">Главная</a> ›
+    <a href="/profiles/">Профили</a> ›
+    <span id="profile-name">Загрузка...</span>
+  </nav>
+
+  <div id="profile-container">
+    <p>Загрузка профиля...</p>
+  </div>
 </div>
 
 <script type="module">
@@ -19,28 +31,30 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
 (async () => {
   const container = document.getElementById("profile-container");
+  const profileNameSpan = document.getElementById("profile-name");
 
   const SUPABASE_URL = "{{ env.SUPABASE_URL }}";
-  const SUPABASE_ANON_KEY = "{{ env.SUPABASE_ANON_KEY }}"; // безопасно для фронтенда
+  const SUPABASE_ANON_KEY = "{{ env.SUPABASE_ANON_KEY }}";
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    container.innerHTML = "<p>Ошибка: ключи Supabase не заданы</p>";
+    container.innerHTML = "<p>Ошибка: конфигурация Supabase не задана</p>";
+    console.error("SUPABASE_URL or SUPABASE_ANON_KEY is missing");
     return;
   }
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-   let id = null;
-
-  const pathSegments = window.location.pathname.split("/").filter(Boolean);
+    const pathSegments = window.location.pathname.split("/").filter(Boolean);
+  let id = null;
   if (pathSegments[pathSegments.length - 2] === "profiles") {
-    id = pathSegments[pathSegments.length - 1];
+    const slug = pathSegments[pathSegments.length - 1];
+    id = slug.split("-").pop(); // Предполагается формат name-uuid
   }
 
-  const queryParams = new URLSearchParams(window.location.search);
-  if (!id) id = queryParams.get("id");
-
-  if (!id) {
-    container.innerHTML = "<p>ID профиля не указан</p>";
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!id || !uuidRegex.test(id)) {
+    container.innerHTML = "<p>Некорректный ID профиля</p>";
+    profileNameSpan.textContent = "Ошибка";
+    console.error("Invalid or missing profile ID:", id);
     return;
   }
 
@@ -53,20 +67,58 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
     if (error || !data) {
       container.innerHTML = "<p>Профиль не найден</p>";
+      profileNameSpan.textContent = "Не найден";
+      console.error("Profile not found or error:", error?.message);
       return;
     }
 
-    document.title = `${data.name} — ${data.category}`;
+    // Обновление title и SEO
+    document.title = `${data.name || "Профиль"} — ${data.category || "Категория"} | ModelConnect Miami`;
+    profileNameSpan.textContent = data.name || "Без имени";
 
+    // Генерация HTML для профиля
     container.innerHTML = `
-      <h1>${data.name}</h1>
-      <p>${data.city || ""}, ${data.category || ""}</p>
-      <img src="${data.image_url || "/img/placeholder.png"}" alt="${data.name}" style="max-width:400px;"/>
-      <p>${data.description || ""}</p>
+      <h1>${data.name || "Без имени"}</h1>
+      <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+        <img src="${data.image_url || "/img/placeholder.png"}" alt="${data.name || "Фото профиля"}" loading="lazy" width="400" height="auto" style="max-width: 100%;">
+        <div class="profile-card__description" style="max-width: 600px;">
+          <p><strong>Категория:</strong> ${data.category || "Не указана"}</p>
+          <p><strong>Город:</strong> ${data.city || "Не указан"}</p>
+          ${data.age ? `<p><strong>Возраст:</strong> ${data.age}</p>` : ""}
+          ${data.email ? `<p><strong>Email:</strong> <a href="mailto:${data.email}" rel="nofollow">${data.email}</a></p>` : ""}
+          ${data.phone ? `<p><strong>Телефон:</strong> <a href="tel:${data.phone}" rel="nofollow">${data.phone}</a></p>` : ""}
+          ${data.description ? `<p><strong>Описание:</strong> ${data.description}</p>` : ""}
+        </div>
+      </div>
       <a href="/">← Вернуться на главную</a>
     `;
+
+    // Динамическое добавление JSON-LD
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": data.name || "Профессионал",
+      "description": data.description ? data.description.slice(0, 200) : "Профиль профессионала в fashion-индустрии Майами",
+      "image": "{{ site.url }}" + (data.image_url || "/img/placeholder.png"),
+      "jobTitle": data.category || "Специалист",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": data.city || "Майами",
+        "addressCountry": "US"
+      },
+      "email": data.email || "",
+      "telephone": data.phone || "",
+      "birthDate": data.age ? new Date(new Date().getFullYear() - data.age, 0, 1).toISOString().split("T")[0] : "",
+      "url": "{{ site.url }}/profiles/" + (data.name ? data.name.toLowerCase().replace(/\s+/g, "-") + "-" + data.id.slice(0, 8) : data.id.slice(0, 8))
+    };
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.textContent = JSON.stringify(jsonLd);
+    document.head.appendChild(script);
   } catch (err) {
     container.innerHTML = `<p>Ошибка загрузки профиля: ${err.message}</p>`;
+    profileNameSpan.textContent = "Ошибка";
+    console.error("Error loading profile:", err.message);
   }
 })();
 </script>

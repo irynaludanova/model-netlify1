@@ -1,34 +1,88 @@
 ---
 layout: base
 pagination:
-  data: all-profiles
+  data: collections.profiles
   size: 1
   alias: profile
-permalink: "/profiles/{{ profile.id }}/"
+permalink: "profiles/{{ profile.id }}/index.html"
+
+eleventyComputed:
+  title: "{{ profile.name | default: 'Профиль' }} — {{ profile.category | default: 'Категория' }} | {{ site.name }}"
+  description: "Профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }}. Категория: {{ profile.category | default: 'не указана' }}. {{ site.name }} — платформа для моделей, фотографов и стилистов."
+
+  seo_title: "{{ profile.name | default: 'Профиль' }} — {{ profile.category | default: 'Категория' }} | {{ site.name }}"
+  seo_description: "Профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }}. Категория: {{ profile.category | default: 'не указана' }}."
+  seo_og_title: "{{ profile.name | default: 'Профиль' }} — {{ profile.category | default: 'Категория' }} | {{ site.name }}"
+  seo_og_description: "Профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }}. Категория: {{ profile.category | default: 'не указана' }}."
+  seo_og_image: "{{ site.url }}{{ profile.image_url | default: site.seo_og_image }}"
+  seo_og_url: "{{ site.url }}{{ page.url }}"
+  seo_twitter_title: "{{ profile.name | default: 'Профиль' }} — {{ profile.category | default: 'Категория' }} | {{ site.name }}"
+  seo_twitter_description: "Профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }}."
+  seo_twitter_image: "{{ site.url }}{{ profile.image_url | default: site.seo_og_image }}"
+  seo_canonical: "{{ site.url }}{{ page.url }}"
+  seo_json_ld: |
+    {% capture birthDate %}
+      {% if profile.age %}
+        {{ 'now' | date: '%Y' | minus: profile.age | date: '%Y-01-01' }}
+      {% else %}
+        ""
+      {% endif %}
+    {% endcapture %}
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "{{ profile.name | default: 'Профессионал' }}",
+      "description": "{{ profile.description | truncate: 200 | default: 'Профиль профессионала в fashion-индустрии Майами' }}",
+      "image": "{{ site.url }}{{ profile.image_url | default: site.seo_og_image }}",
+      "jobTitle": "{{ profile.category | default: 'Специалист' }}",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "{{ profile.city | default: 'Майами' }}",
+        "addressCountry": "US"
+      },
+      "email": "{{ profile.email | default: '' }}",
+      "telephone": "{{ profile.phone | default: '' }}",
+      "birthDate": {{ birthDate | jsonify }},
+      "url": "{{ site.url }}/profiles/{{ profile.name | slugify }}-{{ profile.id | slice: 0, 8 }}"
+    }
 ---
 
 
-  <h1>{{ profile.name }}</h1>
-  <div class="profile-page" style="display:flex;justify-content: space-around">
-{% if profile.image_url %}
-    <img src="{{ profile.image_url | default: '/img/placeholder.png' }}" alt="{{ profile.name }}" width="400">
-  {% endif %}
 
-  <div class="profile-card__description">
-  <p><strong>Категория:</strong> {{ profile.category }}</p>
-  <p><strong>Город:</strong> {{ profile.city }}</p>
-  {% if profile.age %}
-    <p><strong>Возраст:</strong> {{ profile.age }}</p>
-  {% endif %}
-  {% if profile.email %}
-    <p><strong>Email:</strong> <a href="mailto:{{ profile.email }}">{{ profile.email }}</a></p>
-  {% endif %}
-  {% if profile.phone %}
-    <p><strong>Телефон:</strong> {{ profile.phone }}</p>
-  {% endif %}
-  {% if profile.description %}
-    <p><strong>Описание:</strong> {{ profile.description }}</p>
-  {% endif %}
-  </div>
-</div>
+  <nav class="breadcrumbs">
+    <a href="/">Главная</a> ›
+
+    <span>{{ profile.name | default: 'Профиль' }}</span>
+  </nav>
+
+  <h1>{{ profile.name | default: 'Без имени' }}</h1>
+
+  <div class="profile-content" style="display:flex; justify-content: space-around;">
+    <img
+      src="{{ profile.image_url | default: '/img/placeholder.png' }}"
+      alt="{{ profile.name | default: 'Фото профиля' }}"
+      loading="lazy"
+      width="400"
+      height="auto"
+      class="profile-image"
+    />
+    <div class="profile-card__description">
+      <p><strong>Категория:</strong> {{ profile.category | default: 'Не указана' }}</p>
+      <p><strong>Город:</strong> {{ profile.city | default: 'Не указан' }}</p>
+      {% if profile.age %}
+        <p><strong>Возраст:</strong> {{ profile.age }}</p>
+      {% endif %}
+      {% if profile.email %}
+        <p><strong>Email:</strong> <a href="mailto:{{ profile.email }}" rel="nofollow">{{ profile.email }}</a></p>
+      {% endif %}
+      {% if profile.phone %}
+        <p><strong>Телефон:</strong> <a href="tel:{{ profile.phone }}" rel="nofollow">{{ profile.phone }}</a></p>
+      {% endif %}
+      {% if profile.description %}
+        <p><strong>Описание:</strong> {{ profile.description }}</p>
+      {% endif %}
+    </div>
+
+
+  <script type="application/ld+json">{{ seo_json_ld  }}</script>
 </div>
