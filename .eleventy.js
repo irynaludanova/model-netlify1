@@ -1,20 +1,10 @@
 import dotenv from "dotenv"
 import { createClient } from "@supabase/supabase-js"
 import slugify from "slugify"
-import eleventyPluginBundle from "@11ty/eleventy-plugin-bundle"
 
 dotenv.config()
 
 export default async function (eleventyConfig) {
-  eleventyConfig.addPlugin(eleventyPluginBundle, {
-    bundles: ["css", "js"],
-    transforms: ["minify"],
-    output: {
-      css: "css/bundle.[hash].css",
-      js: "js/bundle.[hash].js",
-    },
-  })
-
   eleventyConfig.addFilter("slugify", (str) => {
     return slugify(str, {
       lower: true,
@@ -48,7 +38,22 @@ export default async function (eleventyConfig) {
   } catch (err) {
     console.error("Ошибка загрузки профилей:", err.message)
   }
-
+  console.log(
+    "allRegions:",
+    JSON.stringify(
+      [...new Set(profiles.map((p) => p.city).filter(Boolean))],
+      null,
+      2
+    )
+  )
+  console.log(
+    "allCategories:",
+    JSON.stringify(
+      [...new Set(profiles.map((p) => p.category).filter(Boolean))],
+      null,
+      2
+    )
+  )
   eleventyConfig.addGlobalData("allProfiles", profiles)
 
   eleventyConfig.addGlobalData("allRegions", () => {

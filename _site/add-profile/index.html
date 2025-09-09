@@ -47,7 +47,7 @@
 
   </script>
   <!-- Google tag (gtag.js) -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4CXZPMW012"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4CXZPMW012"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -69,18 +69,25 @@
   <main>
     <div class="add-profile-section">
   <h1>Добавить профиль</h1>
-  <form name="add-profile" method="POST" action="/.netlify/functions/add-profile" id="add-profile-form" enctype="multipart/form-data" aria-label="Форма добавления профиля">
-    <input type="hidden" name="form-name" value="add-profile">
+  <form
+    name="add-profile"
+    method="POST"
+    action="/.netlify/functions/add-profile"
+    id="add-profile-form"
+    enctype="multipart/form-data"
+    aria-label="Форма добавления профиля"
+  >
+    <input type="hidden" name="form-name" value="add-profile" />
 
     <div class="form-group">
       <label for="name">Имя:</label>
-      <input type="text" id="name" name="name" required="" aria-required="true">
+      <input type="text" id="name" name="name" required aria-required="true" />
     </div>
 
     <div class="form-group">
       <label for="city">Город:</label>
-      <select id="city" name="city" required="" aria-required="true">
-        <option value="" disabled="" selected="">Выберите город</option>
+      <select id="city" name="city" required aria-required="true">
+        <option value="" disabled selected>Выберите город</option>
         
           <option value="Корал-Гейблс">Корал-Гейблс</option>
         
@@ -93,8 +100,8 @@
 
     <div class="form-group">
       <label for="category">Категория:</label>
-      <select id="category" name="category" required="" aria-required="true">
-        <option value="" disabled="" selected="">Выберите категорию</option>
+      <select id="category" name="category" required aria-required="true">
+        <option value="" disabled selected>Выберите категорию</option>
         
           <option value="Модель">Модель</option>
         
@@ -107,28 +114,28 @@
 
     <div class="form-group">
       <label for="description">Описание:</label>
-      <textarea id="description" name="description" required="" aria-required="true"></textarea>
+      <textarea id="description" name="description" required aria-required="true"></textarea>
     </div>
 
     <div class="form-group">
       <label for="age">Возраст:</label>
-      <input type="number" id="age" name="age" required="" aria-required="true" min="18" max="100">
+      <input type="number" id="age" name="age" required aria-required="true" min="18" max="100" />
     </div>
 
     <div class="form-group">
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required="" aria-required="true">
+      <input type="email" id="email" name="email" required aria-required="true" />
     </div>
 
     <div class="form-group">
       <label for="phone">Телефон (опционально):</label>
-      <input type="tel" id="phone" name="phone" aria-describedby="phone-note">
+      <input type="tel" id="phone" name="phone" aria-describedby="phone-note" />
       <p id="phone-note" class="form-note">Укажите телефон в формате +1XXXYYYZZZZ</p>
     </div>
 
     <div class="form-group">
       <label for="image">Фото профиля:</label>
-      <input type="file" name="image" id="image" accept="image/jpeg,image/png,image/webp" required="" aria-required="true">
+      <input type="file" name="image" id="image" accept="image/jpeg,image/png,image/webp" required aria-required="true" />
       <p class="form-note">Рекомендуемый размер: 300x300px, формат: JPG, PNG, WEBP.</p>
     </div>
 
