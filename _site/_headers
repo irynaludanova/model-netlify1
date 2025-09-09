@@ -1,23 +1,30 @@
-# HTML страницы
+/sitemap.xml
+  Cache-Control: public, no-cache
+  Content-Type: application/xml
 /*
   Cache-Control: public, no-cache
-  Content-Security-Policy: default-src 'self'; img-src 'self' https://res.cloudinary.com; script-src 'self' https://cdn.jsdelivr.net https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://*.supabase.co https://api.cloudinary.com https://*.google-analytics.com; style-src 'self' 'unsafe-inline'
+  Content-Security-Policy: default-src 'self'; img-src 'self' https://res.cloudinary.com; script-src 'self' https://cdn.jsdelivr.net https://www.googletagmanager.com https://*.google-analytics.com 'sha256-N333Jp6iNROohB0nP6lblmbLIdOYDj3oh0hc55n9mxY='; connect-src 'self' https://*.supabase.co https://api.cloudinary.com https://*.google-analytics.com; style-src 'self' 'unsafe-inline'
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
-
-# Статические ресурсы
-/css/*.css
-  Cache-Control: public, max-age=31536000, immutable
 /css/bundle.*.css
   Cache-Control: public, max-age=31536000, immutable
-/js/*.js
-  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: text/css
 /js/bundle.*.js
   Cache-Control: public, max-age=31536000, immutable
+  Content-Type: application/javascript
 /img/*.webp
   Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/webp
 /img/*.jpg
   Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/jpeg
 /img/*.png
   Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/png
+/img/*.ico
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/x-icon
+/img/site.webmanifest
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: application/manifest+json
