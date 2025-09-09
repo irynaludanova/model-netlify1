@@ -21,7 +21,10 @@ export default async function (eleventyConfig) {
 
   let profiles = []
   try {
-    const { data, error } = await supabase.from("profiles").select("*")
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .order("created_at", { ascending: false })
     if (error) {
       console.error("Ошибка Supabase:", error.message)
     } else {
@@ -34,8 +37,21 @@ export default async function (eleventyConfig) {
 
   eleventyConfig.addGlobalData("allProfiles", profiles)
 
-  let debugCategories = null
-  let debugRegions = null
+  eleventyConfig.addGlobalData("allRegions", () => {
+    const regions = [
+      ...new Set(profiles.map((p) => p.city).filter(Boolean)),
+    ].sort()
+    console.log("Все регионы:", JSON.stringify(regions, null, 2))
+    return regions
+  })
+
+  eleventyConfig.addGlobalData("allCategories", () => {
+    const categories = [
+      ...new Set(profiles.map((p) => p.category).filter(Boolean)),
+    ].sort()
+    console.log("Все категории:", JSON.stringify(categories, null, 2))
+    return categories
+  })
 
   eleventyConfig.addCollection("categories", () => {
     if (!profiles || !profiles.length) {
@@ -54,17 +70,14 @@ export default async function (eleventyConfig) {
           locale: "ru",
         })
         if (!categories[slug]) {
-          categories[slug] = {
-            name: p.category,
-            slug,
-            profiles: [],
-          }
+          categories[slug] = { name: p.category, slug, profiles: [] }
         }
         categories[slug].profiles.push(p)
       }
     })
-    const categoriesArray = Object.values(categories)
-    debugCategories = categoriesArray
+    const categoriesArray = Object.values(categories).sort((a, b) =>
+      a.name.localeCompare(b.name, "ru")
+    )
     console.log(
       "Созданная коллекция categories:",
       JSON.stringify(categoriesArray, null, 2)
@@ -89,17 +102,14 @@ export default async function (eleventyConfig) {
           locale: "ru",
         })
         if (!regions[slug]) {
-          regions[slug] = {
-            name: p.city,
-            slug,
-            profiles: [],
-          }
+          regions[slug] = { name: p.city, slug, profiles: [] }
         }
         regions[slug].profiles.push(p)
       }
     })
-    const regionsArray = Object.values(regions)
-    debugRegions = regionsArray
+    const regionsArray = Object.values(regions).sort((a, b) =>
+      a.name.localeCompare(b.name, "ru")
+    )
     console.log(
       "Созданная коллекция regions:",
       JSON.stringify(regionsArray, null, 2)

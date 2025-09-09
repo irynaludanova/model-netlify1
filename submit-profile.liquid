@@ -1,22 +1,57 @@
+---
+layout: base
+permalink: /submit-profile/index.html
+eleventyComputed:
+  title: "Спасибо за отправку профиля — {{ site.name }}"
+  description: "Ваш профиль успешно отправлен на {{ site.name }}. Он будет добавлен на сайт после модерации."
+  seo_title: "Спасибо за отправку — {{ site.name }}"
+  seo_description: "Ваш профиль успешно отправлен на {{ site.name }} и будет добавлен после проверки."
+  seo_og_title: "Спасибо за отправку — {{ site.name }}"
+  seo_og_description: "Ваш профиль успешно отправлен на {{ site.name }}."
+  seo_og_image: "{{ site.url }}{{ site.seo_og_image }}"
+  seo_og_url: "{{ site.url }}/submit-profile"
+  seo_twitter_title: "Спасибо за отправку — {{ site.name }}"
+  seo_twitter_description: "Ваш профиль успешно отправлен на {{ site.name }}."
+  seo_twitter_image: "{{ site.url }}{{ site.seo_og_image }}"
+  seo_canonical: "{{ site.url }}/submit-profile"
+  seo_json_ld: |
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Спасибо за отправку профиля — {{ site.name }}",
+      "url": "{{ site.url }}/submit-profile",
+      "description": "Ваш профиль успешно отправлен на {{ site.name }} и будет добавлен после проверки."
+    }
+---
+
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Спасибо за отправку!</title>
-    <meta name="robots" content="noindex, nofollow" />
-    <link rel="stylesheet" href="{{site.url}}/css/style.css" />
-  </head>
-  <body>
-    <main class="main-content">
-      <section class="thank-you-section">
-        <h1>Спасибо!</h1>
-        <p>
-          Ваш профиль успешно отправлен. Он будет добавлен на сайт в ближайшее
-          время.
-        </p>
-        <a href={{site.url}} class="home-link">Вернуться на главную</a>
-      </section>
-    </main>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow">
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+  <meta property="og:title" content="{{ seo_og_title }}">
+  <meta property="og:description" content="{{ seo_og_description }}">
+  <meta property="og:image" content="{{ seo_og_image }}">
+  <meta property="og:url" content="{{ seo_og_url }}">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ seo_twitter_title }}">
+  <meta name="twitter:description" content="{{ seo_twitter_description }}">
+  <meta name="twitter:image" content="{{ seo_twitter_image }}">
+  <link rel="canonical" href="{{ seo_canonical }}">
+  <link rel="preload" href="/css/style.css" as="style">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <main class="submit-profile-section">
+    <article>
+      <h1>Спасибо!</h1>
+      <p>Ваш профиль успешно отправлен. Он будет добавлен на сайт в ближайшее время.</p>
+      <a href="/" class="button" aria-label="Вернуться на главную страницу">Вернуться на главную</a>
+    </article>
+  </main>
+</body>
 </html>

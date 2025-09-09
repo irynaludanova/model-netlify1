@@ -3,17 +3,25 @@ layout: base
 permalink: /category/index.html
 eleventyComputed:
   title: '{{site.name}} — {{site.title1}}'
-  description: '{{site.description1}}'
+  description: '{{site.description1}} категории моделей Майами, фотографов, стилистов 2025'
   seo_title: '{{site.name}} — {{site.title1}}'
-  seo_description: '{{site.description1}}'
+  seo_description: '{{site.description1}} Все категории моделей, фотографов и стилистов Майами 2025'
   seo_og_title: '{{site.name}} — {{site.title1}}'
-  seo_og_description: '{{site.description1}}'
+  seo_og_description: '{{site.description1}} Обзор всех категорий моделей, фотографов и стилистов Майами 2025'
   seo_og_image: '{{site.url}}{{site.seo_og_image}}'
   seo_og_url: '{{site.url}}/category'
   seo_twitter_title: '{{site.name}} — {{site.title1}}'
-  seo_twitter_description: '{{site.description1}}'
+  seo_twitter_description: '{{site.description1}} Все категории моделей Майами, фотографов, стилистов 2025'
   seo_twitter_image: '{{site.url}}{{site.seo_og_image}}'
   seo_canonical: '{{site.url}}/category'
+  seo_json_ld: |
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "{{site.name}} — {{site.title1}}",
+      "url": "{{site.url}}/category",
+      "description": "{{site.description1}} Обзор всех категорий моделей, фотографов и стилистов Майами 2025"
+    }
 ---
 
 <div class="profiles-section" id="profiles">
@@ -38,8 +46,9 @@ eleventyComputed:
                 class="profile-card__image"
                 width="300"
                 height="200"
-                src="{{ p.image_url | default: '/img/placeholder.png' }}"
+                src="{{ p.image_url |  default: '/img/placeholder.png' }}"
                 alt="Фото профиля {{ p.name | default: 'Не указано' }}"
+                loading="lazy"
               />
               <div class="profile-card__description">
                 <h3>{{ p.name | default: 'Без имени' }}</h3>
@@ -62,13 +71,11 @@ eleventyComputed:
   const profileList = document.getElementById('profile-list');
   const profiles = profileList.querySelectorAll('.profile-card');
 
-
   function populateFilters() {
-
     while (regionSelect.options.length > 1) regionSelect.remove(1);
     while (categorySelect.options.length > 1) categorySelect.remove(1);
 
-     const regions = [...new Set(Array.from(profiles).map(p => p.dataset.region).filter(Boolean))];
+    const regions = [...new Set(Array.from(profiles).map(p => p.dataset.region).filter(Boolean))];
     const categories = [...new Set(Array.from(profiles).map(p => p.dataset.category).filter(Boolean))];
 
     regions.forEach(r => {
@@ -100,4 +107,46 @@ eleventyComputed:
   populateFilters();
   regionSelect.addEventListener('change', filterProfiles);
   categorySelect.addEventListener('change', filterProfiles);
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    {% assign position = 1 %}
+    {% for category in collections.categories %}
+      {% for p in category.profiles %}
+      {
+        "@type": "ListItem",
+        "position": {{ position }},
+        "item": {
+          "@type": "Person",
+          "name": "{{ p.name }}",
+          "description": "{{ p.description | truncate: 200 }}",
+          "url": "{{ site.url }}/profiles/{{ p.id }}/"
+        }
+      }{% unless forloop.last %},{% endunless %}
+      {% assign position = position | plus: 1 %}
+      {% endfor %}
+    {% endfor %}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Главная",
+    "item": "{{ site.url }}/"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Категории",
+    "item": "{{ site.url }}/category/"
+  }]
+}
 </script>

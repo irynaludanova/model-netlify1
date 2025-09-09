@@ -4,85 +4,103 @@ pagination:
   data: collections.profiles
   size: 1
   alias: profile
-permalink: "profiles/{{ profile.id }}/index.html"
-
+permalink: "profiles/{{ profile.id | slugify }}/index.html"
 eleventyComputed:
   title: "{{ profile.name | default: 'Профиль' }} — {{ profile.category | default: 'Категория' }} | {{ site.name }}"
   description: "Профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }}. Категория: {{ profile.category | default: 'не указана' }}. {{ site.name }} — платформа для моделей, фотографов и стилистов."
-
   seo_title: "{{ profile.name | default: 'Профиль' }} — {{ profile.category | default: 'Категория' }} | {{ site.name }}"
-  seo_description: "Профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }}. Категория: {{ profile.category | default: 'не указана' }}."
+  seo_description: "Подробный профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }}. Категория: {{ profile.category | default: 'не указана' }} на ModelConnect Miami 2025."
   seo_og_title: "{{ profile.name | default: 'Профиль' }} — {{ profile.category | default: 'Категория' }} | {{ site.name }}"
-  seo_og_description: "Профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }}. Категория: {{ profile.category | default: 'не указана' }}."
-  seo_og_image: "{{ site.url }}{{ profile.image_url | default: site.seo_og_image }}"
-  seo_og_url: "{{ site.url }}{{ page.url }}"
+  seo_og_description: "Профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }}. Категория: {{ profile.category | default: 'не указана' }} на ModelConnect Miami."
+  seo_og_image: "{{ site.url }}{{ profile.image_url | default: '/img/placeholder.webp' }}"
+  seo_og_url: "{{ site.url }}/profiles/{{ profile.id | slugify }}"
   seo_twitter_title: "{{ profile.name | default: 'Профиль' }} — {{ profile.category | default: 'Категория' }} | {{ site.name }}"
-  seo_twitter_description: "Профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }}."
-  seo_twitter_image: "{{ site.url }}{{ profile.image_url | default: site.seo_og_image }}"
-  seo_canonical: "{{ site.url }}{{ page.url }}"
+  seo_twitter_description: "Профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }} на ModelConnect Miami 2025."
+  seo_twitter_image: "{{ site.url }}{{ profile.image_url | default: '/img/placeholder.webp' }}"
+  seo_canonical: "{{ site.url }}/profiles/{{ profile.id | slugify }}"
   seo_json_ld: |
-    {% capture birthDate %}
-      {% if profile.age %}
-        {{ 'now' | date: '%Y' | minus: profile.age | date: '%Y-01-01' }}
-      {% else %}
-        ""
-      {% endif %}
-    {% endcapture %}
     {
       "@context": "https://schema.org",
       "@type": "Person",
-      "name": "{{ profile.name | default: 'Профессионал' }}",
-      "description": "{{ profile.description | truncate: 200 | default: 'Профиль профессионала в fashion-индустрии Майами' }}",
-      "image": "{{ site.url }}{{ profile.image_url | default: site.seo_og_image }}",
-      "jobTitle": "{{ profile.category | default: 'Специалист' }}",
+      "name": "{{ profile.name | default: 'Профессионал' | escape }}",
+      "description": "{{ profile.description | truncate: 200 | default: 'Профиль профессионала в fashion-индустрии Майами' | escape }}",
+      "image": "{{ site.url }}{{ profile.image_url | default: '/img/placeholder.webp' }}",
+      "jobTitle": "{{ profile.category | default: 'Специалист' | escape }}",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "{{ profile.city | default: 'Майами' }}",
+        "addressLocality": "{{ profile.city | default: 'Майами' | escape }}",
         "addressCountry": "US"
       },
-      "email": "{{ profile.email | default: '' }}",
-      "telephone": "{{ profile.phone | default: '' }}",
-      "birthDate": {{ birthDate | jsonify }},
-      "url": "{{ site.url }}/profiles/{{ profile.name | slugify }}-{{ profile.id | slice: 0, 8 }}"
+      "email": "{{ profile.email | default: '' | escape }}",
+      "telephone": "{{ profile.phone | default: '' | escape }}",
+      "birthDate": {% if profile.age %}"{{ 'now' | date: '%Y' | minus: profile.age }}-01-01"{% else %}""{% endif %},
+      "url": "{{ site.url }}/profiles/{{ profile.id | slugify }}"
     }
 ---
 
+  <div class="profile-page" style="flex-direction:column">
+    <nav class="breadcrumbs" aria-label="Навигация по сайту">
+      <a href="/">Главная</a> ›
+       <span>{{ profile.name | default: 'Профиль' | escape }}</span>
+    </nav>
 
+    <section aria-label="Информация о профиле" >
+      <h1>{{ profile.name | default: 'Без имени' | escape }}</h1>
+      <div class="profile-content" style="display:flex; margin-bottom:1rem; justify-content: space-around;">
+        <img
+        src="{{ profile.image_url | default: '/img/placeholder.webp' }}"
+        alt="Фото профиля {{ profile.name | default: 'Без имени' | escape }}"
+        loading="lazy"
+        width="400"
+        height="auto"
+        class="profile-image"
+      />
+      <div class="profile-card__description" style="max-width: 600px;">
+        <p><strong>Категория:</strong> {{ profile.category | default: 'Не указана' | escape }}</p>
+        <p><strong>Город:</strong> {{ profile.city | default: 'Не указан' | escape }}</p>
+        {% if profile.age %}
+          <p><strong>Возраст:</strong> {{ profile.age | escape }}</p>
+        {% endif %}
+        {% if profile.email %}
+          <p><strong>Email:</strong> <a href="mailto:{{ profile.email | escape }}" rel="nofollow">{{ profile.email | escape }}</a></p>
+        {% endif %}
+        {% if profile.phone %}
+          <p><strong>Телефон:</strong> <a href="tel:{{ profile.phone | escape }}" rel="nofollow">{{ profile.phone | escape }}</a></p>
+        {% endif %}
+        {% if profile.description %}
+          <p><strong>Описание:</strong> {{ profile.description | escape }}</p>
+        {% endif %}
+      </div>
+      </div>
 
-  <nav class="breadcrumbs">
-    <a href="/">Главная</a> ›
+      <a href="/" aria-label="Вернуться на главную страницу" >← Вернуться на главную</a>
+    </section>
+  </div>
 
-    <span>{{ profile.name | default: 'Профиль' }}</span>
-  </nav>
-
-  <h1>{{ profile.name | default: 'Без имени' }}</h1>
-
-  <div class="profile-content" style="display:flex; justify-content: space-around;">
-    <img
-      src="{{ profile.image_url | default: '/img/placeholder.png' }}"
-      alt="{{ profile.name | default: 'Фото профиля' }}"
-      loading="lazy"
-      width="400"
-      height="auto"
-      class="profile-image"
-    />
-    <div class="profile-card__description">
-      <p><strong>Категория:</strong> {{ profile.category | default: 'Не указана' }}</p>
-      <p><strong>Город:</strong> {{ profile.city | default: 'Не указан' }}</p>
-      {% if profile.age %}
-        <p><strong>Возраст:</strong> {{ profile.age }}</p>
-      {% endif %}
-      {% if profile.email %}
-        <p><strong>Email:</strong> <a href="mailto:{{ profile.email }}" rel="nofollow">{{ profile.email }}</a></p>
-      {% endif %}
-      {% if profile.phone %}
-        <p><strong>Телефон:</strong> <a href="tel:{{ profile.phone }}" rel="nofollow">{{ profile.phone }}</a></p>
-      {% endif %}
-      {% if profile.description %}
-        <p><strong>Описание:</strong> {{ profile.description }}</p>
-      {% endif %}
-    </div>
-
-
-  <script type="application/ld+json">{{ seo_json_ld  }}</script>
-</div>
+  <script type="application/ld+json">{{ seo_json_ld }}</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Главная",
+        "item": "{{ site.url }}/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Профили",
+        "item": "{{ site.url }}/profiles"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{{ profile.name | default: 'Профиль' | escape }}",
+        "item": "{{ site.url }}/profiles/{{ profile.id | slugify }}"
+      }
+    ]
+  }
+  </script>

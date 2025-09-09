@@ -2,119 +2,81 @@
   <label for="region-select">Выберите регион:</label>
   <select id="region-select">
     <option value="все">Все регионы</option>
+    {% for region in allRegions %}
+      <option value="{{ region | escape }}">{{ region | escape }}</option>
+    {% endfor %}
   </select>
 
   <label for="category-select">Выберите категорию:</label>
   <select id="category-select">
     <option value="все">Все категории</option>
+    {% for category in allCategories %}
+      <option value="{{ category | escape }}">{{ category | escape }}</option>
+    {% endfor %}
   </select>
 </div>
 
-<script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const profileList = document.getElementById('profile-list');
+    const regionSelect = document.getElementById('region-select');
+    const categorySelect = document.getElementById('category-select');
+    const profiles = profileList.querySelectorAll('.profile-card');
 
-const SUPABASE_URL = "{{ env.SUPABASE_URL }}";
-const SUPABASE_ANON_KEY = "{{ env.SUPABASE_ANON_KEY }}";
+    // Нормализация строк: удаляем пробелы и приводим к нижнему регистру
+    const normalizeString = (str) => (str || '').trim().toLowerCase();
 
+    // Сохраняем исходные профили для фильтрации
+    const allProfiles = Array.from(profiles).map(profile => ({
+      city: normalizeString(profile.dataset.region),
+      category: normalizeString(profile.dataset.category),
+      innerHTML: profile.outerHTML
+    }));
 
-if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-  document.getElementById("profile-list").innerHTML = "<p>Ошибка: ключи Supabase не заданы</p>";
-  throw new Error("SUPABASE_URL или SUPABASE_ANON_KEY отсутствуют");
-}
+    console.log('All profiles:', allProfiles);
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    function filterProfiles() {
+      const region = normalizeString(regionSelect.value);
+      const category = normalizeString(categorySelect.value);
 
-const profileList = document.getElementById("profile-list");
-const regionSelect = document.getElementById("region-select");
-const categorySelect = document.getElementById("category-select");
+      console.log('Filtering with region:', region, 'category:', category);
 
-let allProfiles = [];
+      profileList.innerHTML = '';
 
-async function fetchProfiles() {
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("*")
-    .order("created_at", { ascending: false });
+      const filtered = allProfiles.filter(p => {
+        const matchRegion = region === 'все' || p.city === region;
+        const matchCategory = category === 'все' || p.category === category;
+        return matchRegion && matchCategory;
+      });
 
-  if (error) {
-    profileList.innerHTML = `<p>Ошибка загрузки профилей: ${error.message}</p>`;
-    return;
-  }
+      console.log('Filtered profiles:', filtered);
 
-  allProfiles = data;
-  renderProfiles(allProfiles);
-  populateFilters(allProfiles);
-}
+      if (filtered.length === 0) {
+        profileList.innerHTML = '<p>Профили не найдены.</p>';
+        return;
+      }
 
-function renderProfiles(profiles) {
-  profileList.innerHTML = "";
-
-  if (!profiles.length) {
-    profileList.innerHTML = "<p>Профили не найдены.</p>";
-    return;
-  }
-
-  profiles.forEach((p) => {
-    const div = document.createElement("div");
-    div.className = "profile-card";
-    div.dataset.region = p.city || "";
-    div.dataset.category = p.category || "";
-    div.innerHTML = `
-      <img
-        class="profile-card__image"
-        width="300"
-        height="200"
-        src="${p.image_url || '/img/placeholder.png'}"
-        alt="Фото профиля ${p.name}"
-      />
-      <div class="profile-card__description">
-        <h3>${p.name}</h3>
-        <p>${p.city || ""}, ${p.category || ""}</p>
-        <a href="/profiles/${p.id}/">Подробнее</a>
-      </div>
-    `;
-    profileList.appendChild(div);
-  });
-}
-
-function populateFilters(profiles) {
-  const regions = [...new Set(profiles.map(p => p.city).filter(Boolean))];
-  const categories = [...new Set(profiles.map(p => p.category).filter(Boolean))];
-
-  regions.forEach(r => {
-    if (![...regionSelect.options].some(opt => opt.value === r)) {
-      const option = document.createElement("option");
-      option.value = r;
-      option.textContent = r;
-      regionSelect.appendChild(option);
+      filtered.forEach(p => {
+        profileList.insertAdjacentHTML('beforeend', p.innerHTML);
+      });
     }
-  });
 
-  categories.forEach(c => {
-    if (![...categorySelect.options].some(opt => opt.value === c)) {
-      const option = document.createElement("option");
-      option.value = c;
-      option.textContent = c;
-      categorySelect.appendChild(option);
+    // Проверка, существуют ли элементы
+    if (!regionSelect || !categorySelect) {
+      console.error('Select elements not found');
+      return;
     }
+
+    regionSelect.addEventListener('change', () => {
+      console.log('Region select changed');
+      filterProfiles();
+    });
+    categorySelect.addEventListener('change', () => {
+      console.log('Category select changed');
+      filterProfiles();
+    });
+
+    // Первоначальная фильтрация (на случай, если выбраны значения по умолчанию)
+    filterProfiles();
   });
-}
-
-function filterProfiles() {
-  const region = regionSelect.value;
-  const category = categorySelect.value;
-
-  const filtered = allProfiles.filter(p => {
-    const matchRegion = region === "все" || p.city === region;
-    const matchCategory = category === "все" || p.category === category;
-    return matchRegion && matchCategory;
-  });
-
-  renderProfiles(filtered);
-}
-
-regionSelect.addEventListener("change", filterProfiles);
-categorySelect.addEventListener("change", filterProfiles);
-
-fetchProfiles();
 </script>

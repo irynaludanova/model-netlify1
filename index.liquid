@@ -2,25 +2,54 @@
 layout: base
 pagination:
   data: allProfiles
-  size: 6
+  size: 4
   alias: profiles
 permalink: "{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber }}/{% endif %}index.html"
 
 eleventyComputed:
   title: "{{ site.name }} — {{ site.title1 }}"
-  description: "{{ site.description1 }}"
-  seo_title: "{{ site.title1 }} — {{ site.title }}"
-  seo_description: "{{ site.description1 }}"
+  description: "{{ site.description1 }} модели Майами 2025, фотографы Халландейл, стилисты Корал-Гейблс"
+  seo_title: "{{ site.title1 }}"
+  seo_description: "{{ site.description1 }} Главная страница с моделями Майами 2025, фотографами Халландейл, стилистами Корал-Гейблс"
   seo_og_title: "{{ site.title1 }}"
-  seo_og_description: "{{ site.description1 }}"
+  seo_og_description: "{{ site.description1 }} Обзор моделей Майами 2025, фотографов Халландейл, стилистов Корал-Гейблс"
   seo_og_image: "{{ site.url }}{{ site.seo_og_image }}"
-  seo_og_url: "{{ site.url }}"
+  seo_og_url: "{{ site.url }}{% if pagination.pageNumber > 0 %}/page/{{ pagination.pageNumber }}{% endif %}"
   seo_twitter_title: "{{ site.title1 }} — {{ site.name }}"
-  seo_twitter_description: "{{ site.description1 }}"
+  seo_twitter_description: "{{ site.description1 }} модели Майами 2025, фотографы Халландейл, стилисты Корал-Гейблс"
   seo_twitter_image: "{{ site.url }}{{ site.seo_og_image }}"
-  seo_canonical: "{{ site.url }}"
+  seo_canonical: "{{ site.url }}{% if pagination.pageNumber > 0 %}/page/{{ pagination.pageNumber }}{% endif %}"
+  seo_json_ld: |
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "{{ site.name }} — {{ site.title1 }}",
+      "url": "{{ site.url }}{% if pagination.pageNumber > 0 %}/page/{{ pagination.pageNumber }}{% endif %}",
+      "description": "{{ site.description1 }} Главная страница с моделями Майами 2025, фотографами Халландейл, стилистами Корал-Гейблс",
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": [
+          {% for profile in profiles %}
+          {
+            "@type": "ListItem",
+            "position": {{ forloop.index }},
+            "item": {
+              "@type": "Person",
+              "name": "{{ profile.name | escape }}",
+              "jobTitle": "{{ profile.category | escape }}",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "{{ profile.city | escape }}"
+              },
+              "image": "{{ profile.image_url | default: '/img/placeholder.webp' }}",
+              "url": "{{ site.url }}/profiles/{{ profile.id | slugify }}/"
+            }
+          }{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        ]
+      }
+    }
 ---
-
 <div class="profiles-section">
   <h1>{{ site.name }}</h1>
   <h2>{{ site.title1 }} в 2025</h2>
@@ -34,18 +63,19 @@ eleventyComputed:
   <div class="profile-list" id="profile-list">
     {% if profiles.length > 0 %}
       {% for profile in profiles %}
-        <div class="profile-card">
+        <div class="profile-card" data-region="{{ profile.city | default: '' | escape }}" data-category="{{ profile.category | default: '' | escape }}">
           <img
             class="profile-card__image"
             width="300"
             height="200"
-            src="{{ profile.image_url | default: '/img/placeholder.png' }}"
-            alt="Фото профиля {{ profile.name }}"
+            src="{{ profile.image_url | default: '/img/placeholder.webp' }}"
+            alt="Фото профиля {{ profile.name | escape }}"
+            loading="lazy"
           />
           <div class="profile-card__description">
-            <h3>{{ profile.name }}</h3>
-            <p>{{ profile.city | default: '' }}, {{ profile.category | default: '' }}</p>
-            <a href="/profiles/{{ profile.id }}/">Подробнее</a>
+            <h3>{{ profile.name | escape }}</h3>
+            <p>{{ profile.city | default: 'Регион не указан' | escape }}, {{ profile.category | default: 'Категория не указан' | escape }}</p>
+            <a href="/profiles/{{ profile.id | slugify }}/" aria-label="Подробнее о {{ profile.name | escape }}">Подробнее</a>
           </div>
         </div>
       {% endfor %}
@@ -56,3 +86,23 @@ eleventyComputed:
 
   {% include "pagination.liquid" %}
 </div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Главная",
+    "item": "{{ site.url }}/"
+  }]
+}
+</script>
+
+{% if pagination.href.previous %}
+  <link rel="prev" href="{{ pagination.href.previous }}">
+{% endif %}
+{% if pagination.href.next %}
+  <link rel="next" href="{{ pagination.href.next }}">
+{% endif %}
