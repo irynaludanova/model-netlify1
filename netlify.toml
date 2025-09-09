@@ -37,3 +37,27 @@
   from = "/submit-profile"
   to = "/.netlify/functions/add-profile"
   status = 200
+
+[build]
+  command = "npx eleventy"
+  publish = "_site"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, no-cache"
+
+[[headers]]
+  for = "/css/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/js/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

@@ -124,8 +124,7 @@ eleventyComputed:
         try {
           image_url = await cloudinaryUpload(file);
         } catch (err) {
-          console.error('Ошибка загрузки изображения:', err.message);
-          alert('Ошибка загрузки изображения: ' + err.message);
+                    alert('Ошибка загрузки изображения: ' + err.message);
           return;
         }
       }
@@ -153,8 +152,7 @@ eleventyComputed:
           throw new Error('Ошибка сервера: ' + result.error);
         }
 
-        // Сохраняем данные профиля в localStorage
-        localStorage.setItem('newProfile', JSON.stringify(result.profile));
+             localStorage.setItem('newProfile', JSON.stringify(result.profile));
         alert('Профиль успешно добавлен!');
         window.location.href = '/';
       } catch (err) {

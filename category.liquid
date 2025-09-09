@@ -42,14 +42,19 @@ eleventyComputed:
         {% if category.profiles and category.profiles.length > 0 %}
           {% for p in category.profiles %}
             <div class="profile-card" data-region="{{ p.city | default: '' }}" data-category="{{ p.category | default: '' }}">
-              <img
-                class="profile-card__image"
-                width="300"
-                height="200"
-                src="{{ p.image_url |  default: '/img/placeholder.png' }}"
-                alt="Фото профиля {{ p.name | default: 'Не указано' }}"
-                loading="lazy"
-              />
+             <img
+    class="profile-card__image"
+    width="300"
+    height="200"
+    src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ p.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }}"
+    srcset="
+      https://res.cloudinary.com/dimallvw3/image/upload/w_150,h_100,c_fill,q_auto,f_webp/{{ p.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 150w,
+      https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ p.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 300w,
+      https://res.cloudinary.com/dimallvw3/image/upload/w_600,h_400,c_fill,q_auto,f_webp/{{ p.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 600w"
+    sizes="(max-width: 600px) 150px, (max-width: 1200px) 300px, 600px"
+    alt="Фото профиля {{ p.name | escape }}"
+    loading="lazy"
+  />
               <div class="profile-card__description">
                 <h3>{{ p.name | default: 'Без имени' }}</h3>
                 <p>{{ p.city | default: 'Регион не указан' }}, {{ p.category | default: 'Категория не указана' }}</p>

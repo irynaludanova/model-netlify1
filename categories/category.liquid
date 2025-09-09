@@ -51,13 +51,18 @@ eleventyComputed:
         {% for profile in category.profiles %}
           <article class="profile-card" style="display: flex;">
             <img
-              src="{{ profile.image_url | default: '/img/placeholder.webp' }}"
-              alt="Фото профиля {{ profile.name | default: 'Без имени' | escape }}"
-              class="profile-card__image"
-              width="300"
-              height="200"
-              loading="lazy"
-            >
+    class="profile-card__image"
+    width="300"
+    height="200"
+    src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }}"
+    srcset="
+      https://res.cloudinary.com/dimallvw3/image/upload/w_150,h_100,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 150w,
+      https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 300w,
+      https://res.cloudinary.com/dimallvw3/image/upload/w_600,h_400,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 600w"
+    sizes="(max-width: 600px) 150px, (max-width: 1200px) 300px, 600px"
+    alt="Фото профиля {{ profile.name | escape }}"
+    loading="lazy"
+  />
             <div class="profile-card__description">
               <h2>{{ profile.name | default: 'Без имени' | escape }}</h2>
               <p>{{ profile.city | default: 'Регион не указан' | escape }}</p>

@@ -48,6 +48,15 @@
 }
 
   </script>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4CXZPMW012"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4CXZPMW012');
+</script>
 </head>
 <body>
   <nav>
@@ -70,14 +79,19 @@
     <section aria-label="Информация о профиле" >
       <h1>Maria</h1>
       <div class="profile-content" style="display:flex; margin-bottom:1rem; justify-content: space-around;">
-        <img
-        src="https://res.cloudinary.com/dimallvw3/image/upload/v1757334488/szmq04q6ze5lrgaudkpr.jpg"
-        alt="Фото профиля Maria"
-        loading="lazy"
-        width="400"
-        height="auto"
-        class="profile-image"
-      />
+      <img
+    class="profile-card__image"
+    width="300"
+    height="200"
+    src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757334488/szmq04q6ze5lrgaudkpr.jpg"
+    srcset="
+      https://res.cloudinary.com/dimallvw3/image/upload/w_150,h_100,c_fill,q_auto,f_webp/v1757334488/szmq04q6ze5lrgaudkpr.jpg 150w,
+      https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757334488/szmq04q6ze5lrgaudkpr.jpg 300w,
+      https://res.cloudinary.com/dimallvw3/image/upload/w_600,h_400,c_fill,q_auto,f_webp/v1757334488/szmq04q6ze5lrgaudkpr.jpg 600w"
+    sizes="(max-width: 600px) 150px, (max-width: 1200px) 300px, 600px"
+    alt="Фото профиля Maria"
+    loading="lazy"
+  />
       <div class="profile-card__description" style="max-width: 600px;">
         <p><strong>Категория:</strong> Стилист</p>
         <p><strong>Город:</strong> Халландейл</p>

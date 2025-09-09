@@ -29,12 +29,11 @@ export default async function (eleventyConfig) {
       console.error("Ошибка Supabase:", error.message)
     } else {
       profiles = data || []
-      // Нормализуем city в профилях
+
       profiles = profiles.map((profile) => ({
         ...profile,
         city: profile.city ? profile.city.trim() : "",
       }))
-      console.log("Загруженные профили:", JSON.stringify(profiles, null, 2))
     }
   } catch (err) {
     console.error("Ошибка загрузки профилей:", err.message)
@@ -54,7 +53,7 @@ export default async function (eleventyConfig) {
     const categories = [
       ...new Set(profiles.map((p) => p.category).filter(Boolean)),
     ].sort((a, b) => a.localeCompare(b, "ru"))
-    console.log("Все категории:", JSON.stringify(categories, null, 2))
+
     return categories
   })
 
@@ -83,18 +82,11 @@ export default async function (eleventyConfig) {
     const categoriesArray = Object.values(categories).sort((a, b) =>
       a.name.localeCompare(b.name, "ru")
     )
-    console.log(
-      "Созданная коллекция categories:",
-      JSON.stringify(categoriesArray, null, 2)
-    )
     return categoriesArray
   })
 
   eleventyConfig.addCollection("regions", () => {
     if (!profiles || !profiles.length) {
-      console.log(
-        "Профили отсутствуют или пусты, возвращается пустая коллекция regions"
-      )
       return []
     }
     const regions = {}
@@ -115,16 +107,12 @@ export default async function (eleventyConfig) {
     const regionsArray = Object.values(regions).sort((a, b) =>
       a.name.localeCompare(b.name, "ru")
     )
-    console.log(
-      "Созданная коллекция regions:",
-      JSON.stringify(regionsArray, null, 2)
-    )
+
     return regionsArray
   })
 
   eleventyConfig.addCollection("profiles", () => {
     if (!profiles || !profiles.length) {
-      console.log("Профили отсутствуют, коллекция profiles пустая")
       return []
     }
     return profiles
@@ -139,6 +127,7 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("img")
   eleventyConfig.addPassthroughCopy("css")
   eleventyConfig.addPassthroughCopy("favicon.ico")
+  eleventyConfig.addPassthroughCopy("_headers")
 
   return {
     dir: {
