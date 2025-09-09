@@ -175,56 +175,6 @@
   </select>
 </div>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const profileList = document.getElementById('profile-list');
-    const regionSelect = document.getElementById('region-select');
-    const categorySelect = document.getElementById('category-select');
-    const profiles = profileList.querySelectorAll('.profile-card');
-
-    // Унификация: приводим всё к нижнему регистру и заменяем пробелы/дефисы на дефис
-    const normalizeString = (str) => {
-      if (!str) return '';
-      return str.trim().toLowerCase().replace(/[\s-]+/g, '-');
-    };
-
-    let allProfiles = Array.from(profiles).map(profile => ({
-      city: normalizeString(profile.dataset.region),
-      category: normalizeString(profile.dataset.category),
-      innerHTML: profile.outerHTML
-    }));
-
-    function filterProfiles() {
-      const region = normalizeString(regionSelect.value);
-      const category = normalizeString(categorySelect.value);
-
-      profileList.innerHTML = '';
-
-      const filtered = allProfiles.filter(p => {
-        const matchRegion = region === 'все' || p.city === region;
-        const matchCategory = category === 'все' || p.category === category;
-        return matchRegion && matchCategory;
-      });
-
-      if (filtered.length === 0) {
-        profileList.innerHTML = '<p>Профили не найдены.</p>';
-        return;
-      }
-
-      filtered.forEach(p => {
-        profileList.insertAdjacentHTML('beforeend', p.innerHTML);
-      });
-    }
-
-    if (regionSelect && categorySelect) {
-      regionSelect.addEventListener('change', filterProfiles);
-      categorySelect.addEventListener('change', filterProfiles);
-    }
-
-    filterProfiles();
-  });
-</script>
-
 
   <div class="profile-list" id="profile-list">
     
@@ -392,5 +342,6 @@
   <footer class="site-footer">
     <p>© 2025 ModelConnect Miami</p>
   </footer>
+  <script src="/js/filters.js" defer></script>
 </body>
 </html>
