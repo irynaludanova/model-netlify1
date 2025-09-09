@@ -3,7 +3,7 @@
   <select id="region-select">
     <option value="все">Все регионы</option>
     {% for region in allRegions %}
-      <option value="{{ region | escape | downcase }}">{{ region | escape }}</option>
+      <option value="{{ region | escape | downcase | replace: ' ', '-' }}">{{ region | escape }}</option>
     {% endfor %}
   </select>
 
@@ -23,60 +23,17 @@
     const categorySelect = document.getElementById('category-select');
     const profiles = profileList.querySelectorAll('.profile-card');
 
+    // Унификация: приводим всё к нижнему регистру и заменяем пробелы/дефисы на дефис
     const normalizeString = (str) => {
       if (!str) return '';
-      return str.trim().toLowerCase().replace(/\s+/g, ' ');
+      return str.trim().toLowerCase().replace(/[\s-]+/g, '-');
     };
-
-   const createProfileCard = (profile) => {
-  const safeName = profile.name ? profile.name.replace(/</g, '&lt;').replace(/>/g, '&gt;') : 'Без имени';
-  const imageBase = profile.image_url.replace('https://res.cloudinary.com/dimallvw3/image/upload/', '');
-  return `
-    <div class="profile-card" data-region="${normalizeString(profile.city)}" data-category="${normalizeString(profile.category)}">
-      <img
-        class="profile-card__image"
-        width="300"
-        height="200"
-        src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/${imageBase}"
-        srcset="
-          https://res.cloudinary.com/dimallvw3/image/upload/w_150,h_100,c_fill,q_auto,f_webp/${imageBase} 150w,
-          https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/${imageBase} 300w,
-          https://res.cloudinary.com/dimallvw3/image/upload/w_600,h_400,c_fill,q_auto,f_webp/${imageBase} 600w"
-        sizes="(max-width: 600px) 150px, (max-width: 1200px) 300px, 600px"
-        alt="Фото профиля ${safeName}"
-        loading="lazy"
-      />
-      <div class="profile-card__description">
-        <h3>${safeName}</h3>
-        <p>${profile.city || 'Регион не указан'}, ${profile.category || 'Категория не указана'}</p>
-        ${profile.description ? `<p>${profile.description.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>` : ''}
-        ${profile.age ? `<p>Возраст: ${profile.age}</p>` : ''}
-        ${profile.email ? `<p>Email: <a href="mailto:${profile.email}">${profile.email}</a></p>` : ''}
-        ${profile.phone ? `<p>Телефон: <a href="tel:${profile.phone}">${profile.phone}</a></p>` : ''}
-        <a href="/profiles/${profile.id ? profile.id.replace(/[^a-z0-9-]/g, '-') : ''}/" aria-label="Подробнее о ${safeName}">Подробнее</a>
-      </div>
-    </div>
-  `;
-};
-
 
     let allProfiles = Array.from(profiles).map(profile => ({
       city: normalizeString(profile.dataset.region),
       category: normalizeString(profile.dataset.category),
       innerHTML: profile.outerHTML
     }));
-
-    const newProfile = localStorage.getItem('newProfile');
-    if (newProfile) {
-      const profileData = JSON.parse(newProfile);
-      allProfiles.unshift({
-        city: normalizeString(profileData.city),
-        category: normalizeString(profileData.category),
-        innerHTML: createProfileCard(profileData)
-      });
-      localStorage.removeItem('newProfile');
-    }
-
 
     function filterProfiles() {
       const region = normalizeString(regionSelect.value);
@@ -100,16 +57,10 @@
       });
     }
 
-    if (!regionSelect || !categorySelect) {
-          return;
+    if (regionSelect && categorySelect) {
+      regionSelect.addEventListener('change', filterProfiles);
+      categorySelect.addEventListener('change', filterProfiles);
     }
-
-    regionSelect.addEventListener('change', () => {
-         filterProfiles();
-    });
-    categorySelect.addEventListener('change', () => {
-       filterProfiles();
-    });
 
     filterProfiles();
   });
