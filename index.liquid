@@ -37,6 +37,9 @@ eleventyComputed:
               "@type": "Person",
               "name": "{{ profile.name | escape }}",
               "jobTitle": "{{ profile.category | escape }}",
+              "description": "{{ profile.description | escape }}",
+              "email": "{{ profile.email | escape }}",
+              "telephone": "{{ profile.phone | escape }}",
               "address": {
                 "@type": "PostalAddress",
                 "addressLocality": "{{ profile.city | escape }}"
@@ -63,7 +66,7 @@ eleventyComputed:
   <div class="profile-list" id="profile-list">
     {% if profiles.length > 0 %}
       {% for profile in profiles %}
-        <div class="profile-card" data-region="{{ profile.city | default: '' | escape }}" data-category="{{ profile.category | default: '' | escape }}">
+        <div class="profile-card" data-region="{{ profile.city | default: '' | escape | downcase }}" data-category="{{ profile.category | default: '' | escape | downcase }}">
           <img
             class="profile-card__image"
             width="300"
@@ -74,7 +77,11 @@ eleventyComputed:
           />
           <div class="profile-card__description">
             <h3>{{ profile.name | escape }}</h3>
-            <p>{{ profile.city | default: 'Регион не указан' | escape }}, {{ profile.category | default: 'Категория не указан' | escape }}</p>
+            <p>{{ profile.city | default: 'Регион не указан' | escape }}, {{ profile.category | default: 'Категория не указана' | escape }}</p>
+            {% if profile.description %}<p>{{ profile.description | escape }}</p>{% endif %}
+            {% if profile.age %}<p>Возраст: {{ profile.age }}</p>{% endif %}
+            {% if profile.email %}<p>Email: <a href="mailto:{{ profile.email | escape }}">{{ profile.email | escape }}</a></p>{% endif %}
+            {% if profile.phone %}<p>Телефон: <a href="tel:{{ profile.phone | escape }}">{{ profile.phone | escape }}</a></p>{% endif %}
             <a href="/profiles/{{ profile.id | slugify }}/" aria-label="Подробнее о {{ profile.name | escape }}">Подробнее</a>
           </div>
         </div>

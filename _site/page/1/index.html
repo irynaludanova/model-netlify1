@@ -44,8 +44,30 @@
         "position": 1,
         "item": {
           "@type": "Person",
+          "name": "Nika",
+          "jobTitle": "Модель",
+          "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, ",
+          "email": "nika@gmail.com",
+          "telephone": "0987654",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Майами-Бич"
+          },
+          "image": "https://res.cloudinary.com/dimallvw3/image/upload/v1757334629/idprxxfkwdmbsqw6mlqt.jpg",
+          "url": "https://models-connect.netlify.app/profiles/e5720766-b43c-4a2d-941d-2b6826a811d8/"
+        }
+      },
+      
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Person",
           "name": "Maria",
           "jobTitle": "Стилист",
+          "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, ",
+          "email": "maria@gmail.com",
+          "telephone": "9876543",
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Халландейл"
@@ -57,11 +79,14 @@
       
       {
         "@type": "ListItem",
-        "position": 2,
+        "position": 3,
         "item": {
           "@type": "Person",
           "name": "Kate",
           "jobTitle": "Модель",
+          "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, ",
+          "email": "kateG@gmail.com",
+          "telephone": "98765rew",
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Корал-Гейблс"
@@ -73,33 +98,20 @@
       
       {
         "@type": "ListItem",
-        "position": 3,
+        "position": 4,
         "item": {
           "@type": "Person",
           "name": "John",
           "jobTitle": "Стилист",
+          "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, ",
+          "email": "john@gmail.com",
+          "telephone": "345678",
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Майами-Бич"
           },
           "image": "https://res.cloudinary.com/dimallvw3/image/upload/v1757334399/mh6ejrpmv7xdm4i2ueae.jpg",
           "url": "https://models-connect.netlify.app/profiles/83455fd6-193d-4b96-9e24-ed9160cab722/"
-        }
-      },
-      
-      {
-        "@type": "ListItem",
-        "position": 4,
-        "item": {
-          "@type": "Person",
-          "name": "Ivan",
-          "jobTitle": "Фотограф",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Халландейл"
-          },
-          "image": "https://res.cloudinary.com/dimallvw3/image/upload/v1757334343/ca1h3mnfjw2vr8c4v2rq.jpg",
-          "url": "https://models-connect.netlify.app/profiles/af25b537-8bf5-46c5-85e2-ef50e7c74b41/"
         }
       }
       
@@ -161,15 +173,52 @@
     const categorySelect = document.getElementById('category-select');
     const profiles = profileList.querySelectorAll('.profile-card');
 
-    // Нормализация строк: удаляем пробелы и приводим к нижнему регистру
+    // Нормализация строк
     const normalizeString = (str) => (str || '').trim().toLowerCase();
 
-    // Сохраняем исходные профили для фильтрации
-    const allProfiles = Array.from(profiles).map(profile => ({
+    // Формируем HTML для профиля
+    const createProfileCard = (profile) => {
+      return `
+        <div class="profile-card" data-region="${normalizeString(profile.city)}" data-category="${normalizeString(profile.category)}">
+          <img
+            class="profile-card__image"
+            width="300"
+            height="200"
+            src="${profile.image_url || '/img/placeholder.webp'}"
+            alt="Фото профиля ${profile.name || 'Без имени'}"
+            loading="lazy"
+          />
+          <div class="profile-card__description">
+            <h3>${profile.name || 'Без имени'}</h3>
+            <p>${profile.city || 'Регион не указан'}, ${profile.category || 'Категория не указана'}</p>
+            ${profile.description ? `<p>${profile.description}</p>` : ''}
+            ${profile.age ? `<p>Возраст: ${profile.age}</p>` : ''}
+            ${profile.email ? `<p>Email: <a href="mailto:${profile.email}">${profile.email}</a></p>` : ''}
+            ${profile.phone ? `<p>Телефон: <a href="tel:${profile.phone}">${profile.phone}</a></p>` : ''}
+            <a href="/profiles/${profile.id ? profile.id.replace(/[^a-z0-9-]/g, '-') : ''}/" aria-label="Подробнее о ${profile.name || 'Без имени'}">Подробнее</a>
+          </div>
+        </div>
+      `;
+    };
+
+    // Инициализация профилей
+    let allProfiles = Array.from(profiles).map(profile => ({
       city: normalizeString(profile.dataset.region),
       category: normalizeString(profile.dataset.category),
       innerHTML: profile.outerHTML
     }));
+
+    // Проверяем новый профиль в localStorage
+    const newProfile = localStorage.getItem('newProfile');
+    if (newProfile) {
+      const profileData = JSON.parse(newProfile);
+      allProfiles.unshift({
+        city: normalizeString(profileData.city),
+        category: normalizeString(profileData.category),
+        innerHTML: createProfileCard(profileData)
+      });
+      localStorage.removeItem('newProfile'); // Очищаем после добавления
+    }
 
     console.log('All profiles:', allProfiles);
 
@@ -199,7 +248,6 @@
       });
     }
 
-    // Проверка, существуют ли элементы
     if (!regionSelect || !categorySelect) {
       console.error('Select elements not found');
       return;
@@ -214,15 +262,34 @@
       filterProfiles();
     });
 
-    // Первоначальная фильтрация (на случай, если выбраны значения по умолчанию)
-    filterProfiles();
+    filterProfiles(); // Первоначальная фильтрация
   });
 </script>
 
   <div class="profile-list" id="profile-list">
     
       
-        <div class="profile-card" data-region="Халландейл" data-category="Стилист">
+        <div class="profile-card" data-region="майами-бич" data-category="модель">
+          <img
+            class="profile-card__image"
+            width="300"
+            height="200"
+            src="https://res.cloudinary.com/dimallvw3/image/upload/v1757334629/idprxxfkwdmbsqw6mlqt.jpg"
+            alt="Фото профиля Nika"
+            loading="lazy"
+          />
+          <div class="profile-card__description">
+            <h3>Nika</h3>
+            <p>Майами-Бич, Модель</p>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, </p>
+            <p>Возраст: 24</p>
+            <p>Email: <a href="mailto:nika@gmail.com">nika@gmail.com</a></p>
+            <p>Телефон: <a href="tel:0987654">0987654</a></p>
+            <a href="/profiles/e5720766-b43c-4a2d-941d-2b6826a811d8/" aria-label="Подробнее о Nika">Подробнее</a>
+          </div>
+        </div>
+      
+        <div class="profile-card" data-region="халландейл" data-category="стилист">
           <img
             class="profile-card__image"
             width="300"
@@ -234,11 +301,15 @@
           <div class="profile-card__description">
             <h3>Maria</h3>
             <p>Халландейл, Стилист</p>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, </p>
+            <p>Возраст: 32</p>
+            <p>Email: <a href="mailto:maria@gmail.com">maria@gmail.com</a></p>
+            <p>Телефон: <a href="tel:9876543">9876543</a></p>
             <a href="/profiles/53345958-12d5-492d-b15a-e4d0fc406c72/" aria-label="Подробнее о Maria">Подробнее</a>
           </div>
         </div>
       
-        <div class="profile-card" data-region="Корал-Гейблс" data-category="Модель">
+        <div class="profile-card" data-region="корал-гейблс" data-category="модель">
           <img
             class="profile-card__image"
             width="300"
@@ -250,11 +321,15 @@
           <div class="profile-card__description">
             <h3>Kate</h3>
             <p>Корал-Гейблс, Модель</p>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, </p>
+            <p>Возраст: 23</p>
+            <p>Email: <a href="mailto:kateG@gmail.com">kateG@gmail.com</a></p>
+            <p>Телефон: <a href="tel:98765rew">98765rew</a></p>
             <a href="/profiles/a411a3c2-d0db-420d-8a2e-778d95724200/" aria-label="Подробнее о Kate">Подробнее</a>
           </div>
         </div>
       
-        <div class="profile-card" data-region="Майами-Бич" data-category="Стилист">
+        <div class="profile-card" data-region="майами-бич" data-category="стилист">
           <img
             class="profile-card__image"
             width="300"
@@ -266,23 +341,11 @@
           <div class="profile-card__description">
             <h3>John</h3>
             <p>Майами-Бич, Стилист</p>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, </p>
+            <p>Возраст: 43</p>
+            <p>Email: <a href="mailto:john@gmail.com">john@gmail.com</a></p>
+            <p>Телефон: <a href="tel:345678">345678</a></p>
             <a href="/profiles/83455fd6-193d-4b96-9e24-ed9160cab722/" aria-label="Подробнее о John">Подробнее</a>
-          </div>
-        </div>
-      
-        <div class="profile-card" data-region="Халландейл" data-category="Фотограф">
-          <img
-            class="profile-card__image"
-            width="300"
-            height="200"
-            src="https://res.cloudinary.com/dimallvw3/image/upload/v1757334343/ca1h3mnfjw2vr8c4v2rq.jpg"
-            alt="Фото профиля Ivan"
-            loading="lazy"
-          />
-          <div class="profile-card__description">
-            <h3>Ivan</h3>
-            <p>Халландейл, Фотограф</p>
-            <a href="/profiles/af25b537-8bf5-46c5-85e2-ef50e7c74b41/" aria-label="Подробнее о Ivan">Подробнее</a>
           </div>
         </div>
       
@@ -310,7 +373,16 @@
       2
     </a>
   
+    <a href="/page/2/"
+       class=""
+       aria-label="Страница 3"
+       >
+      3
+    </a>
+  
 
+  
+    <a href="/page/2/" class="next" aria-label="Следующая страница">Вперёд →</a>
   
 </nav>
 
@@ -332,6 +404,8 @@
 
   <link rel="prev" href="/">
 
+
+  <link rel="next" href="/page/2/">
 
   </main>
 

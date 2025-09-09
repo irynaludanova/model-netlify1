@@ -31,112 +31,113 @@ eleventyComputed:
       }
     }
 ---
+<div class="add-profile-section">
+  <h1>Добавить профиль</h1>
+  <form
+    name="add-profile"
+    method="POST"
+    action="/.netlify/functions/add-profile"
+    id="add-profile-form"
+    enctype="multipart/form-data"
+    aria-label="Форма добавления профиля"
+  >
+    <input type="hidden" name="form-name" value="add-profile" />
 
-  <div class="add-profile-section">
-    <h1>Добавить профиль</h1>
-    <form
-      name="add-profile"
-      method="POST"
-      action="/submit-profile/"
-      id="add-profile-form"
-      enctype="multipart/form-data"
-      aria-label="Форма добавления профиля"
-    >
-      <input type="hidden" name="form-name" value="add-profile" />
+    <div class="form-group">
+      <label for="name">Имя:</label>
+      <input type="text" id="name" name="name" required aria-required="true" />
+    </div>
 
-      <div class="form-group">
-        <label for="name">Имя:</label>
-        <input type="text" id="name" name="name" required aria-required="true" />
-      </div>
+    <div class="form-group">
+      <label for="city">Город:</label>
+      <select id="city" name="city" required aria-required="true">
+        <option value="" disabled selected>Выберите город</option>
+        {% for region in allRegions %}
+          <option value="{{ region | escape }}">{{ region | escape }}</option>
+        {% endfor %}
+      </select>
+    </div>
 
-      <div class="form-group">
-        <label for="city">Город:</label>
-        <select id="city" name="city" required aria-required="true">
-          <option value="Майами-Бич">Майами-Бич</option>
-          <option value="Халландейл">Халландейл</option>
-          <option value="Корал-Гейблс">Корал-Гейблс</option>
-        </select>
-      </div>
+    <div class="form-group">
+      <label for="category">Категория:</label>
+      <select id="category" name="category" required aria-required="true">
+        <option value="" disabled selected>Выберите категорию</option>
+        {% for category in allCategories %}
+          <option value="{{ category | escape }}">{{ category | escape }}</option>
+        {% endfor %}
+      </select>
+    </div>
 
-      <div class="form-group">
-        <label for="category">Категория:</label>
-        <select id="category" name="category" required aria-required="true">
-          <option value="Модель">Модель</option>
-          <option value="Фотограф">Фотограф</option>
-          <option value="Стилист">Стилист</option>
-        </select>
-      </div>
+    <div class="form-group">
+      <label for="description">Описание:</label>
+      <textarea id="description" name="description" required aria-required="true"></textarea>
+    </div>
 
-      <div class="form-group">
-        <label for="description">Описание:</label>
-        <textarea id="description" name="description" required aria-required="true"></textarea>
-      </div>
+    <div class="form-group">
+      <label for="age">Возраст:</label>
+      <input type="number" id="age" name="age" required aria-required="true" min="18" max="100" />
+    </div>
 
-      <div class="form-group">
-        <label for="age">Возраст:</label>
-        <input type="number" id="age" name="age" required aria-required="true" min="18" max="100" />
-      </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required aria-required="true" />
+    </div>
 
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required aria-required="true" />
-      </div>
+    <div class="form-group">
+      <label for="phone">Телефон (опционально):</label>
+      <input type="tel" id="phone" name="phone" aria-describedby="phone-note" />
+      <p id="phone-note" class="form-note">Укажите телефон в формате +1XXXYYYZZZZ</p>
+    </div>
 
-      <div class="form-group">
-        <label for="phone">Телефон (опционально):</label>
-        <input type="tel" id="phone" name="phone" aria-describedby="phone-note" />
-        <p id="phone-note" class="form-note">Укажите телефон в формате +1XXXYYYZZZZ</p>
-      </div>
+    <div class="form-group">
+      <label for="image">Фото профиля:</label>
+      <input type="file" name="image" id="image" accept="image/jpeg,image/png,image/webp" required aria-required="true" />
+      <p class="form-note">Рекомендуемый размер: 300x300px, формат: JPG, PNG, WEBP.</p>
+    </div>
 
-      <div class="form-group">
-        <label for="image">Фото профиля:</label>
-        <input type="file" name="image" id="image" accept="image/jpeg,image/png,image/webp" required aria-required="true" />
-        <p class="form-note">Рекомендуемый размер: 300x300px, формат: JPG, PNG, WEBP.</p>
-      </div>
+    <button type="submit" aria-label="Отправить форму добавления профиля">Отправить</button>
+  </form>
+</div>
 
-      <button type="submit" aria-label="Отправить форму добавления профиля">Отправить</button>
-    </form>
-  </div>
+<script type="module">
+  async function cloudinaryUpload(file) {
+    const form = new FormData();
+    form.append('file', file);
+    form.append('upload_preset', 'unsigned_profiles');
+    const res = await fetch('https://api.cloudinary.com/v1_1/dimallvw3/upload', {
+      method: 'POST',
+      body: form
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error('Cloudinary upload failed: ' + JSON.stringify(data));
+    return data.secure_url;
+  }
 
-  <script type="module" defer>
-    async function cloudinaryUpload(file) {
-      const form = new FormData();
-      form.append('file', file);
-      form.append('upload_preset', 'unsigned_profiles');
-      const res = await fetch('https://api.cloudinary.com/v1_1/dimallvw3/upload', {
-        method: 'POST',
-        body: form
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error('Cloudinary upload failed: ' + JSON.stringify(data));
-      return data.secure_url;
-    }
-
-    document.querySelector('#add-profile-form').addEventListener('submit', async (e) => {
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('#add-profile-form');
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const form = e.target;
       const fd = new FormData(form);
-      const name = fd.get('name');
-
       let image_url = '/img/placeholder.webp';
       const file = fd.get('image');
       if (file && file.size) {
         try {
           image_url = await cloudinaryUpload(file);
         } catch (err) {
+          console.error('Ошибка загрузки изображения:', err.message);
           alert('Ошибка загрузки изображения: ' + err.message);
           return;
         }
       }
 
       const payload = {
-        name,
+        name: fd.get('name').trim(),
         city: fd.get('city'),
         category: fd.get('category'),
         description: fd.get('description'),
-        age: fd.get('age'),
+        age: parseInt(fd.get('age')),
         email: fd.get('email'),
-        phone: fd.get('phone'),
+        phone: fd.get('phone') || null,
         image_url
       };
 
@@ -147,14 +148,19 @@ eleventyComputed:
           body: JSON.stringify(payload)
         });
 
+        const result = await resp.json();
         if (!resp.ok) {
-          const text = await resp.text();
-          throw new Error('Ошибка сервера: ' + text);
+          throw new Error('Ошибка сервера: ' + result.error);
         }
 
-        window.location.href = '/submit-profile/';
+        // Сохраняем данные профиля в localStorage
+        localStorage.setItem('newProfile', JSON.stringify(result.profile));
+        alert('Профиль успешно добавлен!');
+        window.location.href = '/';
       } catch (err) {
+        console.error('Ошибка при отправке формы:', err.message);
         alert('Ошибка при отправке формы: ' + err.message);
       }
     });
-  </script>
+  });
+</script>
