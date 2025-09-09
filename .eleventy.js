@@ -29,6 +29,11 @@ export default async function (eleventyConfig) {
       console.error("Ошибка Supabase:", error.message)
     } else {
       profiles = data || []
+      // Нормализуем city в профилях
+      profiles = profiles.map((profile) => ({
+        ...profile,
+        city: profile.city ? profile.city.trim() : "",
+      }))
       console.log("Загруженные профили:", JSON.stringify(profiles, null, 2))
     }
   } catch (err) {
@@ -40,7 +45,7 @@ export default async function (eleventyConfig) {
   eleventyConfig.addGlobalData("allRegions", () => {
     const regions = [
       ...new Set(profiles.map((p) => p.city).filter(Boolean)),
-    ].sort()
+    ].sort((a, b) => a.localeCompare(b, "ru"))
     console.log("Все регионы:", JSON.stringify(regions, null, 2))
     return regions
   })
@@ -48,7 +53,7 @@ export default async function (eleventyConfig) {
   eleventyConfig.addGlobalData("allCategories", () => {
     const categories = [
       ...new Set(profiles.map((p) => p.category).filter(Boolean)),
-    ].sort()
+    ].sort((a, b) => a.localeCompare(b, "ru"))
     console.log("Все категории:", JSON.stringify(categories, null, 2))
     return categories
   })

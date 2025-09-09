@@ -145,11 +145,11 @@
   <select id="region-select">
     <option value="все">Все регионы</option>
     
-      <option value="Корал-Гейблс">Корал-Гейблс</option>
+      <option value="корал-гейблс">Корал-Гейблс</option>
     
-      <option value="Майами-Бич">Майами-Бич</option>
+      <option value="майами-бич">Майами-Бич</option>
     
-      <option value="Халландейл">Халландейл</option>
+      <option value="халландейл">Халландейл</option>
     
   </select>
 
@@ -157,11 +157,11 @@
   <select id="category-select">
     <option value="все">Все категории</option>
     
-      <option value="Модель">Модель</option>
+      <option value="модель">Модель</option>
     
-      <option value="Стилист">Стилист</option>
+      <option value="стилист">Стилист</option>
     
-      <option value="Фотограф">Фотограф</option>
+      <option value="фотограф">Фотограф</option>
     
   </select>
 </div>
@@ -174,10 +174,14 @@
     const profiles = profileList.querySelectorAll('.profile-card');
 
     // Нормализация строк
-    const normalizeString = (str) => (str || '').trim().toLowerCase();
+    const normalizeString = (str) => {
+      if (!str) return '';
+      return str.trim().toLowerCase().replace(/\s+/g, ' ');
+    };
 
     // Формируем HTML для профиля
     const createProfileCard = (profile) => {
+      const safeName = profile.name ? profile.name.replace(/</g, '&lt;').replace(/>/g, '&gt;') : 'Без имени';
       return `
         <div class="profile-card" data-region="${normalizeString(profile.city)}" data-category="${normalizeString(profile.category)}">
           <img
@@ -185,17 +189,17 @@
             width="300"
             height="200"
             src="${profile.image_url || '/img/placeholder.webp'}"
-            alt="Фото профиля ${profile.name || 'Без имени'}"
+            alt="Фото профиля ${safeName}"
             loading="lazy"
           />
           <div class="profile-card__description">
-            <h3>${profile.name || 'Без имени'}</h3>
+            <h3>${safeName}</h3>
             <p>${profile.city || 'Регион не указан'}, ${profile.category || 'Категория не указана'}</p>
-            ${profile.description ? `<p>${profile.description}</p>` : ''}
+            ${profile.description ? `<p>${profile.description.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>` : ''}
             ${profile.age ? `<p>Возраст: ${profile.age}</p>` : ''}
             ${profile.email ? `<p>Email: <a href="mailto:${profile.email}">${profile.email}</a></p>` : ''}
             ${profile.phone ? `<p>Телефон: <a href="tel:${profile.phone}">${profile.phone}</a></p>` : ''}
-            <a href="/profiles/${profile.id ? profile.id.replace(/[^a-z0-9-]/g, '-') : ''}/" aria-label="Подробнее о ${profile.name || 'Без имени'}">Подробнее</a>
+            <a href="/profiles/${profile.id ? profile.id.replace(/[^a-z0-9-]/g, '-') : ''}/" aria-label="Подробнее о ${safeName}">Подробнее</a>
           </div>
         </div>
       `;
@@ -212,15 +216,18 @@
     const newProfile = localStorage.getItem('newProfile');
     if (newProfile) {
       const profileData = JSON.parse(newProfile);
+      console.log('New profile from localStorage:', profileData);
       allProfiles.unshift({
         city: normalizeString(profileData.city),
         category: normalizeString(profileData.category),
         innerHTML: createProfileCard(profileData)
       });
-      localStorage.removeItem('newProfile'); // Очищаем после добавления
+      localStorage.removeItem('newProfile');
     }
 
-    console.log('All profiles:', allProfiles);
+    console.log('All profiles:', allProfiles.map(p => ({ city: p.city, category: p.category })));
+    console.log('Region options:', Array.from(regionSelect.options).map(opt => opt.value));
+    console.log('Category options:', Array.from(categorySelect.options).map(opt => opt.value));
 
     function filterProfiles() {
       const region = normalizeString(regionSelect.value);
@@ -231,12 +238,13 @@
       profileList.innerHTML = '';
 
       const filtered = allProfiles.filter(p => {
+        console.log('Checking profile:', { city: p.city, category: p.category, matchesRegion: region === 'все' || p.city === region, matchesCategory: category === 'все' || p.category === category });
         const matchRegion = region === 'все' || p.city === region;
         const matchCategory = category === 'все' || p.category === category;
         return matchRegion && matchCategory;
       });
 
-      console.log('Filtered profiles:', filtered);
+      console.log('Filtered profiles:', filtered.map(p => ({ city: p.city, category: p.category })));
 
       if (filtered.length === 0) {
         profileList.innerHTML = '<p>Профили не найдены.</p>';
@@ -254,15 +262,17 @@
     }
 
     regionSelect.addEventListener('change', () => {
-      console.log('Region select changed');
+      console.log('Region select changed to:', regionSelect.value);
       filterProfiles();
     });
     categorySelect.addEventListener('change', () => {
-      console.log('Category select changed');
+      console.log('Category select changed to:', categorySelect.value);
       filterProfiles();
     });
 
-    filterProfiles(); // Первоначальная фильтрация
+    console.log('Event listeners attached:', regionSelect.onchange, categorySelect.onchange);
+
+    filterProfiles();
   });
 </script>
 
