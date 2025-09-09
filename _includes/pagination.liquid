@@ -1,0 +1,18 @@
+{% if pagination.pages.length > 1 %}
+<nav class="pagination">
+  {% if pagination.href.previous %}
+    <a href="{{ pagination.href.previous }}" class="prev">← Назад</a>
+  {% endif %}
+
+  {% for pageEntry in pagination.pages %}
+    <a href="{{ pagination.hrefs[forloop.index0] }}"
+       class="{% if pageEntry == pagination.pageNumber %}active{% endif %}">
+      {{ forloop.index }}
+    </a>
+  {% endfor %}
+
+  {% if pagination.href.next %}
+    <a href="{{ pagination.href.next }}" class="next">Вперёд →</a>
+  {% endif %}
+</nav>
+{% endif %}

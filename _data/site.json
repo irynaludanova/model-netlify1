@@ -1,5 +1,7 @@
 {
   "url": "https://models-connect.netlify.app",
+  "supabase_url": "process.env.SUPABASE_URL",
+  "supabase_key": "process.env.SUPABASE_ANON_KEY",
   "name": "ModelConnect Miami",
   "name2": "Регионы",
   "name3": "Добавить профиль",
