@@ -38,10 +38,6 @@
   to = "/.netlify/functions/add-profile"
   status = 200
 
-[build]
-  command = "npx eleventy"
-  publish = "_site"
-
 [[headers]]
   for = "/*"
   [headers.values]
