@@ -55,51 +55,172 @@ eleventyComputed:
 ---
 {% assign allRegions = collections.profiles | map: "city" | uniq | sort %}
 {% assign allCategories = collections.profiles | map: "category" | uniq | sort %}
-<div class="profiles-section" id="profiles">
- <h1>{{ site.name }}</h1>
-<h2>Свежие модели, фотографы и стилисты — 2025</h2>
-<div class="home-section__intro">
-  <p>{{ site.intro }}</p>
-</div>
-{% include "filters.liquid" %}
+<section class="profiles-section">
+  <h1>{{ site.name }}</h1>
+  <h2>Свежие модели, фотографы и стилисты — 2025</h2>
 
-{% assign allRegions = profiles | map: "city" | uniq | sort %}
-{% assign allCategories = profiles | map: "category" | uniq | sort %}
+  <div class="home-section__intro">
+    <p>Добро пожаловать на {{ site.name }} — ведущую платформу для поиска свежих профилей в fashion-индустрии Майами. Мы соединяем моделей, фотографов и стилистов из разных районов и ежедневно обновляем базу данных.</p>
+  </div>
 
-<div id="profile-list">
-{% if profiles and profiles.size > 0 %}
 
-    {% for profile in profiles %}
-      <div class="profile-card"
-           data-region="{{ profile.city | default: '' }}"
-           data-category="{{ profile.category | default: '' }}">
-        <img
-          class="profile-card__image"
-          width="300"
-          height="200"
-          src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }}"
-          alt="Фото профиля {{ profile.name | escape }}"
-          loading="lazy"
-        />
-        <div class="profile-card__description">
-          <h3>{{ profile.name | default: 'Без имени' }}</h3>
-          <p>{{ profile.city | default: 'Регион не указан' }}, {{ profile.category | default: 'Категория не указана' }}</p>
-          {% if profile.description %}<p>{{ profile.description | escape }}</p>{% endif %}
-          {% if profile.age %}<p>Возраст: {{ profile.age }}</p>{% endif %}
-          {% if profile.email %}<p>Email: <a href="mailto:{{ profile.email | escape }}">{{ profile.email | escape }}</a></p>{% endif %}
-          {% if profile.phone %}<p>Телефон: <a href="tel:{{ profile.phone | escape }}">{{ profile.phone | escape }}</a></p>{% endif %}
-          <a href="/profiles/{{ profile.id | slugify }}/" aria-label="Подробнее о {{ profile.name | escape }}">Подробнее</a>
-        </div>
-      </div>
-    {% endfor %}
-  {% else %}
-    <p>Профили не найдены.</p>
-  {% endif %}
-</div>
+  <div class="filters">
+    <label for="region-select">Выберите регион:</label>
+    <select id="region-select"></select>
 
-{% include "pagination.liquid" %}
+    <label for="category-select">Выберите категорию:</label>
+    <select id="category-select"></select>
+  </div>
 
-<script src="/js/filters.js" defer></script>
+
+  <div id="profile-list">
+    <p>Загрузка профилей...</p>
+  </div>
+
+  <div id="pagination-container" class="pagination"></div>
+</section>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabaseUrl = "https://zftnzsbflzfhfyfnyqza.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdG56c2JmbHpmaGZ5Zm55cXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwODQyMjQsImV4cCI6MjA3MjY2MDIyNH0.ZiNtVmNKFPsW7NPngNvRrDsRFwcPQw0aE6m8FwmCvZg";
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+function normalizeString(str) {
+  if (!str) return "";
+  return str.toString().normalize("NFKD").replace(/\u00A0/g, " ").trim().toLowerCase().replace(/[\s\-_]+/g,"-");
+}
+
+function createOption(value, text) {
+  const opt = document.createElement("option");
+  opt.value = normalizeString(value);
+  opt.textContent = text;
+  return opt;
+}
+
+;(async function() {
+  try {
+    const { data: allProfilesData, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .order("id", { ascending: false });
+
+    if (error) throw error;
+
+    const profileList = document.getElementById("profile-list");
+    const regionSelect = document.getElementById("region-select");
+    const categorySelect = document.getElementById("category-select");
+    const paginationContainer = document.getElementById("pagination-container");
+    const PAGE_SIZE = 4;
+
+    const allProfiles = allProfilesData.map(p => ({
+      ...p,
+      regionSlug: normalizeString(p.city),
+      categorySlug: normalizeString(p.category)
+    }));
+
+    const regions = [...new Set(allProfiles.map(p => p.city).filter(Boolean))];
+    const categories = [...new Set(allProfiles.map(p => p.category).filter(Boolean))];
+
+    regionSelect.innerHTML = "";
+    regionSelect.appendChild(createOption("все", "Все регионы"));
+    regions.forEach(r => regionSelect.appendChild(createOption(r, r)));
+
+    categorySelect.innerHTML = "";
+    categorySelect.appendChild(createOption("все", "Все категории"));
+    categories.forEach(c => categorySelect.appendChild(createOption(c, c)));
+
+    let currentPage = 1;
+
+    function getFilteredProfiles() {
+      const region = normalizeString(regionSelect.value);
+      const category = normalizeString(categorySelect.value);
+      return allProfiles.filter(p =>
+        (region === "все" || p.regionSlug === region) &&
+        (category === "все" || p.categorySlug === category)
+      );
+    }
+
+    function renderPage(page = 1) {
+      const filtered = getFilteredProfiles();
+      const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+      if (page < 1) page = 1;
+      if (page > totalPages) page = totalPages;
+      currentPage = page;
+
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const end = start + PAGE_SIZE;
+      const pageProfiles = filtered.slice(start, end);
+
+      profileList.innerHTML = "";
+      if (!pageProfiles.length) {
+        profileList.innerHTML = "<p>Профили не найдены.</p>";
+        paginationContainer.innerHTML = "";
+        return;
+      }
+
+      pageProfiles.forEach(profile => {
+        const html = `
+          <div class="profile-card" data-region="${profile.regionSlug}" data-category="${profile.categorySlug}">
+            <img class="profile-card__image"
+                 width="300" height="200"
+                 src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/${profile.image_url?.replace("https://res.cloudinary.com/dimallvw3/image/upload/","") || 'placeholder.webp'}"
+                 alt="Фото профиля ${profile.name || ''}" loading="lazy"/>
+            <div class="profile-card__description">
+              <h3>${profile.name || 'Без имени'}</h3>
+              <p>${profile.city || 'Регион не указан'}, ${profile.category || 'Категория не указана'}</p>
+              <a href="/profiles/${profile.id}/">Подробнее</a>
+            </div>
+          </div>`;
+        profileList.insertAdjacentHTML("beforeend", html);
+      });
+
+      renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages) {
+      paginationContainer.innerHTML = "";
+      if (totalPages <= 1) return;
+
+      if (currentPage > 1) {
+        const prev = document.createElement("a");
+        prev.href = "#";
+        prev.textContent = "← Назад";
+        prev.addEventListener("click", e => { e.preventDefault(); renderPage(currentPage - 1); });
+        paginationContainer.appendChild(prev);
+      }
+
+      for (let i = 1; i <= totalPages; i++) {
+        const pageLink = document.createElement("a");
+        pageLink.href = "#";
+        pageLink.textContent = i;
+        if (i === currentPage) pageLink.classList.add("active");
+        pageLink.addEventListener("click", e => { e.preventDefault(); renderPage(i); });
+        paginationContainer.appendChild(pageLink);
+      }
+
+      if (currentPage < totalPages) {
+        const next = document.createElement("a");
+        next.href = "#";
+        next.textContent = "Вперёд →";
+        next.addEventListener("click", e => { e.preventDefault(); renderPage(currentPage + 1); });
+        paginationContainer.appendChild(next);
+      }
+    }
+
+    regionSelect.addEventListener("change", () => renderPage(1));
+    categorySelect.addEventListener("change", () => renderPage(1));
+
+    renderPage(1);
+
+  } catch (err) {
+    console.error(err);
+    const profileList = document.getElementById("profile-list");
+    if (profileList) profileList.innerHTML = "<p>Ошибка загрузки профилей.</p>";
+  }
+})();
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",

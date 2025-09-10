@@ -124,161 +124,172 @@
   <main>
     
 
-<div class="profiles-section" id="profiles">
- <h1>ModelConnect Miami</h1>
-<h2>Свежие модели, фотографы и стилисты — 2025</h2>
-<div class="home-section__intro">
-  <p> Добро пожаловать на ModelConnect Miami — ведущую платформу для поиска свежих профилей в fashion-индустрии Майами. Мы соединяем моделей,фотографов и стилистов из Майами-Бич, Халландейл, Корал-Гейблс и других районов. Наши ежедневные обновления помогают вам найти идеальных профессионалов для съемок, показов и креативных проектов.</p>
-</div>
-<div class="filters">
-  <label for="region-select">Выберите регион:</label>
-  <select id="region-select">
-    <option value="все" selected>Все регионы</option>
-    
-      
-        <option value="корал-гейблс">Корал-Гейблс</option>
-      
-    
-      
-        <option value="майами-бич">Майами-Бич</option>
-      
-    
-      
-        <option value="халландейл">Халландейл</option>
-      
-    
-  </select>
+<section class="profiles-section">
+  <h1>ModelConnect Miami</h1>
+  <h2>Свежие модели, фотографы и стилисты — 2025</h2>
 
-  <label for="category-select">Выберите категорию:</label>
-  <select id="category-select">
-    <option value="все" selected>Все категории</option>
-    
-      
-        <option value="модель">Модель</option>
-      
-    
-      
-        <option value="стилист">Стилист</option>
-      
-    
-      
-        <option value="фотограф">Фотограф</option>
-      
-    
-  </select>
-</div>
+  <div class="home-section__intro">
+    <p>Добро пожаловать на ModelConnect Miami — ведущую платформу для поиска свежих профилей в fashion-индустрии Майами. Мы соединяем моделей, фотографов и стилистов из разных районов и ежедневно обновляем базу данных.</p>
+  </div>
 
 
+  <div class="filters">
+    <label for="region-select">Выберите регион:</label>
+    <select id="region-select"></select>
+
+    <label for="category-select">Выберите категорию:</label>
+    <select id="category-select"></select>
+  </div>
 
 
+  <div id="profile-list">
+    <p>Загрузка профилей...</p>
+  </div>
 
-<div id="profile-list">
+  <div id="pagination-container" class="pagination"></div>
+</section>
 
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-    
-      <div class="profile-card"
-           data-region="Корал-Гейблс"
-           data-category="Модель">
-        <img
-          class="profile-card__image"
-          width="300"
-          height="200"
-          src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757334441/cbjxr8libhlfmdthwekt.jpg"
-          alt="Фото профиля Kate"
-          loading="lazy"
-        />
-        <div class="profile-card__description">
-          <h3>Kate</h3>
-          <p>Корал-Гейблс, Модель</p>
-          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, </p>
-          <p>Возраст: 23</p>
-          <p>Email: <a href="mailto:kateG@gmail.com">kateG@gmail.com</a></p>
-          <p>Телефон: <a href="tel:98765rew">98765rew</a></p>
-          <a href="/profiles/a411a3c2-d0db-420d-8a2e-778d95724200/" aria-label="Подробнее о Kate">Подробнее</a>
-        </div>
-      </div>
-    
-      <div class="profile-card"
-           data-region="Майами-Бич"
-           data-category="Стилист">
-        <img
-          class="profile-card__image"
-          width="300"
-          height="200"
-          src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757334399/mh6ejrpmv7xdm4i2ueae.jpg"
-          alt="Фото профиля John"
-          loading="lazy"
-        />
-        <div class="profile-card__description">
-          <h3>John</h3>
-          <p>Майами-Бич, Стилист</p>
-          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, </p>
-          <p>Возраст: 43</p>
-          <p>Email: <a href="mailto:john@gmail.com">john@gmail.com</a></p>
-          <p>Телефон: <a href="tel:345678">345678</a></p>
-          <a href="/profiles/83455fd6-193d-4b96-9e24-ed9160cab722/" aria-label="Подробнее о John">Подробнее</a>
-        </div>
-      </div>
-    
-      <div class="profile-card"
-           data-region="Халландейл"
-           data-category="Фотограф">
-        <img
-          class="profile-card__image"
-          width="300"
-          height="200"
-          src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757334343/ca1h3mnfjw2vr8c4v2rq.jpg"
-          alt="Фото профиля Ivan"
-          loading="lazy"
-        />
-        <div class="profile-card__description">
-          <h3>Ivan</h3>
-          <p>Халландейл, Фотограф</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-          <p>Возраст: 33</p>
-          <p>Email: <a href="mailto:ivan@gmail.com">ivan@gmail.com</a></p>
-          <p>Телефон: <a href="tel:2345678">2345678</a></p>
-          <a href="/profiles/af25b537-8bf5-46c5-85e2-ef50e7c74b41/" aria-label="Подробнее о Ivan">Подробнее</a>
-        </div>
-      </div>
-    
-  
-</div>
+const supabaseUrl = "https://zftnzsbflzfhfyfnyqza.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdG56c2JmbHpmaGZ5Zm55cXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwODQyMjQsImV4cCI6MjA3MjY2MDIyNH0.ZiNtVmNKFPsW7NPngNvRrDsRFwcPQw0aE6m8FwmCvZg";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
+function normalizeString(str) {
+  if (!str) return "";
+  return str.toString().normalize("NFKD").replace(/\u00A0/g, " ").trim().toLowerCase().replace(/[\s\-_]+/g,"-");
+}
 
-<nav class="pagination" aria-label="Навигация по страницам">
-  
-    <a href="/page/1/" class="prev" aria-label="Предыдущая страница">← Назад</a>
-  
+function createOption(value, text) {
+  const opt = document.createElement("option");
+  opt.value = normalizeString(value);
+  opt.textContent = text;
+  return opt;
+}
 
-  
-    <a href="/"
-       class=""
-       aria-label="Страница 1"
-       >
-      1
-    </a>
-  
-    <a href="/page/1/"
-       class=""
-       aria-label="Страница 2"
-       >
-      2
-    </a>
-  
-    <a href="/page/2/"
-       class="active"
-       aria-label="Страница 3"
-       aria-current="page">
-      3
-    </a>
-  
+;(async function() {
+  try {
+    const { data: allProfilesData, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .order("id", { ascending: false });
 
-  
-</nav>
+    if (error) throw error;
 
+    const profileList = document.getElementById("profile-list");
+    const regionSelect = document.getElementById("region-select");
+    const categorySelect = document.getElementById("category-select");
+    const paginationContainer = document.getElementById("pagination-container");
+    const PAGE_SIZE = 4;
 
-<script src="/js/filters.js" defer></script>
+    const allProfiles = allProfilesData.map(p => ({
+      ...p,
+      regionSlug: normalizeString(p.city),
+      categorySlug: normalizeString(p.category)
+    }));
+
+    const regions = [...new Set(allProfiles.map(p => p.city).filter(Boolean))];
+    const categories = [...new Set(allProfiles.map(p => p.category).filter(Boolean))];
+
+    regionSelect.innerHTML = "";
+    regionSelect.appendChild(createOption("все", "Все регионы"));
+    regions.forEach(r => regionSelect.appendChild(createOption(r, r)));
+
+    categorySelect.innerHTML = "";
+    categorySelect.appendChild(createOption("все", "Все категории"));
+    categories.forEach(c => categorySelect.appendChild(createOption(c, c)));
+
+    let currentPage = 1;
+
+    function getFilteredProfiles() {
+      const region = normalizeString(regionSelect.value);
+      const category = normalizeString(categorySelect.value);
+      return allProfiles.filter(p =>
+        (region === "все" || p.regionSlug === region) &&
+        (category === "все" || p.categorySlug === category)
+      );
+    }
+
+    function renderPage(page = 1) {
+      const filtered = getFilteredProfiles();
+      const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+      if (page < 1) page = 1;
+      if (page > totalPages) page = totalPages;
+      currentPage = page;
+
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const end = start + PAGE_SIZE;
+      const pageProfiles = filtered.slice(start, end);
+
+      profileList.innerHTML = "";
+      if (!pageProfiles.length) {
+        profileList.innerHTML = "<p>Профили не найдены.</p>";
+        paginationContainer.innerHTML = "";
+        return;
+      }
+
+      pageProfiles.forEach(profile => {
+        const html = `
+          <div class="profile-card" data-region="${profile.regionSlug}" data-category="${profile.categorySlug}">
+            <img class="profile-card__image"
+                 width="300" height="200"
+                 src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/${profile.image_url?.replace("https://res.cloudinary.com/dimallvw3/image/upload/","") || 'placeholder.webp'}"
+                 alt="Фото профиля ${profile.name || ''}" loading="lazy"/>
+            <div class="profile-card__description">
+              <h3>${profile.name || 'Без имени'}</h3>
+              <p>${profile.city || 'Регион не указан'}, ${profile.category || 'Категория не указана'}</p>
+              <a href="/profiles/${profile.id}/">Подробнее</a>
+            </div>
+          </div>`;
+        profileList.insertAdjacentHTML("beforeend", html);
+      });
+
+      renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages) {
+      paginationContainer.innerHTML = "";
+      if (totalPages <= 1) return;
+
+      if (currentPage > 1) {
+        const prev = document.createElement("a");
+        prev.href = "#";
+        prev.textContent = "← Назад";
+        prev.addEventListener("click", e => { e.preventDefault(); renderPage(currentPage - 1); });
+        paginationContainer.appendChild(prev);
+      }
+
+      for (let i = 1; i <= totalPages; i++) {
+        const pageLink = document.createElement("a");
+        pageLink.href = "#";
+        pageLink.textContent = i;
+        if (i === currentPage) pageLink.classList.add("active");
+        pageLink.addEventListener("click", e => { e.preventDefault(); renderPage(i); });
+        paginationContainer.appendChild(pageLink);
+      }
+
+      if (currentPage < totalPages) {
+        const next = document.createElement("a");
+        next.href = "#";
+        next.textContent = "Вперёд →";
+        next.addEventListener("click", e => { e.preventDefault(); renderPage(currentPage + 1); });
+        paginationContainer.appendChild(next);
+      }
+    }
+
+    regionSelect.addEventListener("change", () => renderPage(1));
+    categorySelect.addEventListener("change", () => renderPage(1));
+
+    renderPage(1);
+
+  } catch (err) {
+    console.error(err);
+    const profileList = document.getElementById("profile-list");
+    if (profileList) profileList.innerHTML = "<p>Ошибка загрузки профилей.</p>";
+  }
+})();
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -330,18 +341,6 @@
         "position": 4,
         "item": {
           "@type": "Person",
-          "name": "test form",
-          "description": "qwertyuio",
-          "url": "https://models-connect.netlify.app/profiles/50e0991b-b984-46e9-bb81-4f6d0fbc3bad/"
-        }
-      },
-      
-      
-      {
-        "@type": "ListItem",
-        "position": 5,
-        "item": {
-          "@type": "Person",
           "name": "Nick",
           "description": "wertyuiop",
           "url": "https://models-connect.netlify.app/profiles/bced9eb5-bebf-465d-a352-d67b1d03e121/"
@@ -351,7 +350,7 @@
       
       {
         "@type": "ListItem",
-        "position": 6,
+        "position": 5,
         "item": {
           "@type": "Person",
           "name": "Test",
@@ -363,7 +362,7 @@
       
       {
         "@type": "ListItem",
-        "position": 7,
+        "position": 6,
         "item": {
           "@type": "Person",
           "name": "Maria",
@@ -375,7 +374,7 @@
       
       {
         "@type": "ListItem",
-        "position": 8,
+        "position": 7,
         "item": {
           "@type": "Person",
           "name": "John",
@@ -386,6 +385,18 @@
       
       
     
+      
+      {
+        "@type": "ListItem",
+        "position": 8,
+        "item": {
+          "@type": "Person",
+          "name": "test form2",
+          "description": "poiuytrewq",
+          "url": "https://models-connect.netlify.app/profiles/83ddcc80-663a-4cde-8f49-61e00b36b9bc/"
+        }
+      },
+      
       
       {
         "@type": "ListItem",

@@ -338,6 +338,94 @@ nav {
 .submit-btn:hover {
   background-color: #0056b3;
 }
+/* ===Filters=== */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.filters label {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.filters select {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.filters select:hover {
+  border-color: #999;
+}
+
+.filters select:focus {
+  outline: none;
+  border-color: #0070f3;
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+}
+
+@media (max-width: 600px) {
+  .filters {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* ===Pagination=== */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+  font-family: Arial, sans-serif;
+}
+
+.pagination a {
+  display: inline-block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.pagination a:hover {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+.pagination a.active {
+  background-color: #0070f3;
+  color: #fff;
+  border-color: #0070f3;
+  pointer-events: none;
+}
+
+.pagination a.prev,
+.pagination a.next {
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .pagination {
+    gap: 4px;
+  }
+  .pagination a {
+    padding: 6px 10px;
+  }
+}
 
 @media (max-width: 768px) {
   .form-section {
