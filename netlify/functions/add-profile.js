@@ -13,7 +13,6 @@ export async function handler(event) {
       }
     }
 
-    // Разбираем JSON, который отправляет фронтенд
     let body
     try {
       body = JSON.parse(event.body)
@@ -25,7 +24,6 @@ export async function handler(event) {
       }
     }
 
-    // Составляем объект для вставки — только поля таблицы
     const profileData = {
       name: body.name?.trim() || null,
       city: body.city || null,
@@ -37,7 +35,6 @@ export async function handler(event) {
       image_url: body.image_url || null,
     }
 
-    // POST запрос в Supabase REST API
     const res = await fetch(`${SUPABASE_URL}/rest/v1/profiles`, {
       method: "POST",
       headers: {
@@ -49,7 +46,6 @@ export async function handler(event) {
       body: JSON.stringify(profileData),
     })
 
-    // Получаем текст ответа для логов
     const text = await res.text()
     let result
     try {
@@ -79,7 +75,7 @@ export async function handler(event) {
       statusCode: 200,
       body: JSON.stringify({
         message: "Профиль сохранён",
-        profile: result[0], // возвращаем только что созданный профиль
+        profile: result[0],
       }),
       headers: { "Access-Control-Allow-Origin": "*" },
     }

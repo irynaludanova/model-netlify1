@@ -1,66 +1,56 @@
-
-[[headers]]
-  for = "/*.css"
-  [headers.values]
-    Content-Type = "text/css"
-[[headers]]
-  for = "/img/*.ico"
-  [headers.values]
-    Content-Type = "image/x-icon"
-[[headers]]
-  for = "/img/*.png"
-  [headers.values]
-    Content-Type = "image/png"
-[[headers]]
-  for = "/img/*.webp"
-  [headers.values]
-    Content-Type = "image/webp"
-[[headers]]
-  for = "/sitemap.xml"
-  [headers.values]
-    Content-Type = "application/xml"
-[[headers]]
-  for = "/img/site.webmanifest"
-  [headers.values]
-    Content-Type = "application/manifest+json"
-    [[redirects]]
-  from = "/submit-profile"
-  to = "/submit-profile/"
-  status = 301
-  [build]
+[build]
   command = "npx @11ty/eleventy"
   publish = "_site"
   functions = "netlify/functions"
-
-[[redirects]]
-  from = "/profiles/:id"
-  to = "/.netlify/functions/profile-page?id=:id"
-  status = 200
 
 [[redirects]]
   from = "/submit-profile"
   to = "/.netlify/functions/add-profile"
   status = 200
 
-
-
+[[redirects]]
+  from = "/profiles/:id"
+  to = "/.netlify/functions/profile-page?id=:id"
+  status = 200
 
 [[headers]]
   for = "/*"
-  [headers.values]
-    Cache-Control = "public, no-cache"
+  values = {
+    Cache-Control = "public, no-cache",
+    Content-Security-Policy = "default-src 'self'; img-src 'self' https://res.cloudinary.com; script-src 'self' https://cdn.jsdelivr.net https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://*.supabase.co https://api.cloudinary.com https://*.google-analytics.com; style-src 'self' 'unsafe-inline'; frame-ancestors 'none';",
+    X-Content-Type-Options = "nosniff",
+    X-Frame-Options = "DENY",
+    X-XSS-Protection = "1; mode=block"
+  }
 
 [[headers]]
   for = "/css/*.css"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+  values = { Cache-Control = "public, max-age=31536000, immutable", Content-Type = "text/css" }
 
 [[headers]]
   for = "/js/*.js"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+  values = { Cache-Control = "public, max-age=31536000, immutable", Content-Type = "application/javascript" }
 
 [[headers]]
-  for = "/img/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+  for = "/img/*.webp"
+  values = { Cache-Control = "public, max-age=31536000, immutable", Content-Type = "image/webp" }
+
+[[headers]]
+  for = "/img/*.jpg"
+  values = { Cache-Control = "public, max-age=31536000, immutable", Content-Type = "image/jpeg" }
+
+[[headers]]
+  for = "/img/*.png"
+  values = { Cache-Control = "public, max-age=31536000, immutable", Content-Type = "image/png" }
+
+[[headers]]
+  for = "/img/*.ico"
+  values = { Cache-Control = "public, max-age=31536000, immutable", Content-Type = "image/x-icon" }
+
+[[headers]]
+  for = "/img/site.webmanifest"
+  values = { Cache-Control = "public, max-age=31536000, immutable", Content-Type = "application/manifest+json" }
+
+[[headers]]
+  for = "/sitemap.xml"
+  values = { Cache-Control = "public, no-cache", Content-Type = "application/xml" }
