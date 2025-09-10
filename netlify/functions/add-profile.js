@@ -6,7 +6,10 @@ const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
 export async function handler(event) {
   try {
     if (event.httpMethod !== "POST") {
-      return { statusCode: 405, body: "Method Not Allowed" }
+      return {
+        statusCode: 405,
+        body: JSON.stringify({ error: "Method Not Allowed" }),
+      }
     }
 
     const body = JSON.parse(event.body)
@@ -17,24 +20,29 @@ export async function handler(event) {
         apikey: SUPABASE_SERVICE_ROLE_KEY,
         Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
         "Content-Type": "application/json",
-        Prefer: "return=minimal",
+        Prefer: "return=representation", // Возвращаем созданную запись
       },
       body: JSON.stringify(body),
     })
 
     if (!res.ok) {
+      const errorText = await res.text()
       return {
         statusCode: res.status,
         body: JSON.stringify({
           error: "Ошибка сохранения",
-          details: await res.text(),
+          details: errorText,
         }),
       }
     }
 
+    const profile = await res.json() // Получаем данные созданного профиля
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: "Профиль сохранён" }),
+      body: JSON.stringify({
+        message: "Профиль сохранён",
+        profile: profile[0],
+      }),
     }
   } catch (err) {
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) }
