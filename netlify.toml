@@ -15,42 +15,48 @@
 
 [[headers]]
   for = "/*"
-  values = {
-    Cache-Control = "public, no-cache",
-    Content-Security-Policy = "default-src 'self'; img-src 'self' https://res.cloudinary.com; script-src 'self' https://cdn.jsdelivr.net https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://*.supabase.co https://api.cloudinary.com https://*.google-analytics.com; style-src 'self' 'unsafe-inline'; frame-ancestors 'none';",
-    X-Content-Type-Options = "nosniff",
-    X-Frame-Options = "DENY",
-    X-XSS-Protection = "1; mode=block"
-  }
+  Cache-Control = "public, no-cache"
+  Content-Security-Policy = "default-src 'self'; img-src 'self' https://res.cloudinary.com; script-src 'self' https://cdn.jsdelivr.net https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://*.supabase.co https://api.cloudinary.com https://*.google-analytics.com; style-src 'self' 'unsafe-inline'; frame-ancestors 'none';"
+  X-Content-Type-Options = "nosniff"
+  X-Frame-Options = "DENY"
+  X-XSS-Protection = "1; mode=block"
 
 [[headers]]
   for = "/css/*.css"
-  values = { Cache-Control = "public, max-age=31536000, immutable", Content-Type = "text/css" }
+  Cache-Control = "public, max-age=31536000, immutable"
+  Content-Type = "text/css"
 
 [[headers]]
   for = "/js/*.js"
-  values = { Cache-Control = "public, max-age=31536000, immutable", Content-Type = "application/javascript" }
+  Cache-Control = "public, max-age=31536000, immutable"
+  Content-Type = "application/javascript"
 
 [[headers]]
   for = "/img/*.webp"
-  values = { Cache-Control = "public, max-age=31536000, immutable", Content-Type = "image/webp" }
+  Cache-Control = "public, max-age=31536000, immutable"
+  Content-Type = "image/webp"
 
 [[headers]]
   for = "/img/*.jpg"
-  values = { Cache-Control = "public, max-age=31536000, immutable", Content-Type = "image/jpeg" }
+  Cache-Control = "public, max-age=31536000, immutable"
+  Content-Type = "image/jpeg"
 
 [[headers]]
   for = "/img/*.png"
-  values = { Cache-Control = "public, max-age=31536000, immutable", Content-Type = "image/png" }
+  Cache-Control = "public, max-age=31536000, immutable"
+  Content-Type = "image/png"
 
 [[headers]]
   for = "/img/*.ico"
-  values = { Cache-Control = "public, max-age=31536000, immutable", Content-Type = "image/x-icon" }
+  Cache-Control = "public, max-age=31536000, immutable"
+  Content-Type = "image/x-icon"
 
 [[headers]]
   for = "/img/site.webmanifest"
-  values = { Cache-Control = "public, max-age=31536000, immutable", Content-Type = "application/manifest+json" }
+  Cache-Control = "public, max-age=31536000, immutable"
+  Content-Type = "application/manifest+json"
 
 [[headers]]
   for = "/sitemap.xml"
-  values = { Cache-Control = "public, no-cache", Content-Type = "application/xml" }
+  Cache-Control = "public, no-cache"
+  Content-Type = "application/xml"
