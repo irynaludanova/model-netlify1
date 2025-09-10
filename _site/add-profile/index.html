@@ -71,10 +71,9 @@
   <h1>Добавить профиль</h1>
   <form
     name="add-profile"
-    method="POST"
-    action="/.netlify/functions/add-profile"
+
     id="add-profile-form"
-    enctype="multipart/form-data"
+
     aria-label="Форма добавления профиля"
   >
     <input type="hidden" name="form-name" value="add-profile" />
@@ -174,22 +173,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const payload = {
-      name: fd.get('name').trim(),
-      city: fd.get('city'),
-      category: fd.get('category'),
-      description: fd.get('description'),
-      age: parseInt(fd.get('age')),
-      email: fd.get('email'),
-      phone: fd.get('phone') || null,
-      image_url
-    }
-
+  name: fd.get('name').trim(),
+  city: fd.get('city'),
+  category: fd.get('category'),
+  description: fd.get('description'),
+  age: parseInt(fd.get('age')),
+  email: fd.get('email'),
+  phone: fd.get('phone') || null,
+  image_url
+}
     try {
-      const resp = await fetch('/.netlify/functions/add-profile', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
+     const resp = await fetch('/.netlify/functions/add-profile', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(payload)
+})
 
       const result = await resp.json()
       if (!resp.ok) throw new Error(result.error || 'Ошибка сервера')
