@@ -20,7 +20,7 @@ export async function handler(event) {
         apikey: SUPABASE_SERVICE_ROLE_KEY,
         Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
         "Content-Type": "application/json",
-        Prefer: "return=representation", // Возвращаем созданную запись
+        Prefer: "return=representation",
       },
       body: JSON.stringify(body),
     })
@@ -36,7 +36,7 @@ export async function handler(event) {
       }
     }
 
-    const profile = await res.json() // Получаем данные созданного профиля
+    const profile = await res.json()
     return {
       statusCode: 200,
       body: JSON.stringify({
