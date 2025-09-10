@@ -1,5 +1,3 @@
-import fetch from "node-fetch"
-
 const SUPABASE_URL = process.env.SUPABASE_URL
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
 
@@ -9,6 +7,7 @@ export async function handler(event) {
       return {
         statusCode: 405,
         body: JSON.stringify({ error: "Method Not Allowed" }),
+        headers: { "Access-Control-Allow-Origin": "*" },
       }
     }
 
@@ -20,31 +19,34 @@ export async function handler(event) {
         apikey: SUPABASE_SERVICE_ROLE_KEY,
         Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
         "Content-Type": "application/json",
-        Prefer: "return=representation", // Возвращаем созданную запись
+        Prefer: "return=representation",
       },
       body: JSON.stringify(body),
     })
 
+    const result = await res.json()
+
     if (!res.ok) {
-      const errorText = await res.text()
       return {
         statusCode: res.status,
-        body: JSON.stringify({
-          error: "Ошибка сохранения",
-          details: errorText,
-        }),
+        body: JSON.stringify({ error: "Ошибка сохранения", details: result }),
+        headers: { "Access-Control-Allow-Origin": "*" },
       }
     }
 
-    const profile = await res.json() // Получаем данные созданного профиля
     return {
       statusCode: 200,
       body: JSON.stringify({
         message: "Профиль сохранён",
-        profile: profile[0],
+        profile: result[0],
       }),
+      headers: { "Access-Control-Allow-Origin": "*" },
     }
   } catch (err) {
-    return { statusCode: 500, body: JSON.stringify({ error: err.message }) }
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: err.message }),
+      headers: { "Access-Control-Allow-Origin": "*" },
+    }
   }
 }

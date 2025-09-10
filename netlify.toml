@@ -32,16 +32,17 @@
   publish = "_site"
   functions = "netlify/functions"
 
+[[redirects]]
+  from = "/profiles/:id"
+  to = "/.netlify/functions/profile-page?id=:id"
+  status = 200
 
 [[redirects]]
   from = "/submit-profile"
   to = "/.netlify/functions/add-profile"
   status = 200
 
-[[redirects]]
-  from = "/profiles/:id"
-  to = "/.netlify/functions/profile-page?id=:id"
-  status = 200
+
 
 
 [[headers]]
