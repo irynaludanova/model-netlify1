@@ -1,7 +1,8 @@
 /*
   Cache-Control: public, no-cache
   Content-Security-Policy: default-src 'self';
-    script-src 'self' https://cdn.jsdelivr.net https://www.googletagmanager.com https://*.google-analytics.com;
+    script-src 'self' https://cdn.jsdelivr.net https://www.googletagmanager.com https://*.google-analytics.com 'unsafe-inline';
+    script-src-elem 'self' https://cdn.jsdelivr.net https://www.googletagmanager.com https://*.google-analytics.com;
     connect-src 'self' https://*.supabase.co https://api.cloudinary.com https://*.google-analytics.com;
     img-src 'self' https://res.cloudinary.com;
     style-src 'self' 'unsafe-inline';

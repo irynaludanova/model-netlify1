@@ -72,16 +72,17 @@
   <h1>Добавить профиль</h1>
   <form
     id="add-profile-form"
+    enctype="multipart/form-data"
     aria-label="Форма добавления профиля"
   >
     <div class="form-group">
       <label for="name">Имя:</label>
-      <input type="text" id="name" name="name" required aria-required="true" />
+      <input type="text" id="name" name="name" required />
     </div>
 
     <div class="form-group">
       <label for="city">Город:</label>
-      <select id="city" name="city" required aria-required="true">
+      <select id="city" name="city" required>
         <option value="" disabled selected>Выберите город</option>
         
           <option value="Корал-Гейблс">Корал-Гейблс</option>
@@ -95,7 +96,7 @@
 
     <div class="form-group">
       <label for="category">Категория:</label>
-      <select id="category" name="category" required aria-required="true">
+      <select id="category" name="category" required>
         <option value="" disabled selected>Выберите категорию</option>
         
           <option value="Модель">Модель</option>
@@ -109,38 +110,34 @@
 
     <div class="form-group">
       <label for="description">Описание:</label>
-      <textarea id="description" name="description" required aria-required="true"></textarea>
+      <textarea id="description" name="description" required></textarea>
     </div>
 
     <div class="form-group">
       <label for="age">Возраст:</label>
-      <input type="number" id="age" name="age" required aria-required="true" min="18" max="100" />
+      <input type="number" id="age" name="age" min="18" max="100" required />
     </div>
 
     <div class="form-group">
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required aria-required="true" />
+      <input type="email" id="email" name="email" required />
     </div>
 
     <div class="form-group">
       <label for="phone">Телефон (опционально):</label>
-      <input type="tel" id="phone" name="phone" aria-describedby="phone-note" />
-      <p id="phone-note" class="form-note">Укажите телефон в формате +1XXXYYYZZZZ</p>
+      <input type="tel" id="phone" name="phone" />
     </div>
 
     <div class="form-group">
       <label for="image">Фото профиля:</label>
-      <input type="file" name="image" id="image" accept="image/jpeg,image/png,image/webp" required aria-required="true" />
-      <p class="form-note">Рекомендуемый размер: 300x300px, формат: JPG, PNG, WEBP.</p>
+      <input type="file" name="image" id="image" accept="image/jpeg,image/png,image/webp" required />
     </div>
 
-    <button type="submit" aria-label="Отправить форму добавления профиля">Отправить</button>
+    <button type="submit">Отправить</button>
   </form>
 </div>
 
-<!-- Подключаем внешний JS вместо inline -->
-<script src="/js/add-profile.js" type="module"></script>
-
+<script src="/js/add-profile.js" defer></script>
   </main>
 
   <footer class="site-footer">
