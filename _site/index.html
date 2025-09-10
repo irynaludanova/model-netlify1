@@ -44,6 +44,25 @@
         "position": 1,
         "item": {
           "@type": "Person",
+          "name": "test form",
+          "jobTitle": "Стилист",
+          "description": "qwertyuio",
+          "email": "xd@Qv.j",
+          "telephone": "34567890",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Халландейл"
+          },
+          "image": "https://res.cloudinary.com/dimallvw3/image/upload/v1757525478/shjhqgtsb7fimcnhr0n6.jpg",
+          "url": "https://models-connect.netlify.app/profiles/50e0991b-b984-46e9-bb81-4f6d0fbc3bad/"
+        }
+      },
+      
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Person",
           "name": "Nick",
           "jobTitle": "Стилист",
           "description": "wertyuiop",
@@ -60,7 +79,7 @@
       
       {
         "@type": "ListItem",
-        "position": 2,
+        "position": 3,
         "item": {
           "@type": "Person",
           "name": "Alex",
@@ -79,7 +98,7 @@
       
       {
         "@type": "ListItem",
-        "position": 3,
+        "position": 4,
         "item": {
           "@type": "Person",
           "name": "Test",
@@ -93,25 +112,6 @@
           },
           "image": "https://res.cloudinary.com/dimallvw3/image/upload/v1757344642/l6zvuzteyvpmxtdmihly.jpg",
           "url": "https://models-connect.netlify.app/profiles/a2e0472e-8848-477d-8be7-086c972fe368/"
-        }
-      },
-      
-      {
-        "@type": "ListItem",
-        "position": 4,
-        "item": {
-          "@type": "Person",
-          "name": "Anna",
-          "jobTitle": "Модель",
-          "description": "&#34;At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod m",
-          "email": "anna@gmail.com",
-          "telephone": "987654",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Халландейл"
-          },
-          "image": "https://res.cloudinary.com/dimallvw3/image/upload/v1757342206/pho5f1nncqprm4faucjc.jpg",
-          "url": "https://models-connect.netlify.app/profiles/50ba7c00-1993-4e21-9eef-b0474cc920a0/"
         }
       }
       
@@ -141,148 +141,152 @@
   </nav>
 
   <main>
-    <div class="profiles-section">
-  <h1>ModelConnect Miami</h1>
-  <h2> Свежие профили моделей, фотографов, стилистов в 2025</h2>
+    
 
-  <div class="home-section__intro">
-    <p> Добро пожаловать на ModelConnect Miami — ведущую платформу для поиска свежих профилей в fashion-индустрии Майами. Мы соединяем моделей,фотографов и стилистов из Майами-Бич, Халландейл, Корал-Гейблс и других районов. Наши ежедневные обновления помогают вам найти идеальных профессионалов для съемок, показов и креативных проектов.</p>
-  </div>
-
-  <div class="filters">
+<div class="profiles-section" id="profiles">
+ <h1>ModelConnect Miami</h1>
+<h2>Свежие модели, фотографы и стилисты — 2025</h2>
+<div class="home-section__intro">
+  <p> Добро пожаловать на ModelConnect Miami — ведущую платформу для поиска свежих профилей в fashion-индустрии Майами. Мы соединяем моделей,фотографов и стилистов из Майами-Бич, Халландейл, Корал-Гейблс и других районов. Наши ежедневные обновления помогают вам найти идеальных профессионалов для съемок, показов и креативных проектов.</p>
+</div>
+<div class="filters">
   <label for="region-select">Выберите регион:</label>
   <select id="region-select">
-    <option value="все">Все регионы</option>
+    <option value="все" selected>Все регионы</option>
     
-      <option value="корал-гейблс">Корал-Гейблс</option>
+      
+        <option value="корал-гейблс">Корал-Гейблс</option>
+      
     
-      <option value="майами-бич">Майами-Бич</option>
+      
+        <option value="майами-бич">Майами-Бич</option>
+      
     
-      <option value="халландейл">Халландейл</option>
+      
+        <option value="халландейл">Халландейл</option>
+      
     
   </select>
 
   <label for="category-select">Выберите категорию:</label>
   <select id="category-select">
-    <option value="все">Все категории</option>
+    <option value="все" selected>Все категории</option>
     
-      <option value="модель">Модель</option>
+      
+        <option value="модель">Модель</option>
+      
     
-      <option value="стилист">Стилист</option>
+      
+        <option value="стилист">Стилист</option>
+      
     
-      <option value="фотограф">Фотограф</option>
+      
+        <option value="фотограф">Фотограф</option>
+      
     
   </select>
 </div>
 
 
-  <div class="profile-list" id="profile-list">
-    
-      
-       <div class="profile-card" data-region="халландейл" data-category="стилист">
-  <img
-    class="profile-card__image"
-    width="300"
-    height="200"
-    src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757419442/phvgfe0d2mo5yghl8ks4.jpg"
-    srcset="
-      https://res.cloudinary.com/dimallvw3/image/upload/w_150,h_100,c_fill,q_auto,f_webp/v1757419442/phvgfe0d2mo5yghl8ks4.jpg 150w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757419442/phvgfe0d2mo5yghl8ks4.jpg 300w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_600,h_400,c_fill,q_auto,f_webp/v1757419442/phvgfe0d2mo5yghl8ks4.jpg 600w"
-    sizes="(max-width: 600px) 150px, (max-width: 1200px) 300px, 600px"
-    alt="Фото профиля Nick"
-    loading="lazy"
-  />
-  <div class="profile-card__description">
-    <h3>Nick</h3>
-    <p>Халландейл, Стилист</p>
-    <p>wertyuiop</p>
-    <p>Возраст: 22</p>
-    <p>Email: <a href="mailto:nick@gmail.com">nick@gmail.com</a></p>
-    <p>Телефон: <a href="tel:23456788">23456788</a></p>
-    <a href="/profiles/bced9eb5-bebf-465d-a352-d67b1d03e121/" aria-label="Подробнее о Nick">Подробнее</a>
-  </div>
-</div>
-      
-       <div class="profile-card" data-region="халландейл" data-category="фотограф">
-  <img
-    class="profile-card__image"
-    width="300"
-    height="200"
-    src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757418218/v5qta1cmgjxdysqkwi0l.jpg"
-    srcset="
-      https://res.cloudinary.com/dimallvw3/image/upload/w_150,h_100,c_fill,q_auto,f_webp/v1757418218/v5qta1cmgjxdysqkwi0l.jpg 150w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757418218/v5qta1cmgjxdysqkwi0l.jpg 300w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_600,h_400,c_fill,q_auto,f_webp/v1757418218/v5qta1cmgjxdysqkwi0l.jpg 600w"
-    sizes="(max-width: 600px) 150px, (max-width: 1200px) 300px, 600px"
-    alt="Фото профиля Alex"
-    loading="lazy"
-  />
-  <div class="profile-card__description">
-    <h3>Alex</h3>
-    <p>Халландейл, Фотограф</p>
-    <p>qwertyuio</p>
-    <p>Возраст: 33</p>
-    <p>Email: <a href="mailto:alex@gmail.com">alex@gmail.com</a></p>
-    <p>Телефон: <a href="tel:9876543">9876543</a></p>
-    <a href="/profiles/6f26f5a1-8ca8-4da6-9651-1f5ca752be0f/" aria-label="Подробнее о Alex">Подробнее</a>
-  </div>
-</div>
-      
-       <div class="profile-card" data-region="корал-гейблс" data-category="стилист">
-  <img
-    class="profile-card__image"
-    width="300"
-    height="200"
-    src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757344642/l6zvuzteyvpmxtdmihly.jpg"
-    srcset="
-      https://res.cloudinary.com/dimallvw3/image/upload/w_150,h_100,c_fill,q_auto,f_webp/v1757344642/l6zvuzteyvpmxtdmihly.jpg 150w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757344642/l6zvuzteyvpmxtdmihly.jpg 300w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_600,h_400,c_fill,q_auto,f_webp/v1757344642/l6zvuzteyvpmxtdmihly.jpg 600w"
-    sizes="(max-width: 600px) 150px, (max-width: 1200px) 300px, 600px"
-    alt="Фото профиля Test"
-    loading="lazy"
-  />
-  <div class="profile-card__description">
-    <h3>Test</h3>
-    <p>Корал-Гейблс, Стилист</p>
-    <p>qewrtyuiop</p>
-    <p>Возраст: 33</p>
-    <p>Email: <a href="mailto:test@gmail.com">test@gmail.com</a></p>
-    <p>Телефон: <a href="tel:9876543">9876543</a></p>
-    <a href="/profiles/a2e0472e-8848-477d-8be7-086c972fe368/" aria-label="Подробнее о Test">Подробнее</a>
-  </div>
-</div>
-      
-       <div class="profile-card" data-region="халландейл" data-category="модель">
-  <img
-    class="profile-card__image"
-    width="300"
-    height="200"
-    src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757342206/pho5f1nncqprm4faucjc.jpg"
-    srcset="
-      https://res.cloudinary.com/dimallvw3/image/upload/w_150,h_100,c_fill,q_auto,f_webp/v1757342206/pho5f1nncqprm4faucjc.jpg 150w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757342206/pho5f1nncqprm4faucjc.jpg 300w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_600,h_400,c_fill,q_auto,f_webp/v1757342206/pho5f1nncqprm4faucjc.jpg 600w"
-    sizes="(max-width: 600px) 150px, (max-width: 1200px) 300px, 600px"
-    alt="Фото профиля Anna"
-    loading="lazy"
-  />
-  <div class="profile-card__description">
-    <h3>Anna</h3>
-    <p>Халландейл, Модель</p>
-    <p>&#34;At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod m</p>
-    <p>Возраст: 33</p>
-    <p>Email: <a href="mailto:anna@gmail.com">anna@gmail.com</a></p>
-    <p>Телефон: <a href="tel:987654">987654</a></p>
-    <a href="/profiles/50ba7c00-1993-4e21-9eef-b0474cc920a0/" aria-label="Подробнее о Anna">Подробнее</a>
-  </div>
-</div>
-      
-    
-  </div>
 
+
+
+<div id="profile-list">
+
+
+    
+      <div class="profile-card"
+           data-region="Халландейл"
+           data-category="Стилист">
+        <img
+          class="profile-card__image"
+          width="300"
+          height="200"
+          src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757525478/shjhqgtsb7fimcnhr0n6.jpg"
+          alt="Фото профиля test form"
+          loading="lazy"
+        />
+        <div class="profile-card__description">
+          <h3>test form</h3>
+          <p>Халландейл, Стилист</p>
+          <p>qwertyuio</p>
+          <p>Возраст: 33</p>
+          <p>Email: <a href="mailto:xd@Qv.j">xd@Qv.j</a></p>
+          <p>Телефон: <a href="tel:34567890">34567890</a></p>
+          <a href="/profiles/50e0991b-b984-46e9-bb81-4f6d0fbc3bad/" aria-label="Подробнее о test form">Подробнее</a>
+        </div>
+      </div>
+    
+      <div class="profile-card"
+           data-region="Халландейл"
+           data-category="Стилист">
+        <img
+          class="profile-card__image"
+          width="300"
+          height="200"
+          src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757419442/phvgfe0d2mo5yghl8ks4.jpg"
+          alt="Фото профиля Nick"
+          loading="lazy"
+        />
+        <div class="profile-card__description">
+          <h3>Nick</h3>
+          <p>Халландейл, Стилист</p>
+          <p>wertyuiop</p>
+          <p>Возраст: 22</p>
+          <p>Email: <a href="mailto:nick@gmail.com">nick@gmail.com</a></p>
+          <p>Телефон: <a href="tel:23456788">23456788</a></p>
+          <a href="/profiles/bced9eb5-bebf-465d-a352-d67b1d03e121/" aria-label="Подробнее о Nick">Подробнее</a>
+        </div>
+      </div>
+    
+      <div class="profile-card"
+           data-region="Халландейл"
+           data-category="Фотограф">
+        <img
+          class="profile-card__image"
+          width="300"
+          height="200"
+          src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757418218/v5qta1cmgjxdysqkwi0l.jpg"
+          alt="Фото профиля Alex"
+          loading="lazy"
+        />
+        <div class="profile-card__description">
+          <h3>Alex</h3>
+          <p>Халландейл, Фотограф</p>
+          <p>qwertyuio</p>
+          <p>Возраст: 33</p>
+          <p>Email: <a href="mailto:alex@gmail.com">alex@gmail.com</a></p>
+          <p>Телефон: <a href="tel:9876543">9876543</a></p>
+          <a href="/profiles/6f26f5a1-8ca8-4da6-9651-1f5ca752be0f/" aria-label="Подробнее о Alex">Подробнее</a>
+        </div>
+      </div>
+    
+      <div class="profile-card"
+           data-region="Корал-Гейблс"
+           data-category="Стилист">
+        <img
+          class="profile-card__image"
+          width="300"
+          height="200"
+          src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757344642/l6zvuzteyvpmxtdmihly.jpg"
+          alt="Фото профиля Test"
+          loading="lazy"
+        />
+        <div class="profile-card__description">
+          <h3>Test</h3>
+          <p>Корал-Гейблс, Стилист</p>
+          <p>qewrtyuiop</p>
+          <p>Возраст: 33</p>
+          <p>Email: <a href="mailto:test@gmail.com">test@gmail.com</a></p>
+          <p>Телефон: <a href="tel:9876543">9876543</a></p>
+          <a href="/profiles/a2e0472e-8848-477d-8be7-086c972fe368/" aria-label="Подробнее о Test">Подробнее</a>
+        </div>
+      </div>
+    
   
+</div>
+
+
 <nav class="pagination" aria-label="Навигация по страницам">
   
 
@@ -314,8 +318,173 @@
   
 </nav>
 
-</div>
 
+<script src="/js/filters.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    
+    
+      
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "Person",
+          "name": "Anna",
+          "description": ""At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non prov...",
+          "url": "https://models-connect.netlify.app/profiles/50ba7c00-1993-4e21-9eef-b0474cc920a0/"
+        }
+      },
+      
+      
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Person",
+          "name": "Nika",
+          "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
+          "url": "https://models-connect.netlify.app/profiles/e5720766-b43c-4a2d-941d-2b6826a811d8/"
+        }
+      },
+      
+      
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "Person",
+          "name": "Kate",
+          "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
+          "url": "https://models-connect.netlify.app/profiles/a411a3c2-d0db-420d-8a2e-778d95724200/"
+        }
+      }
+      
+      
+    
+      
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "item": {
+          "@type": "Person",
+          "name": "test form",
+          "description": "qwertyuio",
+          "url": "https://models-connect.netlify.app/profiles/50e0991b-b984-46e9-bb81-4f6d0fbc3bad/"
+        }
+      },
+      
+      
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "item": {
+          "@type": "Person",
+          "name": "Nick",
+          "description": "wertyuiop",
+          "url": "https://models-connect.netlify.app/profiles/bced9eb5-bebf-465d-a352-d67b1d03e121/"
+        }
+      },
+      
+      
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "item": {
+          "@type": "Person",
+          "name": "Test",
+          "description": "qewrtyuiop",
+          "url": "https://models-connect.netlify.app/profiles/a2e0472e-8848-477d-8be7-086c972fe368/"
+        }
+      },
+      
+      
+      {
+        "@type": "ListItem",
+        "position": 7,
+        "item": {
+          "@type": "Person",
+          "name": "Maria",
+          "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
+          "url": "https://models-connect.netlify.app/profiles/53345958-12d5-492d-b15a-e4d0fc406c72/"
+        }
+      },
+      
+      
+      {
+        "@type": "ListItem",
+        "position": 8,
+        "item": {
+          "@type": "Person",
+          "name": "John",
+          "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
+          "url": "https://models-connect.netlify.app/profiles/83455fd6-193d-4b96-9e24-ed9160cab722/"
+        }
+      }
+      
+      
+    
+      
+      {
+        "@type": "ListItem",
+        "position": 9,
+        "item": {
+          "@type": "Person",
+          "name": "Alex",
+          "description": "qwertyuio",
+          "url": "https://models-connect.netlify.app/profiles/6f26f5a1-8ca8-4da6-9651-1f5ca752be0f/"
+        }
+      },
+      
+      
+      {
+        "@type": "ListItem",
+        "position": 10,
+        "item": {
+          "@type": "Person",
+          "name": "Tim",
+          "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
+          "url": "https://models-connect.netlify.app/profiles/b4fe21c6-ee77-4ed8-a36b-5ed1453024d6/"
+        }
+      },
+      
+      
+      {
+        "@type": "ListItem",
+        "position": 11,
+        "item": {
+          "@type": "Person",
+          "name": "Ivan",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi u...",
+          "url": "https://models-connect.netlify.app/profiles/af25b537-8bf5-46c5-85e2-ef50e7c74b41/"
+        }
+      }
+      
+      
+    
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Главная",
+    "item": "https://models-connect.netlify.app/"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Категории",
+    "item": "https://models-connect.netlify.app/category/"
+  }]
+}
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",

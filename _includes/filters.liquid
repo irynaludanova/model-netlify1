@@ -1,17 +1,21 @@
 <div class="filters">
   <label for="region-select">Выберите регион:</label>
   <select id="region-select">
-    <option value="все">Все регионы</option>
+    <option value="все" selected>Все регионы</option>
     {% for region in allRegions %}
-      <option value="{{ region | escape | downcase | replace: ' ', '-' }}">{{ region | escape }}</option>
+      {% if region != "" %}
+        <option value="{{ region | escape | downcase | replace: ' ', '-' }}">{{ region | escape }}</option>
+      {% endif %}
     {% endfor %}
   </select>
 
   <label for="category-select">Выберите категорию:</label>
   <select id="category-select">
-    <option value="все">Все категории</option>
+    <option value="все" selected>Все категории</option>
     {% for category in allCategories %}
-      <option value="{{ category | escape | downcase | replace: ' ', '-' }}">{{ category | escape }}</option>
+      {% if category != "" %}
+        <option value="{{ category | escape | downcase | replace: ' ', '-' }}">{{ category | escape }}</option>
+      {% endif %}
     {% endfor %}
   </select>
 </div>

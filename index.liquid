@@ -53,52 +53,94 @@ eleventyComputed:
       }
     }
 ---
-<div class="profiles-section">
-  <h1>{{ site.name }}</h1>
-  <h2>{{ site.title1 }} в 2025</h2>
-
-  <div class="home-section__intro">
-    <p>{{ site.intro }}</p>
-  </div>
-
-  {% include "filters.liquid" %}
-
-  <div class="profile-list" id="profile-list">
-    {% if profiles.length > 0 %}
-      {% for profile in profiles %}
-       <div class="profile-card" data-region="{{ profile.city | default: '' | escape | downcase | replace: ' ', '-' }}" data-category="{{ profile.category | default: '' | escape | downcase }}">
-  <img
-    class="profile-card__image"
-    width="300"
-    height="200"
-    src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }}"
-    srcset="
-      https://res.cloudinary.com/dimallvw3/image/upload/w_150,h_100,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 150w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 300w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_600,h_400,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 600w"
-    sizes="(max-width: 600px) 150px, (max-width: 1200px) 300px, 600px"
-    alt="Фото профиля {{ profile.name | escape }}"
-    loading="lazy"
-  />
-  <div class="profile-card__description">
-    <h3>{{ profile.name | escape }}</h3>
-    <p>{{ profile.city | default: 'Регион не указан' | escape }}, {{ profile.category | default: 'Категория не указана' | escape }}</p>
-    {% if profile.description %}<p>{{ profile.description | escape }}</p>{% endif %}
-    {% if profile.age %}<p>Возраст: {{ profile.age }}</p>{% endif %}
-    {% if profile.email %}<p>Email: <a href="mailto:{{ profile.email | escape }}">{{ profile.email | escape }}</a></p>{% endif %}
-    {% if profile.phone %}<p>Телефон: <a href="tel:{{ profile.phone | escape }}">{{ profile.phone | escape }}</a></p>{% endif %}
-    <a href="/profiles/{{ profile.id | slugify }}/" aria-label="Подробнее о {{ profile.name | escape }}">Подробнее</a>
-  </div>
+{% assign allRegions = collections.profiles | map: "city" | uniq | sort %}
+{% assign allCategories = collections.profiles | map: "category" | uniq | sort %}
+<div class="profiles-section" id="profiles">
+ <h1>{{ site.name }}</h1>
+<h2>Свежие модели, фотографы и стилисты — 2025</h2>
+<div class="home-section__intro">
+  <p>{{ site.intro }}</p>
 </div>
+{% include "filters.liquid" %}
+
+{% assign allRegions = profiles | map: "city" | uniq | sort %}
+{% assign allCategories = profiles | map: "category" | uniq | sort %}
+
+<div id="profile-list">
+{% if profiles and profiles.size > 0 %}
+
+    {% for profile in profiles %}
+      <div class="profile-card"
+           data-region="{{ profile.city | default: '' }}"
+           data-category="{{ profile.category | default: '' }}">
+        <img
+          class="profile-card__image"
+          width="300"
+          height="200"
+          src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }}"
+          alt="Фото профиля {{ profile.name | escape }}"
+          loading="lazy"
+        />
+        <div class="profile-card__description">
+          <h3>{{ profile.name | default: 'Без имени' }}</h3>
+          <p>{{ profile.city | default: 'Регион не указан' }}, {{ profile.category | default: 'Категория не указана' }}</p>
+          {% if profile.description %}<p>{{ profile.description | escape }}</p>{% endif %}
+          {% if profile.age %}<p>Возраст: {{ profile.age }}</p>{% endif %}
+          {% if profile.email %}<p>Email: <a href="mailto:{{ profile.email | escape }}">{{ profile.email | escape }}</a></p>{% endif %}
+          {% if profile.phone %}<p>Телефон: <a href="tel:{{ profile.phone | escape }}">{{ profile.phone | escape }}</a></p>{% endif %}
+          <a href="/profiles/{{ profile.id | slugify }}/" aria-label="Подробнее о {{ profile.name | escape }}">Подробнее</a>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>Профили не найдены.</p>
+  {% endif %}
+</div>
+
+{% include "pagination.liquid" %}
+
+<script src="/js/filters.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    {% assign position = 1 %}
+    {% for category in collections.categories %}
+      {% for p in category.profiles %}
+      {
+        "@type": "ListItem",
+        "position": {{ position }},
+        "item": {
+          "@type": "Person",
+          "name": "{{ p.name }}",
+          "description": "{{ p.description | truncate: 200 }}",
+          "url": "{{ site.url }}/profiles/{{ p.id }}/"
+        }
+      }{% unless forloop.last %},{% endunless %}
+      {% assign position = position | plus: 1 %}
       {% endfor %}
-    {% else %}
-      <p>Профили не найдены.</p>
-    {% endif %}
-  </div>
-
-  {% include "pagination.liquid" %}
-</div>
-
+    {% endfor %}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Главная",
+    "item": "{{ site.url }}/"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Категории",
+    "item": "{{ site.url }}/category/"
+  }]
+}
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
