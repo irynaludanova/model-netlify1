@@ -1,3 +1,5 @@
+import fetch from "node-fetch"
+
 const SUPABASE_URL = process.env.SUPABASE_URL
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
 
@@ -11,8 +13,31 @@ export async function handler(event) {
       }
     }
 
-    const body = JSON.parse(event.body)
+    // Разбираем JSON, который отправляет фронтенд
+    let body
+    try {
+      body = JSON.parse(event.body)
+    } catch (err) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: "Invalid JSON", details: err.message }),
+        headers: { "Access-Control-Allow-Origin": "*" },
+      }
+    }
 
+    // Составляем объект для вставки — только поля таблицы
+    const profileData = {
+      name: body.name?.trim() || null,
+      city: body.city || null,
+      category: body.category || null,
+      description: body.description || null,
+      age: body.age || null,
+      email: body.email || null,
+      phone: body.phone || null,
+      image_url: body.image_url || null,
+    }
+
+    // POST запрос в Supabase REST API
     const res = await fetch(`${SUPABASE_URL}/rest/v1/profiles`, {
       method: "POST",
       headers: {
@@ -21,10 +46,26 @@ export async function handler(event) {
         "Content-Type": "application/json",
         Prefer: "return=representation",
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(profileData),
     })
 
-    const result = await res.json()
+    // Получаем текст ответа для логов
+    const text = await res.text()
+    let result
+    try {
+      result = JSON.parse(text)
+    } catch (err) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          error: "Invalid JSON from Supabase",
+          raw: text,
+        }),
+        headers: { "Access-Control-Allow-Origin": "*" },
+      }
+    }
+
+    console.log("Supabase response:", result)
 
     if (!res.ok) {
       return {
@@ -38,7 +79,7 @@ export async function handler(event) {
       statusCode: 200,
       body: JSON.stringify({
         message: "Профиль сохранён",
-        profile: result[0],
+        profile: result[0], // возвращаем только что созданный профиль
       }),
       headers: { "Access-Control-Allow-Origin": "*" },
     }
