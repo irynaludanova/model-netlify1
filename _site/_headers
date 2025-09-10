@@ -1,9 +1,9 @@
 /*
   Cache-Control: public, no-cache
   Content-Security-Policy: default-src 'self';
-    img-src 'self' https://res.cloudinary.com;
     script-src 'self' https://cdn.jsdelivr.net https://www.googletagmanager.com https://*.google-analytics.com;
     connect-src 'self' https://*.supabase.co https://api.cloudinary.com https://*.google-analytics.com;
+    img-src 'self' https://res.cloudinary.com;
     style-src 'self' 'unsafe-inline';
     frame-ancestors 'none';
   X-Content-Type-Options: nosniff
