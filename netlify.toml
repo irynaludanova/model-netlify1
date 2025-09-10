@@ -38,6 +38,12 @@
   to = "/.netlify/functions/add-profile"
   status = 200
 
+[[redirects]]
+  from = "/profiles/:id"
+  to = "/.netlify/functions/profile-page?id=:id"
+  status = 200
+
+
 [[headers]]
   for = "/*"
   [headers.values]
