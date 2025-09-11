@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow">
-  <meta name="keywords" content="модели Майами, фотографы Халландейл, стилисты Корал-Гейблс, ModelConnect Miami">
   <title>{{ title }}</title>
   <meta name="description" content="{{ description }}">
   <meta property="og:title" content="{{ seo_og_title }}">
@@ -25,21 +24,24 @@
   <link rel="icon" type="image/png" sizes="16x16" href="{{ site.url }}/img/favicon-16x16.png">
   <link rel="manifest" href="{{ site.url }}/img/site.webmanifest">
   <link rel="preload" href="/css/style.css" as="style">
-  <link rel="dns-prefetch" href="https://api.cloudinary.com">
-  <link rel="dns-prefetch" href="{{ env.SUPABASE_URL }}">
   <link rel="stylesheet" href="/css/style.css">
-  <script type="application/ld+json">
-    {{ seo_json_ld  }}
-  </script>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-4CXZPMW012"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <link rel="dns-prefetch" href="https://api.cloudinary.com">
 
-  gtag('config', 'G-4CXZPMW012');
-</script>
+  <script type="application/ld+json">{{ seo_json_ld }}</script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4CXZPMW012"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4CXZPMW012');
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script>
+    window.SUPABASE_URL = "https://zftnzsbflzfhfyfnyqza.supabase.co";
+    window.SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdG56c2JmbHpmaGZ5Zm55cXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwODQyMjQsImV4cCI6MjA3MjY2MDIyNH0.ZiNtVmNKFPsW7NPngNvRrDsRFwcPQw0aE6m8FwmCvZg";
+  </script>
 </head>
 <body>
   <nav>
@@ -58,6 +60,8 @@
   <footer class="site-footer">
     <p>© 2025 ModelConnect Miami</p>
   </footer>
+
+  <script src="/js/profiles.js" defer></script>
   <script src="/js/filters.js" defer></script>
 </body>
 </html>

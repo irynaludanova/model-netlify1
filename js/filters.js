@@ -1,156 +1,92 @@
-;(function () {
-  const PAGE_SIZE = 4
+document.addEventListener("DOMContentLoaded", function () {
+  const profileList = document.getElementById("profile-list")
+  const categorySelect = document.getElementById("category-select")
+  const regionSelect = document.getElementById("region-select")
 
-  function normalizeString(str) {
-    if (!str) return ""
-    return str
-      .toString()
-      .normalize("NFKD")
-      .replace(/\u00A0/g, " ")
-      .trim()
-      .toLowerCase()
-      .replace(/[\s\-_]+/g, "-")
-  }
+  if (!profileList || !categorySelect || !regionSelect) return
 
-  function createOption(value, text) {
-    const opt = document.createElement("option")
-    opt.value = normalizeString(value)
-    opt.textContent = text
-    return opt
-  }
-
-  document.addEventListener("profilesRendered", function () {
-    const profileList = document.getElementById("profile-list")
-    const regionSelect = document.getElementById("region-select")
-    const categorySelect = document.getElementById("category-select")
-    const paginationContainer = document.getElementById("pagination-container")
-
-    if (!profileList || !regionSelect || !categorySelect) return
-
-    const allProfiles = window.allProfilesData.map((p) => ({
-      ...p,
-      regionSlug: normalizeString(p.city),
-      categorySlug: normalizeString(p.category),
-    }))
-
-    const regions = [...new Set(allProfiles.map((p) => p.city).filter(Boolean))]
-    const categories = [
-      ...new Set(allProfiles.map((p) => p.category).filter(Boolean)),
-    ]
-
-    regionSelect.innerHTML = ""
-    regionSelect.appendChild(createOption("все", "Все регионы"))
-    regions.forEach((r) => regionSelect.appendChild(createOption(r, r)))
-
-    categorySelect.innerHTML = ""
-    categorySelect.appendChild(createOption("все", "Все категории"))
-    categories.forEach((c) => categorySelect.appendChild(createOption(c, c)))
-
-    let currentPage = 1
-
-    function getFilteredProfiles() {
-      const region = normalizeString(regionSelect.value)
-      const category = normalizeString(categorySelect.value)
-      return allProfiles.filter(
-        (p) =>
-          (region === "все" || p.regionSlug === region) &&
-          (category === "все" || p.categorySlug === category)
-      )
+  function renderProfiles(profiles) {
+    if (!profiles || profiles.length === 0) {
+      profileList.innerHTML = "<p>Нет профилей для отображения.</p>"
+      return
     }
 
-    function renderPage(page = 1) {
-      const filtered = getFilteredProfiles()
-      const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
-      if (page < 1) page = 1
-      if (page > totalPages) page = totalPages
-      currentPage = page
+    profileList.innerHTML = profiles
+      .map((p) => {
+        const category = p.category || "Категория не указана"
+        const region = p.city || "Регион не указан"
+        const name = p.name || "Без имени"
+        const image = p.image_url
+          ? `https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/${p.image_url.replace(
+              "https://res.cloudinary.com/dimallvw3/image/upload/",
+              ""
+            )}`
+          : "/img/placeholder.webp"
 
-      const start = (currentPage - 1) * PAGE_SIZE
-      const end = start + PAGE_SIZE
-      const pageProfiles = filtered.slice(start, end)
-
-      profileList.innerHTML = ""
-      if (!pageProfiles.length) {
-        profileList.innerHTML = "<p>Профили не найдены.</p>"
-        paginationContainer.innerHTML = ""
-        return
-      }
-
-      pageProfiles.forEach((profile) => {
-        const html = `
-          <div class="profile-card" data-region="${
-            profile.regionSlug
-          }" data-category="${profile.categorySlug}">
-            <img
-              class="profile-card__image"
-              width="300"
-              height="200"
-              src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/${
-                profile.image_url?.replace(
-                  "https://res.cloudinary.com/dimallvw3/image/upload/",
-                  ""
-                ) || "placeholder.webp"
-              }"
-              alt="Фото профиля ${profile.name || ""}"
-              loading="lazy"
-            />
+        return `
+          <div class="profile-card" data-category="${p.category}" data-region="${p.city}">
+            <img class="profile-card__image" src="${image}" width="300" height="200" alt="Фото профиля ${name}" loading="lazy">
             <div class="profile-card__description">
-              <h3>${profile.name || "Без имени"}</h3>
-              <p>${profile.city || "Регион не указан"}, ${
-          profile.category || "Категория не указана"
-        }</p>
-              <a href="/profiles/${profile.id}/">Подробнее</a>
+              <h3>${name}</h3>
+              <p>${region}, ${category}</p>
+              <a href="/profiles/${p.id}/">Подробнее</a>
             </div>
           </div>
         `
-        profileList.insertAdjacentHTML("beforeend", html)
       })
+      .join("")
+  }
 
-      renderPagination(totalPages)
-    }
+  function populateFilters(profiles) {
+    const regions = [
+      ...new Set(profiles.map((p) => p.city).filter(Boolean)),
+    ].sort()
+    const categories = [
+      ...new Set(profiles.map((p) => p.category).filter(Boolean)),
+    ].sort()
 
-    function renderPagination(totalPages) {
-      paginationContainer.innerHTML = ""
-      if (totalPages <= 1) return
+    while (regionSelect.options.length > 1) regionSelect.remove(1)
+    while (categorySelect.options.length > 1) categorySelect.remove(1)
 
-      if (currentPage > 1) {
-        const prev = document.createElement("a")
-        prev.href = "#"
-        prev.textContent = "← Назад"
-        prev.addEventListener("click", (e) => {
-          e.preventDefault()
-          renderPage(currentPage - 1)
-        })
-        paginationContainer.appendChild(prev)
-      }
+    regions.forEach((r) => {
+      const option = document.createElement("option")
+      option.value = r
+      option.textContent = r
+      regionSelect.appendChild(option)
+    })
 
-      for (let i = 1; i <= totalPages; i++) {
-        const pageLink = document.createElement("a")
-        pageLink.href = "#"
-        pageLink.textContent = i
-        if (i === currentPage) pageLink.classList.add("active")
-        pageLink.addEventListener("click", (e) => {
-          e.preventDefault()
-          renderPage(i)
-        })
-        paginationContainer.appendChild(pageLink)
-      }
+    categories.forEach((c) => {
+      const option = document.createElement("option")
+      option.value = c
+      option.textContent = c
+      categorySelect.appendChild(option)
+    })
+  }
 
-      if (currentPage < totalPages) {
-        const next = document.createElement("a")
-        next.href = "#"
-        next.textContent = "Вперёд →"
-        next.addEventListener("click", (e) => {
-          e.preventDefault()
-          renderPage(currentPage + 1)
-        })
-        paginationContainer.appendChild(next)
-      }
-    }
+  function filterProfiles() {
+    const selectedCategory = categorySelect.value
+    const selectedRegion = regionSelect.value
 
-    regionSelect.addEventListener("change", () => renderPage(1))
-    categorySelect.addEventListener("change", () => renderPage(1))
+    const filtered = window.allProfilesData.filter((p) => {
+      const matchCategory =
+        selectedCategory === "все" || p.category === selectedCategory
+      const matchRegion = selectedRegion === "все" || p.city === selectedRegion
+      return matchCategory && matchRegion
+    })
 
-    renderPage(1)
+    renderProfiles(filtered)
+  }
+
+  if (window.allProfilesData && window.allProfilesData.length) {
+    populateFilters(window.allProfilesData)
+    renderProfiles(window.allProfilesData)
+  }
+
+  categorySelect.addEventListener("change", filterProfiles)
+  regionSelect.addEventListener("change", filterProfiles)
+
+  document.addEventListener("profilesLoaded", () => {
+    populateFilters(window.allProfilesData)
+    renderProfiles(window.allProfilesData)
   })
-})()
+})

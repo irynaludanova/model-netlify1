@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow">
-  <meta name="keywords" content="модели Майами, фотографы Халландейл, стилисты Корал-Гейблс, ModelConnect Miami">
   <title>Добавить профиль — ModelConnect Miami</title>
   <meta name="description" content="Добавьте свой профиль модели, фотографа или стилиста на платформу ModelConnect Miami. Добавьте свой профиль модели, фотографа или стилиста в Майами.">
   <meta property="og:title" content="Добавить профиль — ModelConnect Miami">
@@ -25,11 +24,10 @@
   <link rel="icon" type="image/png" sizes="16x16" href="https://models-connect.netlify.app/img/favicon-16x16.png">
   <link rel="manifest" href="https://models-connect.netlify.app/img/site.webmanifest">
   <link rel="preload" href="/css/style.css" as="style">
-  <link rel="dns-prefetch" href="https://api.cloudinary.com">
-  <link rel="dns-prefetch" href="https://zftnzsbflzfhfyfnyqza.supabase.co">
   <link rel="stylesheet" href="/css/style.css">
-  <script type="application/ld+json">
-    {
+  <link rel="dns-prefetch" href="https://api.cloudinary.com">
+
+  <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "WebPage",
   "name": "Добавить профиль — ModelConnect Miami",
@@ -44,17 +42,21 @@
     }
   }
 }
-
-  </script>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-4CXZPMW012"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-4CXZPMW012');
 </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4CXZPMW012"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4CXZPMW012');
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script>
+    window.SUPABASE_URL = "https://zftnzsbflzfhfyfnyqza.supabase.co";
+    window.SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdG56c2JmbHpmaGZ5Zm55cXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwODQyMjQsImV4cCI6MjA3MjY2MDIyNH0.ZiNtVmNKFPsW7NPngNvRrDsRFwcPQw0aE6m8FwmCvZg";
+  </script>
 </head>
 <body>
   <nav>
@@ -85,12 +87,6 @@
       <select id="city" name="city" required>
         <option value="" disabled selected>Выберите город</option>
         
-          <option value="Корал-Гейблс">Корал-Гейблс</option>
-        
-          <option value="Майами-Бич">Майами-Бич</option>
-        
-          <option value="Халландейл">Халландейл</option>
-        
       </select>
     </div>
 
@@ -98,12 +94,6 @@
       <label for="category">Категория:</label>
       <select id="category" name="category" required>
         <option value="" disabled selected>Выберите категорию</option>
-        
-          <option value="Модель">Модель</option>
-        
-          <option value="Стилист">Стилист</option>
-        
-          <option value="Фотограф">Фотограф</option>
         
       </select>
     </div>
@@ -143,6 +133,8 @@
   <footer class="site-footer">
     <p>© 2025 ModelConnect Miami</p>
   </footer>
+
+  <script src="/js/profiles.js" defer></script>
   <script src="/js/filters.js" defer></script>
 </body>
 </html>

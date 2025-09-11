@@ -2,156 +2,36 @@
 layout: base
 permalink: /category/index.html
 eleventyComputed:
-  title: '{{site.name}} — {{site.title1}}'
-  description: '{{site.description1}} категории моделей Майами, фотографов, стилистов 2025'
-  seo_title: '{{site.name}} — {{site.title1}}'
-  seo_description: '{{site.description1}} Все категории моделей, фотографов и стилистов Майами 2025'
-  seo_og_title: '{{site.name}} — {{site.title1}}'
-  seo_og_description: '{{site.description1}} Обзор всех категорий моделей, фотографов и стилистов Майами 2025'
-  seo_og_image: '{{site.url}}{{site.seo_og_image}}'
-  seo_og_url: '{{site.url}}/category'
-  seo_twitter_title: '{{site.name}} — {{site.title1}}'
-  seo_twitter_description: '{{site.description1}} Все категории моделей Майами, фотографов, стилистов 2025'
-  seo_twitter_image: '{{site.url}}{{site.seo_og_image}}'
-  seo_canonical: '{{site.url}}/category'
+  title: '{{ site.name }} — Категории'
+  description: 'Обзор всех категорий моделей, фотографов и стилистов Майами 2025'
+  seo_og_image: '{{ site.url }}{{ site.seo_og_image }}'
+  seo_og_url: '{{ site.url }}/category'
+  seo_canonical: '{{ site.url }}/category'
   seo_json_ld: |
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "{{site.name}} — {{site.title1}}",
-      "url": "{{site.url}}/category",
-      "description": "{{site.description1}} Обзор всех категорий моделей, фотографов и стилистов Майами 2025"
+      "name": "{{ site.name }} — Категории",
+      "url": "{{ site.url }}/category",
+      "description": "Обзор всех категорий моделей, фотографов и стилистов Майами 2025"
     }
 ---
 
-<div class="profiles-section" id="profiles">
-  <h1>{{site.title1}}</h1>
-  <ul class="category-links">
-    {% if collections.categories and collections.categories.length > 0 %}
-      {% for c in collections.categories %}
-        <li><a href="/category/{{ c.slug }}/">{{ c.name }}</a></li>
-      {% endfor %}
-    {% else %}
-      <li>Нет категорий</li>
-    {% endif %}
-  </ul>
+<section class="profiles-section">
+  <h1>Категории</h1>
 
-  <div class="profile-list" id="profile-list">
-    {% if collections.categories and collections.categories.length > 0 %}
-      {% for category in collections.categories %}
-        {% if category.profiles and category.profiles.length > 0 %}
-          {% for p in category.profiles %}
-            <div class="profile-card" data-region="{{ p.city | default: '' }}" data-category="{{ p.category | default: '' }}">
-             <img
-    class="profile-card__image"
-    width="300"
-    height="200"
-    src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ p.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }}"
-    srcset="
-      https://res.cloudinary.com/dimallvw3/image/upload/w_150,h_100,c_fill,q_auto,f_webp/{{ p.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 150w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ p.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 300w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_600,h_400,c_fill,q_auto,f_webp/{{ p.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 600w"
-    sizes="(max-width: 600px) 150px, (max-width: 1200px) 300px, 600px"
-    alt="Фото профиля {{ p.name | escape }}"
-    loading="lazy"
-  />
-              <div class="profile-card__description">
-                <h3>{{ p.name | default: 'Без имени' }}</h3>
-                <p>{{ p.city | default: 'Регион не указан' }}, {{ p.category | default: 'Категория не указана' }}</p>
-                <a href="/profiles/{{ p.id | slugify }}/">Подробнее</a>
-              </div>
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% endfor %}
-    {% else %}
-      <p>Нет профилей для отображения.</p>
-    {% endif %}
+  <div id="filters-container">
+    <label>Категория:
+      <select id="category-select"><option value="все">Все</option></select>
+    </label>
+    <label>Регион:
+      <select id="region-select"><option value="все">Все</option></select>
+    </label>
   </div>
-</div>
 
-<script>
-  const regionSelect = document.getElementById('region-select');
-  const categorySelect = document.getElementById('category-select');
-  const profileList = document.getElementById('profile-list');
-  const profiles = profileList.querySelectorAll('.profile-card');
+  <div id="profile-list">
+    <p>Загрузка профилей...</p>
+  </div>
 
-  function populateFilters() {
-    while (regionSelect.options.length > 1) regionSelect.remove(1);
-    while (categorySelect.options.length > 1) categorySelect.remove(1);
-
-    const regions = [...new Set(Array.from(profiles).map(p => p.dataset.region).filter(Boolean))];
-    const categories = [...new Set(Array.from(profiles).map(p => p.dataset.category).filter(Boolean))];
-
-    regions.forEach(r => {
-      const option = document.createElement('option');
-      option.value = r;
-      option.textContent = r;
-      regionSelect.appendChild(option);
-    });
-
-    categories.forEach(c => {
-      const option = document.createElement('option');
-      option.value = c;
-      option.textContent = c;
-      categorySelect.appendChild(option);
-    });
-  }
-
-  function filterProfiles() {
-    const region = regionSelect.value;
-    const category = categorySelect.value;
-
-    profiles.forEach(profile => {
-      const matchRegion = region === 'все' || profile.dataset.region === region;
-      const matchCategory = category === 'все' || profile.dataset.category === category;
-      profile.style.display = matchRegion && matchCategory ? 'block' : 'none';
-    });
-  }
-
-  populateFilters();
-  regionSelect.addEventListener('change', filterProfiles);
-  categorySelect.addEventListener('change', filterProfiles);
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "itemListElement": [
-    {% assign position = 1 %}
-    {% for category in collections.categories %}
-      {% for p in category.profiles %}
-      {
-        "@type": "ListItem",
-        "position": {{ position }},
-        "item": {
-          "@type": "Person",
-          "name": "{{ p.name }}",
-          "description": "{{ p.description | truncate: 200 }}",
-          "url": "{{ site.url }}/profiles/{{ p.id }}/"
-        }
-      }{% unless forloop.last %},{% endunless %}
-      {% assign position = position | plus: 1 %}
-      {% endfor %}
-    {% endfor %}
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{
-    "@type": "ListItem",
-    "position": 1,
-    "name": "Главная",
-    "item": "{{ site.url }}/"
-  },{
-    "@type": "ListItem",
-    "position": 2,
-    "name": "Категории",
-    "item": "{{ site.url }}/category/"
-  }]
-}
-</script>
+  <div id="pagination-container"></div>
+</section>

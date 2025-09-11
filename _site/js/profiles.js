@@ -1,101 +1,134 @@
-import { createClient } from "@supabase/supabase-js"
+document.addEventListener("DOMContentLoaded", async () => {
+  const supabase = window.supabase.createClient(
+    window.SUPABASE_URL,
+    window.SUPABASE_KEY
+  )
 
-const supabaseUrl = "https://zftnzsbflzfhfyfnyqza.supabase.co"
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdG56c2JmbHpmaGZ5Zm55cXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwODQyMjQsImV4cCI6MjA3MjY2MDIyNH0.ZiNtVmNKFPsW7NPngNvRrDsRFwcPQw0aE6m8FwmCvZg"
-const supabase = createClient(supabaseUrl, supabaseKey)
-
-function debug(...args) {
-  console.log("[profiles.js]", ...args)
-}
-
-async function fetchProfiles() {
-  try {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*")
-      .order("id", { ascending: false })
-
-    if (error) throw error
-    debug("fetched profiles:", data.length)
-
-    return data
-  } catch (err) {
-    console.error("[profiles.js] error", err)
-    return []
-  }
-}
-
-function normalizeString(str) {
-  if (!str) return ""
-  return str
-    .toString()
-    .normalize("NFKD")
-    .replace(/\u00A0/g, " ")
-    .trim()
-    .toLowerCase()
-    .replace(/[\s\-_]+/g, "-")
-}
-
-function renderProfiles(list) {
   const profileList = document.getElementById("profile-list")
-  if (!profileList) return
+  const regionSelect = document.getElementById("region-select")
+  const categorySelect = document.getElementById("category-select")
+  const paginationContainer = document.getElementById("pagination-container")
 
-  profileList.innerHTML = ""
-  if (!list.length) {
-    profileList.innerHTML = "<p>Профили не найдены.</p>"
-    return
+  window.allProfilesData = []
+  const pageSize = 4
+  let currentPage = 1
+
+  async function loadProfiles() {
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .order("created_at", { ascending: false })
+
+      if (error) throw error
+
+      window.allProfilesData = data
+
+      populateFilters()
+      renderPage(currentPage)
+    } catch (err) {
+      console.error("Ошибка загрузки профилей:", err)
+      if (profileList)
+        profileList.innerHTML =
+          "<p>Ошибка загрузки профилей. Проверьте Supabase.</p>"
+    }
   }
 
-  list.forEach((profile) => {
-    const regionSlug = normalizeString(profile.city)
-    const categorySlug = normalizeString(profile.category)
+  function populateFilters() {
+    if (!window.allProfilesData) return
 
-    const html = `
-      <div class="profile-card" data-region="${regionSlug}" data-category="${categorySlug}">
-        <img
-          class="profile-card__image"
-          width="300"
-          height="200"
-          src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/${
-            profile.image_url?.replace(
-              "https://res.cloudinary.com/dimallvw3/image/upload/",
-              ""
-            ) || "placeholder.webp"
-          }"
-          alt="Фото профиля ${profile.name || ""}"
-          loading="lazy"
-        />
-        <div class="profile-card__description">
-          <h3>${profile.name || "Без имени"}</h3>
-          <p>${profile.city || "Регион не указан"}, ${
-      profile.category || "Категория не указана"
-    }</p>
-          ${profile.description ? `<p>${profile.description}</p>` : ""}
-          ${profile.age ? `<p>Возраст: ${profile.age}</p>` : ""}
-          ${
-            profile.email
-              ? `<p>Email: <a href="mailto:${profile.email}">${profile.email}</a></p>`
-              : ""
-          }
-          ${
-            profile.phone
-              ? `<p>Телефон: <a href="tel:${profile.phone}">${profile.phone}</a></p>`
-              : ""
-          }
-          <a href="/profiles/${profile.id}/">Подробнее</a>
-        </div>
-      </div>
-    `
-    profileList.insertAdjacentHTML("beforeend", html)
-  })
-}
+    const regions = [
+      ...new Set(window.allProfilesData.map((p) => p.city).filter(Boolean)),
+    ]
+    const categories = [
+      ...new Set(window.allProfilesData.map((p) => p.category).filter(Boolean)),
+    ]
 
-async function initProfiles() {
-  const profiles = await fetchProfiles()
-  window.allProfilesData = profiles
+    regions.forEach((r) => regionSelect.appendChild(new Option(r, r)))
+    categories.forEach((c) => categorySelect.appendChild(new Option(c, c)))
+  }
 
-  document.dispatchEvent(new Event("profilesRendered"))
-}
+  function filterProfiles() {
+    const selectedRegion = regionSelect.value
+    const selectedCategory = categorySelect.value
 
-initProfiles()
+    return window.allProfilesData.filter(
+      (p) =>
+        (selectedRegion === "все" || p.city === selectedRegion) &&
+        (selectedCategory === "все" || p.category === selectedCategory)
+    )
+  }
+
+  function renderPage(page = 1) {
+    const filtered = filterProfiles()
+    const totalPages = Math.ceil(filtered.length / pageSize)
+    currentPage = Math.min(Math.max(page, 1), totalPages)
+
+    const start = (currentPage - 1) * pageSize
+    const end = start + pageSize
+    const pageData = filtered.slice(start, end)
+
+    if (!profileList) return
+
+    if (!pageData.length) {
+      profileList.innerHTML = "<p>Нет профилей для отображения.</p>"
+    } else {
+      profileList.innerHTML = pageData
+        .map(
+          (p) => `
+        <article class="profile-card" data-region="${p.city}" data-category="${
+            p.category
+          }">
+          <img class="profile-card__image" width="300" height="200"
+            src="${p.image_url || "/img/placeholder.webp"}"
+            alt="Фото профиля ${p.name || "Без имени"}" loading="lazy"/>
+          <div class="profile-card__description">
+            <h3>${p.name || "Без имени"}</h3>
+            <p>${p.city || "Регион не указан"}, ${
+            p.category || "Категория не указана"
+          }</p>
+            <a href="/profiles/${p.id}">Подробнее</a>
+          </div>
+        </article>
+      `
+        )
+        .join("")
+    }
+
+    renderPagination(totalPages)
+  }
+
+  function renderPagination(totalPages) {
+    if (!paginationContainer) return
+    if (totalPages <= 1) {
+      paginationContainer.innerHTML = ""
+      return
+    }
+
+    let html = ""
+
+    if (currentPage > 1) html += `<a href="#" class="prev">‹</a>`
+    for (let i = 1; i <= totalPages; i++) {
+      html += `<a href="#" class="${
+        i === currentPage ? "active" : ""
+      }">${i}</a>`
+    }
+    if (currentPage < totalPages) html += `<a href="#" class="next">›</a>`
+
+    paginationContainer.innerHTML = html
+
+    paginationContainer.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault()
+        if (link.classList.contains("prev")) renderPage(currentPage - 1)
+        else if (link.classList.contains("next")) renderPage(currentPage + 1)
+        else renderPage(Number(link.textContent))
+      })
+    })
+  }
+
+  regionSelect?.addEventListener("change", () => renderPage(1))
+  categorySelect?.addEventListener("change", () => renderPage(1))
+
+  await loadProfiles()
+})
