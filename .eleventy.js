@@ -1,6 +1,7 @@
 import dotenv from "dotenv"
 import slugify from "slugify"
 import { createClient } from "@supabase/supabase-js"
+import fs from "fs"
 
 dotenv.config()
 
@@ -13,6 +14,25 @@ export default async function (eleventyConfig) {
     })
   })
 
+  let regionsData = []
+  try {
+    const rawRegions = fs.readFileSync("./_data/regions.json", "utf-8")
+    regionsData = JSON.parse(rawRegions)
+  } catch (e) {
+    console.error("Ошибка при загрузке regions.json:", e)
+  }
+
+  let categoriesData = []
+  try {
+    const rawCategories = fs.readFileSync("./_data/categories.json", "utf-8")
+    categoriesData = JSON.parse(rawCategories)
+  } catch (e) {
+    console.error("Ошибка при загрузке categories.json:", e)
+  }
+
+  eleventyConfig.addGlobalData("regionsData", regionsData)
+  eleventyConfig.addGlobalData("categoriesData", categoriesData)
+
   const supabase = createClient(
     process.env.SUPABASE_URL,
     process.env.SUPABASE_ANON_KEY
@@ -24,6 +44,7 @@ export default async function (eleventyConfig) {
       .from("profiles")
       .select("*")
       .order("created_at", { ascending: false })
+
     if (error) throw error
     profilesData = data
     console.log(`Fetched ${profilesData.length} profiles from Supabase ✅`)
