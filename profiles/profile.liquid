@@ -4,7 +4,7 @@ pagination:
   data: collections.profiles
   size: 1
   alias: profile
-permalink: "profiles/{{ profile.id | slugify }}/index.html"
+permalink: "profiles/{{ profile.name | slugify }}/index.html"
 eleventyComputed:
   title: "{{ profile.name | default: 'Профиль' }} — {{ profile.category | default: 'Категория' }} | {{ site.name }}"
   description: "Профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }}. Категория: {{ profile.category | default: 'не указана' }}. {{ site.name }} — платформа для моделей, фотографов и стилистов."

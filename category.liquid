@@ -24,17 +24,20 @@ eleventyComputed:
     }
 ---
 
-<div class="profiles-section">
-  <h1>{{ site.title1 }} </h1>
- <ul class="category-links">
-  {% for c in allProfiles %}
-    <li><a href="/category/{{ c.category }}/">{{ c.category }}</a></li>
-     {% endfor %}
-</ul>
+<section class="profiles-section">
+  <h1>{{ site.title1 }}</h1>
+  <p>Выберите категорию для просмотра профилей:</p>
 
-  <div id="profile-list">
+  <ul class="category-list">
+    {% for category in collections.categories %}
+      <li class="category-card">
+        <a href="/category/{{ category.slug }}/index.html">{{ category.name | escape }}</a>
+        <p>{{ category.profiles | size }} профилей</p>
+      </li>
+    {% endfor %}
+  </ul>
+    <div id="profile-list">
     <p>Загрузка профилей...</p>
   </div>
-
-  <div id="pagination-container"></div>
-</div>
+    <div id="pagination-container"></div>
+</section>

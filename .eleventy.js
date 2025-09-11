@@ -1,23 +1,17 @@
 import dotenv from "dotenv"
 import slugify from "slugify"
-import fs from "fs"
 import { createClient } from "@supabase/supabase-js"
 
 dotenv.config()
 
 export default async function (eleventyConfig) {
   eleventyConfig.addFilter("slugify", (str) => {
-    return slugify(str, {
+    return slugify(str || "", {
       lower: true,
       strict: true,
       remove: /[*+~.()'"!:@]/g,
     })
   })
-  console.log("SUPABASE_URL:", process.env.SUPABASE_URL)
-  console.log(
-    "SUPABASE_KEY:",
-    process.env.SUPABASE_ANON_KEY ? "OK" : "NOT FOUND"
-  )
 
   const supabase = createClient(
     process.env.SUPABASE_URL,
@@ -30,7 +24,6 @@ export default async function (eleventyConfig) {
       .from("profiles")
       .select("*")
       .order("created_at", { ascending: false })
-
     if (error) throw error
     profilesData = data
     console.log(`Fetched ${profilesData.length} profiles from Supabase ✅`)
@@ -40,14 +33,40 @@ export default async function (eleventyConfig) {
 
   eleventyConfig.addCollection("profiles", () => profilesData)
 
-  eleventyConfig.addCollection("allRegions", () => {
-    const data = fs.readFileSync("./_data/regions.json", "utf-8")
-    return JSON.parse(data)
+  eleventyConfig.addCollection("regions", () => {
+    const regionsMap = {}
+    profilesData.forEach((profile) => {
+      const cityName = profile.city || "Не указан"
+      const citySlug = slugify(cityName, { lower: true, strict: true })
+
+      if (!regionsMap[citySlug]) {
+        regionsMap[citySlug] = {
+          name: cityName,
+          slug: citySlug,
+          profiles: [],
+        }
+      }
+      regionsMap[citySlug].profiles.push(profile)
+    })
+    return Object.values(regionsMap)
   })
 
-  eleventyConfig.addCollection("allCategories", () => {
-    const data = fs.readFileSync("./_data/categories.json", "utf-8")
-    return JSON.parse(data)
+  eleventyConfig.addCollection("categories", () => {
+    const categoriesMap = {}
+    profilesData.forEach((profile) => {
+      const catName = profile.category || "Без категории"
+      const catSlug = slugify(catName, { lower: true, strict: true })
+
+      if (!categoriesMap[catSlug]) {
+        categoriesMap[catSlug] = {
+          name: catName,
+          slug: catSlug,
+          profiles: [],
+        }
+      }
+      categoriesMap[catSlug].profiles.push(profile)
+    })
+    return Object.values(categoriesMap)
   })
 
   eleventyConfig.addPassthroughCopy("css")

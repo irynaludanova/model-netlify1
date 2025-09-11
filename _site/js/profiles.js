@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             <p>${p.city || "Регион не указан"}, ${
             p.category || "Категория не указана"
           }</p>
-            <a href="/profiles/${p.id}">Подробнее</a>
+            <a href="/profiles/${p.name}">Подробнее</a>
           </div>
         </article>
       `

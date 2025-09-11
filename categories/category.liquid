@@ -36,94 +36,40 @@ eleventyComputed:
     }
 ---
 
-  <header>
-    <nav class="breadcrumbs" aria-label="Навигация по сайту">
-      <a href="/">Главная</a> ›
-      <a href="/category/">Категории</a> ›
-      <span>{{ category.name | default: 'Категория' | escape }}</span>
-    </nav>
-  </header>
+<header>
+  <nav class="breadcrumbs" aria-label="Навигация по сайту">
+    <a href="/">Главная</a> ›
+    <a href="/category/">Категории</a> ›
+    <span>{{ category.name | default: 'Категория' | escape }}</span>
+  </nav>
+</header>
 
-    <h1>Категория: {{ category.name | default: 'Не указана' | escape }}</h1>
+<section class="profiles-section">
+  <h1>Категория: {{ category.name | default: 'Не указана' | escape }}</h1>
 
-    <div class="profiles-list" role="region" aria-label="Список профилей в категории">
-      {% if category and category.profiles and category.profiles.length > 0 %}
-        {% for profile in category.profiles %}
-          <article class="profile-card" style="display: flex;">
-            <img
-    class="profile-card__image"
-    width="300"
-    height="200"
-    src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }}"
-    srcset="
-      https://res.cloudinary.com/dimallvw3/image/upload/w_150,h_100,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 150w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 300w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_600,h_400,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 600w"
-    sizes="(max-width: 600px) 150px, (max-width: 1200px) 300px, 600px"
-    alt="Фото профиля {{ profile.name | escape }}"
-    loading="lazy"
-  />
-            <div class="profile-card__description">
-              <h2>{{ profile.name | default: 'Без имени' | escape }}</h2>
-              <p>{{ profile.city | default: 'Регион не указан' | escape }}</p>
-              <p>{{ profile.description | truncate: 100 | escape }}</p>
-              <a href="/profiles/{{ profile.id | slugify }}/index.html" aria-label="Подробнее о {{ profile.name | default: 'Без имени' | escape }}">Подробнее</a>
-            </div>
-          </article>
-        {% endfor %}
-      {% else %}
-        <p>В этой категории пока нет профилей.</p>
-      {% endif %}
-    </div>
-  </main>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Профили в категории {{ category.name | default: 'Категория' }}",
-    "description": "Профили профессионалов в категории {{ category.name | default: 'не указана' }}",
-    "itemListElement": [
+  <div class="profiles-list" role="region" aria-label="Список профилей в категории">
+    {% if category.profiles and category.profiles.length > 0 %}
       {% for profile in category.profiles %}
-      {
-        "@type": "ListItem",
-        "position": {{ forloop.index }},
-        "item": {
-          "@type": "Person",
-          "name": "{{ profile.name | default: 'Без имени' | escape }}",
-          "description": "{{ profile.description | truncate: 200 | escape }}",
-          "image": "{{ site.url }}{{ profile.image_url | default: '/img/placeholder.webp' }}",
-          "url": "{{ site.url }}/profiles/{{ profile.id | slugify }}/index.html"
-        }
-      }{% unless forloop.last %},{% endunless %}
+        <article class="profile-card">
+          <img
+            class="profile-card__image"
+            width="300"
+            height="200"
+            src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }}"
+            alt="Фото профиля {{ profile.name | escape }}"
+            loading="lazy"
+          />
+          <div class="profile-card__description">
+            <h2>{{ profile.name | default: 'Без имени' | escape }}</h2>
+            <p>{{ profile.city | default: 'Регион не указан' | escape }}</p>
+            <p>{{ profile.description | truncate: 100 | escape }}</p>
+            <a href="/profiles/{{ profile.name | slugify }}/index.html">Подробнее</a>
+          </div>
+        </article>
       {% endfor %}
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Главная",
-        "item": "{{ site.url }}/"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Категории",
-        "item": "{{ site.url }}/category"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": "{{ category.name | default: 'Категория' | escape }}",
-        "item": "{{ site.url }}/category/{{ category.slug }}"
-      }
-    ]
-  }
-  </script>
-
+    {% else %}
+      <p>В этой категории пока нет профилей.</p>
+    {% endif %}
+  </div>
+     <div id="pagination-container"></div>
+</section>

@@ -37,6 +37,7 @@ export async function handler(event) {
       </head>
       <body>
         <h1>${profile.name}</h1>
+        <div class="profile-card__description">
         <p><strong>Категория:</strong> ${profile.category}</p>
         <p><strong>Город:</strong> ${profile.city}</p>
         ${profile.age ? `<p><strong>Возраст:</strong> ${profile.age}</p>` : ""}
@@ -51,9 +52,11 @@ export async function handler(event) {
             ? `<p>Телефон: <a href="tel:${profile.phone}">${profile.phone}</a></p>`
             : ""
         }
+        </div>
+
         ${
           profile.image_url
-            ? `<img src="${profile.image_url}" alt="Фото ${profile.name}" />`
+            ? `<img src="${profile.image_url}" alt="Фото ${profile.name}" class="profile-card__image"/>`
             : ""
         }
         <p><a href="/">← Вернуться на главную</a></p>

@@ -3,7 +3,7 @@ layout: base
 permalink: /region/index.html
 eleventyComputed:
   title: "{{ site.name }} — {{ site.title2 }}"
-  description: "{{ site.description2 }} Найдите профессионалов в Майами, Халландейл и Корал-Гейблс"
+  description: "{{ site.description2 }} Найдите профессионалов во всех регионах Майами"
   seo_title: "{{ site.name }} — {{ site.title2 }}"
   seo_description: "{{ site.description2 }} Модели, фотографы и стилисты во всех регионах Майами 2025"
   seo_og_title: "{{ site.name }} — {{ site.title2 }}"
@@ -24,13 +24,22 @@ eleventyComputed:
     }
 ---
 
-<div class="profiles-section">
+<section class="profiles-section">
   <h1>{{ site.title2 }}</h1>
+  <p>Выберите регион для просмотра профилей:</p>
 
-
+  <ul class="region-list" role="list">
+    {% for region in collections.regions %}
+      <li class="region-card">
+        <a href="/region/{{ region.name | slugify }}/index.html">
+          {{ region.name | escape }}
+        </a>
+        <p>{{ region.profiles | size }} профилей</p>
+      </li>
+    {% endfor %}
+  </ul>
   <div id="profile-list">
     <p>Загрузка профилей...</p>
   </div>
-
-  <div id="pagination-container"></div>
-</div>
+    <div id="pagination-container"></div>
+</section>
