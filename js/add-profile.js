@@ -2,6 +2,7 @@ async function cloudinaryUpload(file) {
   const form = new FormData()
   form.append("file", file)
   form.append("upload_preset", "unsigned_profiles")
+
   const res = await fetch("https://api.cloudinary.com/v1_1/dimallvw3/upload", {
     method: "POST",
     body: form,
@@ -53,10 +54,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!resp.ok) throw new Error(result.error || "Ошибка сервера")
 
       localStorage.setItem("newProfile", JSON.stringify(result.profile))
-      alert("Профиль успешно добавлен!")
-      window.location.href = "/"
+      window.location.href = "/submit-profile"
     } catch (err) {
-      alert("Ошибка при отправке формы: " + err.message)
+      alert("Ошибка при отправке профиля: " + err.message)
     }
   })
 })

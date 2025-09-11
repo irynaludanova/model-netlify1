@@ -1,5 +1,6 @@
 import dotenv from "dotenv"
 import slugify from "slugify"
+import fs from "fs"
 
 dotenv.config()
 
@@ -10,6 +11,16 @@ export default async function (eleventyConfig) {
       strict: true,
       remove: /[*+~.()'"!:@]/g,
     })
+  })
+
+  eleventyConfig.addCollection("allRegions", () => {
+    const data = fs.readFileSync("./_data/regions.json", "utf-8")
+    return JSON.parse(data)
+  })
+
+  eleventyConfig.addCollection("allCategories", () => {
+    const data = fs.readFileSync("./_data/categories.json", "utf-8")
+    return JSON.parse(data)
   })
 
   eleventyConfig.addPassthroughCopy("css")

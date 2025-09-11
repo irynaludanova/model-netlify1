@@ -61,8 +61,6 @@ export async function handler(event) {
       }
     }
 
-    console.log("Supabase response:", result)
-
     if (!res.ok) {
       return {
         statusCode: res.status,

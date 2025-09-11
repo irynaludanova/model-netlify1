@@ -75,15 +75,29 @@
     <div class="form-group">
       <label for="city">Город:</label>
       <select id="city" name="city" required>
-        <option value="" disabled selected>Выберите город</option>
-      </select>
+  <option value="" disabled selected>Выберите город</option>
+  
+    <option value="Майами">Майами</option>
+  
+    <option value="Форт-Лодердейл">Форт-Лодердейл</option>
+  
+    <option value="Холландейл">Холландейл</option>
+  
+</select>
     </div>
 
     <div class="form-group">
       <label for="category">Категория:</label>
       <select id="category" name="category" required>
-        <option value="" disabled selected>Выберите категорию</option>
-      </select>
+  <option value="" disabled selected>Выберите категорию</option>
+  
+    <option value="Модель">Модель</option>
+  
+    <option value="Фотограф">Фотограф</option>
+  
+    <option value="Стилист">Стилист</option>
+  
+</select>
     </div>
 
     <div class="form-group">
@@ -115,81 +129,7 @@
   </form>
 </div>
 
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  if (!window.SUPABASE_URL || !window.SUPABASE_KEY) {
-    console.error("SUPABASE_URL или SUPABASE_KEY не определены!");
-    return;
-  }
-
-  const supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_KEY);
-
-  const citySelect = document.getElementById("city");
-  const categorySelect = document.getElementById("category");
-
-  try {
-    const { data: citiesData } = await supabase
-      .from("profiles")
-      .select("city")
-      .neq("city", null);
-
-    const uniqueCities = [...new Set(citiesData.map(p => p.city))];
-    uniqueCities.forEach(c => citySelect.appendChild(new Option(c, c)));
-
-    const { data: categoriesData } = await supabase
-      .from("profiles")
-      .select("category")
-      .neq("category", null);
-
-    const uniqueCategories = [...new Set(categoriesData.map(p => p.category))];
-    uniqueCategories.forEach(c => categorySelect.appendChild(new Option(c, c)));
-  } catch (err) {
-    console.error("Ошибка загрузки селектов:", err);
-  }
-
-
-  const form = document.getElementById("add-profile-form");
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    const profileData = Object.fromEntries(formData.entries());
-
-    try {
-
-      let imageUrl = null;
-      const imageFile = formData.get("image");
-      if (imageFile && imageFile.size > 0) {
-        const fileExt = imageFile.name.split('.').pop();
-        const fileName = `${Date.now()}.${fileExt}`;
-        const { data: uploadData, error: uploadError } = await supabase
-          .storage.from("profiles-images")
-          .upload(fileName, imageFile);
-
-        if (uploadError) throw uploadError;
-
-        const { data: publicUrl } = supabase
-          .storage.from("profiles-images")
-          .getPublicUrl(fileName);
-
-        imageUrl = publicUrl.publicUrl;
-      }
-
-         const { data, error } = await supabase
-        .from("profiles")
-        .insert([{ ...profileData, image_url: imageUrl }]);
-
-      if (error) throw error;
-
-            window.location.href = "/submit-profile/";
-
-    } catch (err) {
-      console.error("Ошибка при отправке профиля:", err);
-      alert("Произошла ошибка при отправке профиля. Попробуйте еще раз.");
-    }
-  });
-});
-</script>
+<script src="/js/add-profile.js" defer></script>
 
   </main>
 
