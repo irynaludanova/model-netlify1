@@ -86,7 +86,6 @@
       <label for="city">Город:</label>
       <select id="city" name="city" required>
         <option value="" disabled selected>Выберите город</option>
-        
       </select>
     </div>
 
@@ -94,7 +93,6 @@
       <label for="category">Категория:</label>
       <select id="category" name="category" required>
         <option value="" disabled selected>Выберите категорию</option>
-        
       </select>
     </div>
 
@@ -127,7 +125,36 @@
   </form>
 </div>
 
-<script src="/js/add-profile.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const supabase = window.supabase.createClient(
+    window.SUPABASE_URL,
+    window.SUPABASE_KEY
+  );
+
+  const citySelect = document.getElementById("city");
+  const categorySelect = document.getElementById("category");
+
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("city, category");
+
+    if(error) throw error;
+
+    const cities = [...new Set(data.map(p => p.city).filter(Boolean))];
+    const categories = [...new Set(data.map(p => p.category).filter(Boolean))];
+
+    cities.forEach(c => citySelect.appendChild(new Option(c, c)));
+    categories.forEach(c => categorySelect.appendChild(new Option(c, c)));
+
+  } catch(err) {
+    console.error("Ошибка загрузки селектов:", err);
+  }
+
+ });
+</script>
+
   </main>
 
   <footer class="site-footer">
