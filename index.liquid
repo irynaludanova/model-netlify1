@@ -27,14 +27,17 @@ eleventyComputed:
 <section class="profiles-section">
   <h1>Свежие профили</h1>
 
-  <div id="filters-container">
-    <label>Категория:
-      <select id="category-select"><option value="все">Все</option></select>
-    </label>
-    <label>Регион:
-      <select id="region-select"><option value="все">Все</option></select>
-    </label>
-  </div>
+  <div class="filters">
+  <label for="region-select">Регион:</label>
+  <select id="region-select">
+    <option value="все">Все</option>
+  </select>
+
+  <label for="category-select">Категория:</label>
+  <select id="category-select">
+    <option value="все">Все</option>
+  </select>
+</div>
 
   <div id="profile-list">
     <p>Загрузка профилей...</p>

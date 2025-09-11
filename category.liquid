@@ -25,22 +25,12 @@ eleventyComputed:
 ---
 
 <div class="profiles-section">
-  <h1>{{ site.title1 }}</h1>
-
-  <div class="filters" id="filters-container">
-    <label>
-      Категория:
-      <select id="category-select">
-        <option value="все">Все</option>
-      </select>
-    </label>
-    <label>
-      Регион:
-      <select id="region-select">
-        <option value="все">Все</option>
-      </select>
-    </label>
-  </div>
+  <h1>{{ site.title1 }} </h1>
+ <ul class="category-links">
+  {% for c in allProfiles %}
+    <li><a href="/category/{{ c.category }}/">{{ c.category }}</a></li>
+     {% endfor %}
+</ul>
 
   <div id="profile-list">
     <p>Загрузка профилей...</p>

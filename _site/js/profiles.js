@@ -117,14 +117,25 @@ document.addEventListener("DOMContentLoaded", async () => {
       return
     }
 
-    let html = ""
-    if (currentPage > 1) html += `<a href="#" class="prev">‹</a>`
-    for (let i = 1; i <= totalPages; i++) {
-      html += `<a href="#" class="${
-        i === currentPage ? "active" : ""
-      }">${i}</a>`
+    let html = '<nav class="pagination" aria-label="Навигация по страницам">'
+
+    if (currentPage > 1) {
+      html += `<a href="#" class="pagination-btn prev" aria-label="Предыдущая страница">←</a>`
     }
-    if (currentPage < totalPages) html += `<a href="#" class="next">›</a>`
+
+    for (let i = 1; i <= totalPages; i++) {
+      html += `<a href="#" class="pagination-btn ${
+        i === currentPage ? "active" : ""
+      }" aria-label="Страница ${i}" ${
+        i === currentPage ? 'aria-current="page"' : ""
+      }>${i}</a>`
+    }
+
+    if (currentPage < totalPages) {
+      html += `<a href="#" class="pagination-btn next" aria-label="Следующая страница">→</a>`
+    }
+
+    html += "</nav>"
 
     paginationContainer.innerHTML = html
 
