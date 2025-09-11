@@ -2,30 +2,43 @@
 layout: base
 permalink: /category/index.html
 eleventyComputed:
-  title: '{{ site.name }} — Категории'
-  description: 'Обзор всех категорий моделей, фотографов и стилистов Майами 2025'
+  title: '{{ site.name }} — {{ site.title1 }}'
+  description: '{{ site.description1 }} категории моделей Майами, фотографов, стилистов 2025'
+  seo_title: '{{ site.name }} — {{ site.title1 }}'
+  seo_description: '{{ site.description1 }} Все категории моделей, фотографов и стилистов Майами 2025'
+  seo_og_title: '{{ site.name }} — {{ site.title1 }}'
+  seo_og_description: '{{ site.description1 }} Обзор всех категорий моделей, фотографов и стилистов Майами 2025'
   seo_og_image: '{{ site.url }}{{ site.seo_og_image }}'
   seo_og_url: '{{ site.url }}/category'
+  seo_twitter_title: '{{ site.name }} — {{ site.title1 }}'
+  seo_twitter_description: '{{ site.description1 }} Все категории моделей Майами, фотографов, стилистов 2025'
+  seo_twitter_image: '{{ site.url }}{{ site.seo_og_image }}'
   seo_canonical: '{{ site.url }}/category'
   seo_json_ld: |
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "{{ site.name }} — Категории",
+      "name": "{{ site.name }} — {{ site.title1 }}",
       "url": "{{ site.url }}/category",
-      "description": "Обзор всех категорий моделей, фотографов и стилистов Майами 2025"
+      "description": "{{ site.description1 }} Обзор всех категорий моделей, фотографов и стилистов Майами 2025"
     }
 ---
 
-<section class="profiles-section">
-  <h1>Категории</h1>
+<div class="profiles-section">
+  <h1>{{ site.title1 }}</h1>
 
-  <div id="filters-container">
-    <label>Категория:
-      <select id="category-select"><option value="все">Все</option></select>
+  <div class="filters" id="filters-container">
+    <label>
+      Категория:
+      <select id="category-select">
+        <option value="все">Все</option>
+      </select>
     </label>
-    <label>Регион:
-      <select id="region-select"><option value="все">Все</option></select>
+    <label>
+      Регион:
+      <select id="region-select">
+        <option value="все">Все</option>
+      </select>
     </label>
   </div>
 
@@ -34,4 +47,4 @@ eleventyComputed:
   </div>
 
   <div id="pagination-container"></div>
-</section>
+</div>

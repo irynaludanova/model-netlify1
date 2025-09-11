@@ -1,8 +1,16 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  console.log("Testing Supabase connection...")
+
+  if (!window.SUPABASE_URL || !window.SUPABASE_KEY) {
+    console.error("SUPABASE_URL или SUPABASE_KEY не определены!")
+    return
+  }
+
   const supabase = window.supabase.createClient(
     window.SUPABASE_URL,
     window.SUPABASE_KEY
   )
+  console.log("Supabase client created ✅")
 
   const profileList = document.getElementById("profile-list")
   const regionSelect = document.getElementById("region-select")
@@ -23,9 +31,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (error) throw error
 
       window.allProfilesData = data
+      console.log("Profiles received:", data)
 
       populateFilters()
-      renderPage(currentPage)
+      renderPage(1)
     } catch (err) {
       console.error("Ошибка загрузки профилей:", err)
       if (profileList)
@@ -35,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function populateFilters() {
-    if (!window.allProfilesData) return
+    if (!window.allProfilesData || !regionSelect || !categorySelect) return
 
     const regions = [
       ...new Set(window.allProfilesData.map((p) => p.city).filter(Boolean)),
@@ -44,13 +53,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       ...new Set(window.allProfilesData.map((p) => p.category).filter(Boolean)),
     ]
 
+    regionSelect.innerHTML = '<option value="все">Все</option>'
+    categorySelect.innerHTML = '<option value="все">Все</option>'
+
     regions.forEach((r) => regionSelect.appendChild(new Option(r, r)))
     categories.forEach((c) => categorySelect.appendChild(new Option(c, c)))
   }
 
   function filterProfiles() {
-    const selectedRegion = regionSelect.value
-    const selectedCategory = categorySelect.value
+    const selectedRegion = regionSelect?.value || "все"
+    const selectedCategory = categorySelect?.value || "все"
 
     return window.allProfilesData.filter(
       (p) =>
@@ -106,7 +118,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     let html = ""
-
     if (currentPage > 1) html += `<a href="#" class="prev">‹</a>`
     for (let i = 1; i <= totalPages; i++) {
       html += `<a href="#" class="${

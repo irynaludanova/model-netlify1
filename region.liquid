@@ -3,15 +3,15 @@ layout: base
 permalink: /region/index.html
 eleventyComputed:
   title: "{{ site.name }} — {{ site.title2 }}"
-  description: "{{ site.description2 }} Найдите профессионалов по регионам"
+  description: "{{ site.description2 }} Найдите профессионалов в Майами, Халландейл и Корал-Гейблс"
   seo_title: "{{ site.name }} — {{ site.title2 }}"
-  seo_description: "{{ site.description2 }} Профили по регионам Майами 2025"
+  seo_description: "{{ site.description2 }} Модели, фотографы и стилисты во всех регионах Майами 2025"
   seo_og_title: "{{ site.name }} — {{ site.title2 }}"
-  seo_og_description: "{{ site.description2 }} Профили по регионам"
+  seo_og_description: "{{ site.description2 }} Профили профессионалов во всех регионах Майами 2025"
   seo_og_image: "{{ site.url }}{{ site.seo_og_image }}"
   seo_og_url: "{{ site.url }}/region"
   seo_twitter_title: "{{ site.name }} — {{ site.title2 }}"
-  seo_twitter_description: "{{ site.description2 }} Профили по регионам"
+  seo_twitter_description: "{{ site.description2 }} Модели, фотографы и стилисты во всех регионах Майами 2025"
   seo_twitter_image: "{{ site.url }}{{ site.seo_og_image }}"
   seo_canonical: "{{ site.url }}/region"
   seo_json_ld: |
@@ -20,27 +20,31 @@ eleventyComputed:
       "@type": "WebPage",
       "name": "{{ site.name }} — {{ site.title2 }}",
       "url": "{{ site.url }}/region",
-      "description": "{{ site.description2 }} Обзор всех регионов"
+      "description": "{{ site.description2 }} Обзор всех регионов с моделями, фотографами и стилистами."
     }
 ---
 
 <div class="profiles-section">
-  <nav class="breadcrumbs" aria-label="Навигация по сайту">
-    <a href="/">Главная</a> ›
-    <span>Регионы</span>
-  </nav>
-
   <h1>{{ site.title2 }}</h1>
 
-  <div id="filters-container" class="filters">
-    <label>Регион:
-      <select id="region-select"><option value="все">Все</option></select>
+  <div class="filters" id="filters-container">
+    <label>
+      Регион:
+      <select id="region-select">
+        <option value="все">Все</option>
+      </select>
     </label>
-    <label>Категория:
-      <select id="category-select"><option value="все">Все</option></select>
+    <label>
+      Категория:
+      <select id="category-select">
+        <option value="все">Все</option>
+      </select>
     </label>
   </div>
 
-  <div id="profile-list"><p>Загрузка профилей...</p></div>
-  <div id="pagination-container" class="pagination"></div>
+  <div id="profile-list">
+    <p>Загрузка профилей...</p>
+  </div>
+
+  <div id="pagination-container"></div>
 </div>

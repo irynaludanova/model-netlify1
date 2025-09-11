@@ -25,24 +25,17 @@
   <link rel="manifest" href="https://models-connect.netlify.app/img/site.webmanifest">
   <link rel="preload" href="/css/style.css" as="style">
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="dns-prefetch" href="https://api.cloudinary.com">
 
-  <script type="application/ld+json">{
+  <script type="application/ld+json">
+    {
   "@context": "https://schema.org",
   "@type": "WebPage",
   "name": "Добавить профиль — ModelConnect Miami",
   "url": "https://models-connect.netlify.app/add-profile",
-  "description": "Добавьте свой профиль модели, фотографа или стилиста на платформу ModelConnect Miami. Форма для добавления профиля модели, фотографа или стилиста в Майами.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "ModelConnect Miami",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://models-connect.netlify.app/img/logo.png"
-    }
-  }
+  "description": "Добавьте свой профиль модели, фотографа или стилиста на платформу ModelConnect Miami. Форма для добавления профиля модели, фотографа или стилиста в Майами."
 }
-</script>
+
+  </script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4CXZPMW012"></script>
   <script>
@@ -52,11 +45,12 @@
     gtag('config', 'G-4CXZPMW012');
   </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script>
     window.SUPABASE_URL = "https://zftnzsbflzfhfyfnyqza.supabase.co";
     window.SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdG56c2JmbHpmaGZ5Zm55cXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwODQyMjQsImV4cCI6MjA3MjY2MDIyNH0.ZiNtVmNKFPsW7NPngNvRrDsRFwcPQw0aE6m8FwmCvZg";
   </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
   <nav>
@@ -72,11 +66,7 @@
     
 <div class="add-profile-section">
   <h1>Добавить профиль</h1>
-  <form
-    id="add-profile-form"
-    enctype="multipart/form-data"
-    aria-label="Форма добавления профиля"
-  >
+  <form id="add-profile-form" enctype="multipart/form-data">
     <div class="form-group">
       <label for="name">Имя:</label>
       <input type="text" id="name" name="name" required />
@@ -127,32 +117,78 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
-  const supabase = window.supabase.createClient(
-    window.SUPABASE_URL,
-    window.SUPABASE_KEY
-  );
+  if (!window.SUPABASE_URL || !window.SUPABASE_KEY) {
+    console.error("SUPABASE_URL или SUPABASE_KEY не определены!");
+    return;
+  }
+
+  const supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_KEY);
 
   const citySelect = document.getElementById("city");
   const categorySelect = document.getElementById("category");
 
   try {
-    const { data, error } = await supabase
+    const { data: citiesData } = await supabase
       .from("profiles")
-      .select("city, category");
+      .select("city")
+      .neq("city", null);
 
-    if(error) throw error;
+    const uniqueCities = [...new Set(citiesData.map(p => p.city))];
+    uniqueCities.forEach(c => citySelect.appendChild(new Option(c, c)));
 
-    const cities = [...new Set(data.map(p => p.city).filter(Boolean))];
-    const categories = [...new Set(data.map(p => p.category).filter(Boolean))];
+    const { data: categoriesData } = await supabase
+      .from("profiles")
+      .select("category")
+      .neq("category", null);
 
-    cities.forEach(c => citySelect.appendChild(new Option(c, c)));
-    categories.forEach(c => categorySelect.appendChild(new Option(c, c)));
-
-  } catch(err) {
+    const uniqueCategories = [...new Set(categoriesData.map(p => p.category))];
+    uniqueCategories.forEach(c => categorySelect.appendChild(new Option(c, c)));
+  } catch (err) {
     console.error("Ошибка загрузки селектов:", err);
   }
 
- });
+
+  const form = document.getElementById("add-profile-form");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const profileData = Object.fromEntries(formData.entries());
+
+    try {
+
+      let imageUrl = null;
+      const imageFile = formData.get("image");
+      if (imageFile && imageFile.size > 0) {
+        const fileExt = imageFile.name.split('.').pop();
+        const fileName = `${Date.now()}.${fileExt}`;
+        const { data: uploadData, error: uploadError } = await supabase
+          .storage.from("profiles-images")
+          .upload(fileName, imageFile);
+
+        if (uploadError) throw uploadError;
+
+        const { data: publicUrl } = supabase
+          .storage.from("profiles-images")
+          .getPublicUrl(fileName);
+
+        imageUrl = publicUrl.publicUrl;
+      }
+
+         const { data, error } = await supabase
+        .from("profiles")
+        .insert([{ ...profileData, image_url: imageUrl }]);
+
+      if (error) throw error;
+
+            window.location.href = "/submit-profile/";
+
+    } catch (err) {
+      console.error("Ошибка при отправке профиля:", err);
+      alert("Произошла ошибка при отправке профиля. Попробуйте еще раз.");
+    }
+  });
+});
 </script>
 
   </main>
