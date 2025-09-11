@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  console.log("Testing Supabase connection...")
-
   if (!window.SUPABASE_URL || !window.SUPABASE_KEY) {
     console.error("SUPABASE_URL или SUPABASE_KEY не определены!")
     return
@@ -10,7 +8,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.SUPABASE_URL,
     window.SUPABASE_KEY
   )
-  console.log("Supabase client created ✅")
 
   const profileList = document.getElementById("profile-list")
   const regionSelect = document.getElementById("region-select")
@@ -29,9 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         .order("created_at", { ascending: false })
 
       if (error) throw error
-
       window.allProfilesData = data
-      console.log("Profiles received:", data)
 
       populateFilters()
       renderPage(1)
@@ -119,24 +114,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let html = '<nav class="pagination" aria-label="Навигация по страницам">'
 
-    if (currentPage > 1) {
-      html += `<a href="#" class="pagination-btn prev" aria-label="Предыдущая страница">←</a>`
-    }
-
+    if (currentPage > 1) html += `<a href="#" class="pagination-btn prev">←</a>`
     for (let i = 1; i <= totalPages; i++) {
       html += `<a href="#" class="pagination-btn ${
         i === currentPage ? "active" : ""
-      }" aria-label="Страница ${i}" ${
-        i === currentPage ? 'aria-current="page"' : ""
-      }>${i}</a>`
+      }">${i}</a>`
     }
-
-    if (currentPage < totalPages) {
-      html += `<a href="#" class="pagination-btn next" aria-label="Следующая страница">→</a>`
-    }
+    if (currentPage < totalPages)
+      html += `<a href="#" class="pagination-btn next">→</a>`
 
     html += "</nav>"
-
     paginationContainer.innerHTML = html
 
     paginationContainer.querySelectorAll("a").forEach((link) => {

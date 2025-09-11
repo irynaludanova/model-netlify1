@@ -12,7 +12,6 @@ eleventyComputed:
   seo_og_url: '{{ site.url }}/'
   seo_twitter_title: '{{ site.name }} — Главная'
   seo_twitter_description: 'Свежие профили моделей, фотографов и стилистов Майами 2025'
-  seo_twitter_image: '{{ site.url }}{{ site.seo_og_image }}'
   seo_canonical: '{{ site.url }}/'
   seo_json_ld: |
     {
@@ -28,16 +27,16 @@ eleventyComputed:
   <h1>Свежие профили</h1>
 
   <div class="filters">
-  <label for="region-select">Регион:</label>
-  <select id="region-select">
-    <option value="все">Все</option>
-  </select>
+    <label for="region-select">Регион:</label>
+    <select id="region-select">
+      <option value="все">Все</option>
+    </select>
 
-  <label for="category-select">Категория:</label>
-  <select id="category-select">
-    <option value="все">Все</option>
-  </select>
-</div>
+    <label for="category-select">Категория:</label>
+    <select id="category-select">
+      <option value="все">Все</option>
+    </select>
+  </div>
 
   <div id="profile-list">
     <p>Загрузка профилей...</p>
@@ -45,3 +44,5 @@ eleventyComputed:
 
   <div id="pagination-container"></div>
 </section>
+
+<script type="module" src="/js/profiles.js"></script>

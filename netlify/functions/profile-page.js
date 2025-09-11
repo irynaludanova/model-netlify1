@@ -8,10 +8,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 export async function handler(event) {
   try {
     const { id } = event.queryStringParameters
-
-    if (!id) {
-      return { statusCode: 400, body: "Profile ID is required" }
-    }
+    if (!id) return { statusCode: 400, body: "Profile ID is required" }
 
     const { data: profile, error } = await supabase
       .from("profiles")
@@ -19,59 +16,54 @@ export async function handler(event) {
       .eq("id", id)
       .single()
 
-    if (error || !profile) {
-      return { statusCode: 404, body: "Profile not found" }
-    }
+    if (error || !profile) return { statusCode: 404, body: "Profile not found" }
 
     const html = `
-    <!DOCTYPE html>
-    <html lang="ru">
-    <head>
-      <meta charset="UTF-8" />
-      <title>${profile.name} — ${profile.category} | ModelConnect Miami</title>
-      <meta name="description" content="Профиль ${profile.name} из ${
+      <!DOCTYPE html>
+      <html lang="ru">
+      <head>
+        <meta charset="UTF-8" />
+        <title>${profile.name} — ${
+      profile.category
+    } | ModelConnect Miami</title>
+        <meta name="description" content="Профиль ${profile.name} из ${
       profile.city
     }. Категория: ${profile.category}.">
-      <meta property="og:title" content="${profile.name} — ${
-      profile.category
-    }" />
-      <meta property="og:description" content="Профиль ${profile.name} из ${
-      profile.city
-    }. Категория: ${profile.category}." />
-      ${
-        profile.image_url
-          ? `<meta property="og:image" content="${profile.image_url}" />`
-          : ""
-      }
-    </head>
-    <body>
-      <h1>${profile.name}</h1>
-      <p><strong>Категория:</strong> ${profile.category}</p>
-      <p><strong>Город:</strong> ${profile.city}</p>
-      ${profile.age ? `<p><strong>Возраст:</strong> ${profile.age}</p>` : ""}
-      ${profile.description ? `<p>${profile.description}</p>` : ""}
-      ${
-        profile.email
-          ? `<p>Email: <a href="mailto:${profile.email}">${profile.email}</a></p>`
-          : ""
-      }
-      ${
-        profile.phone
-          ? `<p>Телефон: <a href="tel:${profile.phone}">${profile.phone}</a></p>`
-          : ""
-      }
-      ${
-        profile.image_url
-          ? `<img src="${profile.image_url}" alt="Фото ${profile.name}" />`
-          : ""
-      }
-    </body>
-    </html>
+        ${
+          profile.image_url
+            ? `<meta property="og:image" content="${profile.image_url}" />`
+            : ""
+        }
+      </head>
+      <body>
+        <h1>${profile.name}</h1>
+        <p><strong>Категория:</strong> ${profile.category}</p>
+        <p><strong>Город:</strong> ${profile.city}</p>
+        ${profile.age ? `<p><strong>Возраст:</strong> ${profile.age}</p>` : ""}
+        ${profile.description ? `<p>${profile.description}</p>` : ""}
+        ${
+          profile.email
+            ? `<p>Email: <a href="mailto:${profile.email}">${profile.email}</a></p>`
+            : ""
+        }
+        ${
+          profile.phone
+            ? `<p>Телефон: <a href="tel:${profile.phone}">${profile.phone}</a></p>`
+            : ""
+        }
+        ${
+          profile.image_url
+            ? `<img src="${profile.image_url}" alt="Фото ${profile.name}" />`
+            : ""
+        }
+        <p><a href="/">← Вернуться на главную</a></p>
+      </body>
+      </html>
     `
 
     return {
       statusCode: 200,
-      headers: { "Content-Type": "text/html; charset=utf-8" },
+      headers: { "Content-Type": "text/html" },
       body: html,
     }
   } catch (err) {
