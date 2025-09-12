@@ -1,12 +1,24 @@
 import dotenv from "dotenv"
 import slugify from "slugify"
-import { createClient } from "@supabase/supabase-js"
 import fs from "fs"
 
 dotenv.config()
 
-export default async function (eleventyConfig) {
-  // 🔹 Фильтр для slugify
+function loadProfilesCache() {
+  const cachePath = "./_data/profiles_cache.json"
+  let profilesData = []
+  try {
+    const rawData = fs.readFileSync(cachePath, "utf-8")
+    profilesData = JSON.parse(rawData)
+    console.log(`Loaded ${profilesData.length} profiles from cache ✅`)
+  } catch (err) {
+    console.warn("Profiles cache not found, proceeding with empty array.", err)
+    profilesData = []
+  }
+  return profilesData
+}
+
+export default function (eleventyConfig) {
   eleventyConfig.addFilter("slugify", (str) => {
     return slugify(str || "", {
       lower: true,
@@ -15,19 +27,18 @@ export default async function (eleventyConfig) {
     })
   })
 
-  // 🔹 Загружаем JSON из _data
   let regionsData = []
   try {
-    const rawRegions = fs.readFileSync("./_data/regions.json", "utf-8")
-    regionsData = JSON.parse(rawRegions)
+    regionsData = JSON.parse(fs.readFileSync("./_data/regions.json", "utf-8"))
   } catch (e) {
     console.error("Ошибка при загрузке regions.json:", e)
   }
 
   let categoriesData = []
   try {
-    const rawCategories = fs.readFileSync("./_data/categories.json", "utf-8")
-    categoriesData = JSON.parse(rawCategories)
+    categoriesData = JSON.parse(
+      fs.readFileSync("./_data/categories.json", "utf-8")
+    )
   } catch (e) {
     console.error("Ошибка при загрузке categories.json:", e)
   }
@@ -35,43 +46,27 @@ export default async function (eleventyConfig) {
   eleventyConfig.addGlobalData("regionsData", regionsData)
   eleventyConfig.addGlobalData("categoriesData", categoriesData)
 
-  // 🔹 Supabase client
-  const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_ANON_KEY
-  )
+  const profilesData = loadProfilesCache()
 
-  // 🔹 Загружаем профили
-  let profilesData = []
-  try {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*")
-      .order("created_at", { ascending: false })
-
-    if (error) throw error
-    profilesData = data
-    console.log(`Fetched ${profilesData.length} profiles from Supabase ✅`)
-  } catch (err) {
-    console.error("Ошибка при загрузке профилей из Supabase:", err)
-    profilesData = []
-  }
-
-  // 🔹 Коллекции
-  eleventyConfig.addCollection("profiles", () => profilesData)
+  eleventyConfig.addCollection("profiles", () => {
+    return profilesData.map((profile) => {
+      return {
+        ...profile,
+        slug: slugify(profile.name || profile.id, {
+          lower: true,
+          strict: true,
+        }),
+      }
+    })
+  })
 
   eleventyConfig.addCollection("regions", () => {
     const regionsMap = {}
     profilesData.forEach((profile) => {
       const cityName = profile.city || "Не указан"
       const citySlug = slugify(cityName, { lower: true, strict: true })
-
       if (!regionsMap[citySlug]) {
-        regionsMap[citySlug] = {
-          name: cityName,
-          slug: citySlug,
-          profiles: [],
-        }
+        regionsMap[citySlug] = { name: cityName, slug: citySlug, profiles: [] }
       }
       regionsMap[citySlug].profiles.push(profile)
     })
@@ -83,20 +78,14 @@ export default async function (eleventyConfig) {
     profilesData.forEach((profile) => {
       const catName = profile.category || "Без категории"
       const catSlug = slugify(catName, { lower: true, strict: true })
-
       if (!categoriesMap[catSlug]) {
-        categoriesMap[catSlug] = {
-          name: catName,
-          slug: catSlug,
-          profiles: [],
-        }
+        categoriesMap[catSlug] = { name: catName, slug: catSlug, profiles: [] }
       }
       categoriesMap[catSlug].profiles.push(profile)
     })
     return Object.values(categoriesMap)
   })
 
-  // 🔹 Пробрасываем env в глобальные данные
   eleventyConfig.addGlobalData("site", {
     url: process.env.SITE_URL || "http://localhost:8080",
     supabase_url: process.env.SUPABASE_URL,
@@ -106,7 +95,6 @@ export default async function (eleventyConfig) {
     netlify_build_hook: process.env.NETLIFY_BUILD_HOOK,
   })
 
-  // 🔹 Статические файлы
   eleventyConfig.addPassthroughCopy("css")
   eleventyConfig.addPassthroughCopy("js")
   eleventyConfig.addPassthroughCopy("img")

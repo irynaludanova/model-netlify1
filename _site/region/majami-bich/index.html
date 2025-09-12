@@ -4,177 +4,184 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow">
-  <title>Майами-Бич — Модели и фотографы | ModelConnect Miami</title>
-  <meta name="description" content="Профили моделей, фотографов и стилистов из региона Майами-Бич. ModelConnect Miami — платформа для творческих людей.">
-  <meta property="og:title" content="Майами-Бич — ModelConnect Miami">
+
+  <title>Регионы — ModelConnect Miami</title>
+  <meta name="description" content="Выберите регион для просмотра моделей, фотографов и стилистов.">
+
+  <meta property="og:title" content="Регионы — ModelConnect Miami">
   <meta property="og:site_name" content="ModelConnect Miami">
   <meta property="og:locale" content="ru_RU">
-  <meta property="og:description" content="Профили моделей, фотографов и стилистов в регионе Майами-Бич на ModelConnect Miami.">
-  <meta property="og:image" content="http://localhost:8080">
-  <meta property="og:url" content="http://localhost:8080/region/majami-bich">
+  <meta property="og:description" content="Каталог специалистов по регионам.">
+  <meta property="og:image" content="http://localhost:8080/img/og-image.png/img/og-default.jpg">
+  <meta property="og:url" content="http://localhost:8080/region/">
   <meta property="og:type" content="website">
+
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Майами-Бич — ModelConnect Miami">
-  <meta name="twitter:description" content="Профили профессионалов в регионе Майами-Бич на ModelConnect Miami 2025.">
-  <meta name="twitter:image" content="http://localhost:8080">
-  <link rel="canonical" href="http://localhost:8080/region/majami-bich">
+  <meta name="twitter:title" content="Регионы — ModelConnect Miami">
+  <meta name="twitter:description" content="Каталог специалистов по регионам.">
+  <meta name="twitter:image" content="http://localhost:8080/img/og-default.jpg">
+
+  <link rel="canonical" href="http://localhost:8080/region/">
   <link rel="icon" type="image/x-icon" href="http://localhost:8080/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:8080/img/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:8080/img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:8080/img/favicon-16x16.png">
   <link rel="manifest" href="http://localhost:8080/img/site.webmanifest">
-   <link rel="preload" href="/css/style.css" as="style">
-  <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="http://localhost:8080/css/style.css" as="style">
+  <link rel="stylesheet" href="http://localhost:8080/css/style.css">
   <link rel="dns-prefetch" href="https://api.cloudinary.com">
 
-
+  
   <script type="application/ld+json">
     {
   "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Майами-Бич — ModelConnect Miami",
-  "url": "http://localhost:8080/region/majami-bich",
-  "description": "Профили моделей, фотографов и стилистов в регионе Майами-Бич на ModelConnect Miami 2025"
+  "@type": "CollectionPage",
+  "name": "Регионы — ModelConnect Miami",
+  "url": "http://localhost:8080/region/",
+  "description": "Каталог специалистов по регионам",
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "Place",
+          "name": "Халландейл",
+          "url": "http://localhost:8080/region/hallandejl/"
+        }
+      },
+      
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Place",
+          "name": "Корал-Гейблс",
+          "url": "http://localhost:8080/region/koral-gejbls/"
+        }
+      },
+      
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "Place",
+          "name": "Майами-Бич",
+          "url": "http://localhost:8080/region/majami-bich/"
+        }
+      }
+      
+    ]
+  }
 }
 
   </script>
+  
+
+  
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Главная",
+      "item": "http://localhost:8080/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Регионы",
+      "item": "http://localhost:8080/region/"
+    }
+  ]
+}
+
+  </script>
+  
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4CXZPMW012"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-4CXZPMW012');
+    gtag('config', '');
   </script>
 
   <script>
       window.SUPABASE_URL = "https://zftnzsbflzfhfyfnyqza.supabase.co";
       window.SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdG56c2JmbHpmaGZ5Zm55cXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwODQyMjQsImV4cCI6MjA3MjY2MDIyNH0.ZiNtVmNKFPsW7NPngNvRrDsRFwcPQw0aE6m8FwmCvZg";
+       window.CLOUDINARY_CLOUD_NAME = "dimallvw3";
+
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
-    <nav class="nav-list" aria-label="Основная навигация">
-      <li><a href="/" >Главная</a></li>
-      <li><a href="/region/">Регионы</a></li>
-      <li><a href="/category/">Категории</a></li>
-      <li><a href="/add-profile/">Добавить профиль</a></li>
-    </nav>
+  <nav class="nav-list" aria-label="Основная навигация">
+    <li><a href="/">Главная</a></li>
+    <li><a href="/region/">Регионы</a></li>
+    <li><a href="/category/">Категории</a></li>
+    <li><a href="/add-profile/">Добавить профиль</a></li>
+  </nav>
 
   <main>
     
-<header>
-  <nav class="breadcrumbs" aria-label="Навигация по сайту">
-    <a href="/">Главная</a> ›
-    <a href="/region/">Регионы</a> ›
-    <span>Майами-Бич</span>
-  </nav>
-</header>
+<h1>Регион Майами-Бич</h1>
 
-<h1>Регион: Майами-Бич</h1>
-
-<div class="profiles-list" role="region" aria-label="Список профилей в регионе">
+<div id="profile-list" class="profiles">
   
-    
-      <article class="profile-card" style="display: flex;">
-        <img
-          class="profile-card__image"
-          width="300"
-          height="200"
-          src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757334629/idprxxfkwdmbsqw6mlqt.jpg"
-          alt="Фото профиля Nika"
-          loading="lazy"
-        />
-        <div class="profile-card__description">
-          <h2>Nika</h2>
-          <p>Майами-Бич</p>
-          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,...</p>
-          <a href="/profiles/nika/index.html" aria-label="Подробнее о Nika">Подробнее</a>
-        </div>
-      </article>
-    
-      <article class="profile-card" style="display: flex;">
-        <img
-          class="profile-card__image"
-          width="300"
-          height="200"
-          src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/v1757334399/mh6ejrpmv7xdm4i2ueae.jpg"
-          alt="Фото профиля John"
-          loading="lazy"
-        />
-        <div class="profile-card__description">
-          <h2>John</h2>
-          <p>Майами-Бич</p>
-          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,...</p>
-          <a href="/profiles/john/index.html" aria-label="Подробнее о John">Подробнее</a>
-        </div>
-      </article>
-    
+    <article class="profile-card">
+      <img
+        class="profile-card__image"
+        width="300"
+        height="200"
+        src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/https://res.cloudinary.com/dimallvw3/image/upload/v1757334629/idprxxfkwdmbsqw6mlqt.jpg"
+        srcset="
+          https://res.cloudinary.com/dimallvw3/image/upload/w_150,h_100,c_fill,q_auto,f_webp/https://res.cloudinary.com/dimallvw3/image/upload/v1757334629/idprxxfkwdmbsqw6mlqt.jpg 150w,
+          https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/https://res.cloudinary.com/dimallvw3/image/upload/v1757334629/idprxxfkwdmbsqw6mlqt.jpg 300w,
+          https://res.cloudinary.com/dimallvw3/image/upload/w_600,h_400,c_fill,q_auto,f_webp/https://res.cloudinary.com/dimallvw3/image/upload/v1757334629/idprxxfkwdmbsqw6mlqt.jpg 600w
+        "
+        sizes="(max-width: 600px) 150px, (max-width: 1200px) 300px, 600px"
+        alt="Фото профиля Nika (Майами-Бич)"
+        loading="lazy"
+      />
+      <div class="profile-card__description">
+        <h3>Nika</h3>
+        <p>Майами-Бич, Модель</p>
+        <a href="/profiles/nika/" aria-label="Подробнее о Nika">Подробнее</a>
+      </div>
+    </article>
+  
+    <article class="profile-card">
+      <img
+        class="profile-card__image"
+        width="300"
+        height="200"
+        src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/https://res.cloudinary.com/dimallvw3/image/upload/v1757334399/mh6ejrpmv7xdm4i2ueae.jpg"
+        srcset="
+          https://res.cloudinary.com/dimallvw3/image/upload/w_150,h_100,c_fill,q_auto,f_webp/https://res.cloudinary.com/dimallvw3/image/upload/v1757334399/mh6ejrpmv7xdm4i2ueae.jpg 150w,
+          https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/https://res.cloudinary.com/dimallvw3/image/upload/v1757334399/mh6ejrpmv7xdm4i2ueae.jpg 300w,
+          https://res.cloudinary.com/dimallvw3/image/upload/w_600,h_400,c_fill,q_auto,f_webp/https://res.cloudinary.com/dimallvw3/image/upload/v1757334399/mh6ejrpmv7xdm4i2ueae.jpg 600w
+        "
+        sizes="(max-width: 600px) 150px, (max-width: 1200px) 300px, 600px"
+        alt="Фото профиля John (Майами-Бич)"
+        loading="lazy"
+      />
+      <div class="profile-card__description">
+        <h3>John</h3>
+        <p>Майами-Бич, Стилист</p>
+        <a href="/profiles/john/" aria-label="Подробнее о John">Подробнее</a>
+      </div>
+    </article>
   
 </div>
 
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Профили в регионе Майами-Бич",
-    "description": "Профили моделей, фотографов и стилистов в регионе Майами-Бич",
-    "itemListElement": [
-      
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "item": {
-          "@type": "Person",
-          "name": "Nika",
-          "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
-          "image": "http://localhost:8080https://res.cloudinary.com/dimallvw3/image/upload/v1757334629/idprxxfkwdmbsqw6mlqt.jpg",
-          "url": "http://localhost:8080/profiles/e5720766-b43c-4a2d-941d-2b6826a811d8/index.html"
-        }
-      },
-      
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "item": {
-          "@type": "Person",
-          "name": "John",
-          "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
-          "image": "http://localhost:8080https://res.cloudinary.com/dimallvw3/image/upload/v1757334399/mh6ejrpmv7xdm4i2ueae.jpg",
-          "url": "http://localhost:8080/profiles/83455fd6-193d-4b96-9e24-ed9160cab722/index.html"
-        }
-      }
-      
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Главная",
-        "item": "http://localhost:8080/"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Регионы",
-        "item": "http://localhost:8080/region"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": "Майами-Бич",
-        "item": "http://localhost:8080/region/majami-bich"
-      }
-    ]
-  }
-  </script>
   </main>
 
   <footer class="site-footer">

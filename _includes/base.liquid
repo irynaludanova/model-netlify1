@@ -4,63 +4,77 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow">
-  <title>{{ title }}</title>
-  <meta name="description" content="{{ description }}">
-  <meta property="og:title" content="{{ seo_og_title }}">
+
+  <title>{{ title | default: site.name }}</title>
+  <meta name="description" content="{{ description | default: site.description }}">
+
+  <meta property="og:title" content="{{ seo_og_title | default: title }}">
   <meta property="og:site_name" content="{{ site.name }}">
   <meta property="og:locale" content="ru_RU">
-  <meta property="og:description" content="{{ seo_og_description }}">
-  <meta property="og:image" content="{{ seo_og_image }}">
-  <meta property="og:url" content="{{ seo_og_url }}">
+  <meta property="og:description" content="{{ seo_og_description | default: description }}">
+  <meta property="og:image" content="{{ seo_og_image | default: site.url | append: '/img/og-default.jpg' }}">
+  <meta property="og:url" content="{{ seo_og_url | default: site.url }}">
   <meta property="og:type" content="website">
+
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ seo_twitter_title }}">
-  <meta name="twitter:description" content="{{ seo_twitter_description }}">
-  <meta name="twitter:image" content="{{ seo_twitter_image }}">
-  <link rel="canonical" href="{{ seo_canonical }}">
+  <meta name="twitter:title" content="{{ seo_twitter_title | default: title }}">
+  <meta name="twitter:description" content="{{ seo_twitter_description | default: description }}">
+  <meta name="twitter:image" content="{{ seo_twitter_image | default: site.url | append: '/img/og-default.jpg' }}">
+
+  <link rel="canonical" href="{{ seo_canonical | default: site.url }}">
   <link rel="icon" type="image/x-icon" href="{{ site.url }}/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="{{ site.url }}/img/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="{{ site.url }}/img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="{{ site.url }}/img/favicon-16x16.png">
   <link rel="manifest" href="{{ site.url }}/img/site.webmanifest">
-   <link rel="preload" href="/css/style.css" as="style">
-  <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="{{ site.url }}/css/style.css" as="style">
+  <link rel="stylesheet" href="{{ site.url }}/css/style.css">
   <link rel="dns-prefetch" href="https://api.cloudinary.com">
 
-
+  {% if seo_json_ld %}
   <script type="application/ld+json">
     {{ seo_json_ld }}
   </script>
+  {% endif %}
+
+  {% if breadcrumb_json_ld %}
+  <script type="application/ld+json">
+    {{ breadcrumb_json_ld }}
+  </script>
+  {% endif %}
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4CXZPMW012"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-4CXZPMW012');
+    gtag('config', '{{ site.google_analytics_id }}');
   </script>
 
   <script>
       window.SUPABASE_URL = "{{ site.supabase_url }}";
       window.SUPABASE_KEY = "{{ site.supabase_anon_key }}";
+       window.CLOUDINARY_CLOUD_NAME = "{{ site.cloudinary_cloud_name }}";
+
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
-    <nav class="nav-list" aria-label="Основная навигация">
-      <li><a href="/" >Главная</a></li>
-      <li><a href="/region/">Регионы</a></li>
-      <li><a href="/category/">Категории</a></li>
-      <li><a href="/add-profile/">Добавить профиль</a></li>
-    </nav>
+  <nav class="nav-list" aria-label="Основная навигация">
+    <li><a href="/">Главная</a></li>
+    <li><a href="/region/">Регионы</a></li>
+    <li><a href="/category/">Категории</a></li>
+    <li><a href="/add-profile/">Добавить профиль</a></li>
+  </nav>
 
   <main>
     {{ content }}
   </main>
 
   <footer class="site-footer">
-    <p>© 2025 ModelConnect Miami</p>
+    <p>© {{ "now" | date: "%Y" }} {{ site.name }}</p>
   </footer>
 
   <script src="/js/profiles.js" defer></script>

@@ -31,6 +31,7 @@ h1 {
 
 h2 {
   font-size: clamp(1.5rem, 4vw, 2rem);
+  text-align: center;
 }
 
 h3 {
@@ -210,7 +211,7 @@ nav {
 /* === Profile === */
 .profile-detail {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 1fr;
   gap: 2rem;
 }
 
@@ -538,16 +539,6 @@ nav {
 .pagination-btn.prev::before,
 .pagination-btn.next::after {
   font-size: 1rem;
-}
-
-.pagination-btn.prev::before {
-  content: "←";
-  margin-right: 0.5rem;
-}
-
-.pagination-btn.next::after {
-  content: "→";
-  margin-left: 0.5rem;
 }
 
 /* === Media === */

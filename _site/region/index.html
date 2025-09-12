@@ -4,63 +4,104 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow">
-  <title>ModelConnect Miami —  Профили по регионам</title>
-  <meta name="description" content="Смотрите профили моделей, фотографов и стилистов по регионам Майами. Найдите профессионалов во всех регионах Майами">
-  <meta property="og:title" content="ModelConnect Miami —  Профили по регионам">
+
+  <title>Регионы — ModelConnect Miami</title>
+  <meta name="description" content="Выберите регион для просмотра моделей, фотографов и стилистов.">
+
+  <meta property="og:title" content="Регионы — ModelConnect Miami">
   <meta property="og:site_name" content="ModelConnect Miami">
   <meta property="og:locale" content="ru_RU">
-  <meta property="og:description" content="Смотрите профили моделей, фотографов и стилистов по регионам Майами. Профили профессионалов во всех регионах Майами 2025">
-  <meta property="og:image" content="http://localhost:8080">
-  <meta property="og:url" content="http://localhost:8080/region">
+  <meta property="og:description" content="Каталог специалистов по регионам.">
+  <meta property="og:image" content="http://localhost:8080/img/og-image.png/img/og-default.jpg">
+  <meta property="og:url" content="http://localhost:8080/region/">
   <meta property="og:type" content="website">
+
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ModelConnect Miami —  Профили по регионам">
-  <meta name="twitter:description" content="Смотрите профили моделей, фотографов и стилистов по регионам Майами. Модели, фотографы и стилисты во всех регионах Майами 2025">
-  <meta name="twitter:image" content="http://localhost:8080">
-  <link rel="canonical" href="http://localhost:8080/region">
+  <meta name="twitter:title" content="Регионы — ModelConnect Miami">
+  <meta name="twitter:description" content="Каталог специалистов по регионам.">
+  <meta name="twitter:image" content="http://localhost:8080/img/og-default.jpg">
+
+  <link rel="canonical" href="http://localhost:8080/region/">
   <link rel="icon" type="image/x-icon" href="http://localhost:8080/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:8080/img/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:8080/img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:8080/img/favicon-16x16.png">
   <link rel="manifest" href="http://localhost:8080/img/site.webmanifest">
-   <link rel="preload" href="/css/style.css" as="style">
-  <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="http://localhost:8080/css/style.css" as="style">
+  <link rel="stylesheet" href="http://localhost:8080/css/style.css">
   <link rel="dns-prefetch" href="https://api.cloudinary.com">
 
-
+  
   <script type="application/ld+json">
     {
   "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "ModelConnect Miami —  Профили по регионам",
-  "url": "http://localhost:8080/region",
-  "description": "Смотрите профили моделей, фотографов и стилистов по регионам Майами. Обзор всех регионов с моделями, фотографами и стилистами."
+  "@type": "CollectionPage",
+  "name": "Регионы — ModelConnect Miami",
+  "url": "http://localhost:8080/region/",
+  "description": "Каталог специалистов по регионам",
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      
+    ]
+  }
+},
+breadcrumb_json_ld: |
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Главная",
+      "item": "http://localhost:8080/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Регионы",
+      "item": "http://localhost:8080/region/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "",
+      "item": "http://localhost:8080/region//"
+    }
+  ]
 }
 
   </script>
+  
+
+  
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4CXZPMW012"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-4CXZPMW012');
+    gtag('config', '');
   </script>
 
   <script>
       window.SUPABASE_URL = "https://zftnzsbflzfhfyfnyqza.supabase.co";
       window.SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdG56c2JmbHpmaGZ5Zm55cXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwODQyMjQsImV4cCI6MjA3MjY2MDIyNH0.ZiNtVmNKFPsW7NPngNvRrDsRFwcPQw0aE6m8FwmCvZg";
+       window.CLOUDINARY_CLOUD_NAME = "dimallvw3";
+
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
-    <nav class="nav-list" aria-label="Основная навигация">
-      <li><a href="/" >Главная</a></li>
-      <li><a href="/region/">Регионы</a></li>
-      <li><a href="/category/">Категории</a></li>
-      <li><a href="/add-profile/">Добавить профиль</a></li>
-    </nav>
+  <nav class="nav-list" aria-label="Основная навигация">
+    <li><a href="/">Главная</a></li>
+    <li><a href="/region/">Регионы</a></li>
+    <li><a href="/category/">Категории</a></li>
+    <li><a href="/add-profile/">Добавить профиль</a></li>
+  </nav>
 
   <main>
     
@@ -71,205 +112,36 @@
   <ul class="region-list" role="list" label="Список регионов">
     
       <li class="region-card">
-        <a href="/region/hallandejl/index.html" aria-label="Перейти к региону ">
+        <a href="/region/hallandejl/index.html" aria-label="Перейти к региону Халландейл">
           Халландейл
         </a>
         <p>5 профилей</p>
       </li>
     
       <li class="region-card">
-        <a href="/region/koral-gejbls/index.html" aria-label="Перейти к региону ">
+        <a href="/region/koral-gejbls/index.html" aria-label="Перейти к региону Корал-Гейблс">
           Корал-Гейблс
         </a>
         <p>3 профилей</p>
       </li>
     
       <li class="region-card">
-        <a href="/region/majami-bich/index.html" aria-label="Перейти к региону ">
+        <a href="/region/majami-bich/index.html" aria-label="Перейти к региону Майами-Бич">
           Майами-Бич
         </a>
         <p>2 профилей</p>
       </li>
     
   </ul>
+
   <div id="profile-list">
     <p>Загрузка профилей...</p>
   </div>
-    <div id="pagination-container"></div>
+  <div id="pagination-container"></div>
 </section>
 
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Профили по регионам ModelConnect Miami",
-    "description": "Смотрите профили моделей, фотографов и стилистов по регионам Майами.",
-    "itemListElement": [
-      
-        
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "item": {
-            "@type": "Person",
-            "name": "Nick",
-            "description": "wertyuiop",
-            "image": "http://localhost:8080https://res.cloudinary.com/dimallvw3/image/upload/v1757419442/phvgfe0d2mo5yghl8ks4.jpg",
-            "url": "http://localhost:8080/profiles/bced9eb5-bebf-465d-a352-d67b1d03e121/index.html"
-          }
-        },
-        
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "item": {
-            "@type": "Person",
-            "name": "Alex",
-            "description": "qwertyuio",
-            "image": "http://localhost:8080https://res.cloudinary.com/dimallvw3/image/upload/v1757418218/v5qta1cmgjxdysqkwi0l.jpg",
-            "url": "http://localhost:8080/profiles/6f26f5a1-8ca8-4da6-9651-1f5ca752be0f/index.html"
-          }
-        },
-        
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "item": {
-            "@type": "Person",
-            "name": "Anna",
-            "description": "&#34;At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non prov...",
-            "image": "http://localhost:8080https://res.cloudinary.com/dimallvw3/image/upload/v1757342206/pho5f1nncqprm4faucjc.jpg",
-            "url": "http://localhost:8080/profiles/50ba7c00-1993-4e21-9eef-b0474cc920a0/index.html"
-          }
-        },
-        
-        {
-          "@type": "ListItem",
-          "position": 4,
-          "item": {
-            "@type": "Person",
-            "name": "Maria",
-            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
-            "image": "http://localhost:8080https://res.cloudinary.com/dimallvw3/image/upload/v1757334488/szmq04q6ze5lrgaudkpr.jpg",
-            "url": "http://localhost:8080/profiles/53345958-12d5-492d-b15a-e4d0fc406c72/index.html"
-          }
-        },
-        
-        {
-          "@type": "ListItem",
-          "position": 5,
-          "item": {
-            "@type": "Person",
-            "name": "Ivan",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi u...",
-            "image": "http://localhost:8080https://res.cloudinary.com/dimallvw3/image/upload/v1757334343/ca1h3mnfjw2vr8c4v2rq.jpg",
-            "url": "http://localhost:8080/profiles/af25b537-8bf5-46c5-85e2-ef50e7c74b41/index.html"
-          }
-        }
-        
 
 
-
-
-
-      
-        
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "item": {
-            "@type": "Person",
-            "name": "Test",
-            "description": "qewrtyuiop",
-            "image": "http://localhost:8080https://res.cloudinary.com/dimallvw3/image/upload/v1757344642/l6zvuzteyvpmxtdmihly.jpg",
-            "url": "http://localhost:8080/profiles/a2e0472e-8848-477d-8be7-086c972fe368/index.html"
-          }
-        },
-        
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "item": {
-            "@type": "Person",
-            "name": "Tim",
-            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
-            "image": "http://localhost:8080https://res.cloudinary.com/dimallvw3/image/upload/v1757334672/agvnwemqynntxfc5ku5e.jpg",
-            "url": "http://localhost:8080/profiles/b4fe21c6-ee77-4ed8-a36b-5ed1453024d6/index.html"
-          }
-        },
-        
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "item": {
-            "@type": "Person",
-            "name": "Kate",
-            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
-            "image": "http://localhost:8080https://res.cloudinary.com/dimallvw3/image/upload/v1757334441/cbjxr8libhlfmdthwekt.jpg",
-            "url": "http://localhost:8080/profiles/a411a3c2-d0db-420d-8a2e-778d95724200/index.html"
-          }
-        }
-        
-
-
-
-
-
-      
-        
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "item": {
-            "@type": "Person",
-            "name": "Nika",
-            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
-            "image": "http://localhost:8080https://res.cloudinary.com/dimallvw3/image/upload/v1757334629/idprxxfkwdmbsqw6mlqt.jpg",
-            "url": "http://localhost:8080/profiles/e5720766-b43c-4a2d-941d-2b6826a811d8/index.html"
-          }
-        },
-        
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "item": {
-            "@type": "Person",
-            "name": "John",
-            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
-            "image": "http://localhost:8080https://res.cloudinary.com/dimallvw3/image/upload/v1757334399/mh6ejrpmv7xdm4i2ueae.jpg",
-            "url": "http://localhost:8080/profiles/83455fd6-193d-4b96-9e24-ed9160cab722/index.html"
-          }
-        }
-        
-
-
-
-
-
-      
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Главная",
-        "item": "http://localhost:8080/"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Регионы",
-        "item": "http://localhost:8080/region"
-      }
-    ]
-  }
-  </script>
   </main>
 
   <footer class="site-footer">

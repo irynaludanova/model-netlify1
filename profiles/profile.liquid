@@ -5,107 +5,99 @@ pagination:
   size: 1
   alias: profile
 permalink: "profiles/{{ profile.name | slugify }}/index.html"
+
 eleventyComputed:
-  title: "{{ profile.name | default: 'Профиль' }} — {{ profile.category | default: 'Категория' }} | {{ site.name }}"
-  description: "Профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }}. Категория: {{ profile.category | default: 'не указана' }}. {{ site.name }} — платформа для моделей, фотографов и стилистов."
-  seo_title: "{{ profile.name | default: 'Профиль' }} — {{ profile.category | default: 'Категория' }} | {{ site.name }}"
-  seo_description: "Подробный профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }}. Категория: {{ profile.category | default: 'не указана' }} на ModelConnect Miami 2025."
-  seo_og_title: "{{ profile.name | default: 'Профиль' }} — {{ profile.category | default: 'Категория' }} | {{ site.name }}"
-  seo_og_description: "Профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }}. Категория: {{ profile.category | default: 'не указана' }} на ModelConnect Miami."
-  seo_og_image: "{{ site.url }}{{ profile.image_url | default: '/img/placeholder.webp' }}"
-  seo_og_url: "{{ site.url }}/profiles/{{ profile.id | slugify }}"
-  seo_twitter_title: "{{ profile.name | default: 'Профиль' }} — {{ profile.category | default: 'Категория' }} | {{ site.name }}"
-  seo_twitter_description: "Профиль {{ profile.name | default: 'профессионала' }} из {{ profile.city | default: 'Майами' }} на ModelConnect Miami 2025."
-  seo_twitter_image: "{{ site.url }}{{ profile.image_url | default: '/img/placeholder.webp' }}"
-  seo_canonical: "{{ site.url }}/profiles/{{ profile.id | slugify }}"
+  title: "{{ profile.name }} — {{ site.name }}"
+  description: "Профиль {{ profile.name }}. {{ profile.city | default: 'Регион не указан' }}, {{ profile.category | default: 'Категория не указана' }}"
+  seo_og_image: "https://res.cloudinary.com/{{ site.cloudinary_cloud_name }}/image/upload/w_600,h_400,c_fill,q_auto,f_webp{{ profile.image_url }}"
   seo_json_ld: |
     {
       "@context": "https://schema.org",
       "@type": "Person",
-      "name": "{{ profile.name | default: 'Профессионал' | escape }}",
-      "description": "{{ profile.description | truncate: 200 | default: 'Профиль профессионала в fashion-индустрии Майами' | escape }}",
-      "image": "{{ site.url }}{{ profile.image_url | default: '/img/placeholder.webp' }}",
-      "jobTitle": "{{ profile.category | default: 'Специалист' | escape }}",
+      "name": "{{ profile.name }}",
+      "image": "https://res.cloudinary.com/{{ site.cloudinary_cloud_name }}/image/upload/w_600,h_400,c_fill,q_auto,f_webp{{ profile.image_url }}",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "{{ profile.city | default: 'Майами' | escape }}",
-        "addressCountry": "US"
+        "addressLocality": "{{ profile.city | default: 'Не указан' }}"
       },
-      "email": "{{ profile.email | default: '' | escape }}",
-      "telephone": "{{ profile.phone | default: '' | escape }}",
-      "birthDate": {% if profile.age %}"{{ 'now' | date: '%Y' | minus: profile.age }}-01-01"{% else %}""{% endif %},
-      "url": "{{ site.url }}/profiles/{{ profile.id | slugify }}"
+      "jobTitle": "{{ profile.category | default: 'Без категории' }}",
+      "email": "{{ profile.email | default: '' }}",
+      "telephone": "{{ profile.phone | default: '' }}",
+      "birthDate": "{{ profile.date | date: '%Y-%m-%d' }}",
+      "url": "{{ site.url }}/profiles/{{ profile.name | slugify }}/"
+    }
+  breadcrumb_json_ld: |
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Главная",
+          "item": "{{ site.url }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "{{ profile.city | default: 'Регион не указан' }}",
+          "item": "{{ site.url }}/region/{{ profile.city | slugify }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "{{ profile.category | default: 'Без категории' }}",
+          "item": "{{ site.url }}/category/{{ profile.category | slugify }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "{{ profile.name | escape }}",
+          "item": "{{ site.url }}/profiles/{{ profile.name | slugify }}/"
+        }
+      ]
     }
 ---
 
-  <div class="profile-page" style="flex-direction:column">
-    <nav class="breadcrumbs" aria-label="Навигация по сайту">
-      <a href="/">Главная</a> ›
-       <span>{{ profile.name | default: 'Профиль' | escape }}</span>
-    </nav>
+<article class="profile-detail">
+  {% assign img_path = profile.image_url %}
 
-    <section aria-label="Информация о профиле" >
-      <h1>{{ profile.name | default: 'Без имени' | escape }}</h1>
-      <div class="profile-content" style="display:flex; margin-bottom:1rem; justify-content: space-around;">
-      <img
-    class="profile-card__image"
-    width="300"
-    height="200"
-    src="https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }}"
-    srcset="
-      https://res.cloudinary.com/dimallvw3/image/upload/w_150,h_100,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 150w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 300w,
-      https://res.cloudinary.com/dimallvw3/image/upload/w_600,h_400,c_fill,q_auto,f_webp/{{ profile.image_url | replace: 'https://res.cloudinary.com/dimallvw3/image/upload/', '' }} 600w"
-    sizes="(max-width: 600px) 150px, (max-width: 1200px) 300px, 600px"
-    alt="Фото профиля {{ profile.name | escape }}"
+  <img
+    class="profile-detail__image"
+    width="600"
+    height="400"
+    {% if img_path contains 'res.cloudinary.com' %}
+      src="https://res.cloudinary.com/{{ site.cloudinary_cloud_name }}/image/upload/w_600,h_400,c_fill,q_auto,f_webp/{{ img_path | split: '/upload/' | last }}"
+      srcset="
+        https://res.cloudinary.com/{{ site.cloudinary_cloud_name }}/image/upload/w_300,h_200,c_fill,q_auto,f_webp/{{ img_path | split: '/upload/' | last }} 300w,
+        https://res.cloudinary.com/{{ site.cloudinary_cloud_name }}/image/upload/w_600,h_400,c_fill,q_auto,f_webp/{{ img_path | split: '/upload/' | last }} 600w,
+        https://res.cloudinary.com/{{ site.cloudinary_cloud_name }}/image/upload/w_1200,h_800,c_fill,q_auto,f_webp/{{ img_path | split: '/upload/' | last }} 1200w
+      "
+    {% else %}
+      src="{{ img_path }}"
+      srcset="{{ img_path }} 300w, {{ img_path }} 600w, {{ img_path }} 1200w"
+    {% endif %}
+    sizes="(max-width: 600px) 300px, (max-width: 1200px) 600px, 1200px"
+    alt="Фото профиля {{ profile.name | escape }} ({{ profile.city | default: 'Регион не указан' | escape }})"
     loading="lazy"
   />
-      <div class="profile-card__description" style="max-width: 600px;">
-        <p><strong>Категория:</strong> {{ profile.category | default: 'Не указана' | escape }}</p>
-        <p><strong>Город:</strong> {{ profile.city | default: 'Не указан' | escape }}</p>
-        {% if profile.age %}
-          <p><strong>Возраст:</strong> {{ profile.age | escape }}</p>
-        {% endif %}
-        {% if profile.email %}
-          <p><strong>Email:</strong> <a href="mailto:{{ profile.email | escape }}" rel="nofollow">{{ profile.email | escape }}</a></p>
-        {% endif %}
-        {% if profile.phone %}
-          <p><strong>Телефон:</strong> <a rel="nofollow" href="tel:{{ profile.phone | escape }}" rel="nofollow">{{ profile.phone | escape }}</a></p>
-        {% endif %}
-        {% if profile.description %}
-          <p><strong>Описание:</strong> {{ profile.description | escape }}</p>
-        {% endif %}
-      </div>
-      </div>
+  <div class="profile-card__description"><h1>{{ profile.name }}</h1>
+  <ul class="profile-detail__info">
+    <li><strong>Город:</strong> {{ profile.city | default: "Не указан" }}</li>
+    <li><strong>Категория:</strong> {{ profile.category | default: "Без категории" }}</li>
+    <li><strong>Описание:</strong> {{ profile.description | default: "Нет описания" }}</li>
+    {% if profile.age %}
+      <li><strong>Возраст:</strong> {{ profile.age }}</li>
+    {% endif %}
+    {% if profile.email %}
+      <li><strong>Email:</strong> <a href="mailto:{{ profile.email }}">{{ profile.email }}</a></li>
+    {% endif %}
+    {% if profile.phone %}
+      <li><strong>Телефон:</strong> <a href="tel:{{ profile.phone }}">{{ profile.phone }}</a></li>
+    {% endif %}
+    {% if profile.date %}
+      <li><strong>Дата регистрации:</strong> {{ profile.date | date: "%d.%m.%Y" }}</li>
+    {% endif %}
+  </ul></div>
 
-      <a href="/" aria-label="Вернуться на главную страницу" >← Вернуться на главную</a>
-    </section>
-  </div>
-
-  <script type="application/ld+json">{{ seo_json_ld }}</script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Главная",
-        "item": "{{ site.url }}/"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Профили",
-        "item": "{{ site.url }}/profiles"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": "{{ profile.name | default: 'Профиль' | escape }}",
-        "item": "{{ site.url }}/profiles/{{ profile.id | slugify }}"
-      }
-    ]
-  }
-  </script>
+</article>

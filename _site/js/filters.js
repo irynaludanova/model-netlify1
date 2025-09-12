@@ -1,3 +1,5 @@
+import slugify from "slugify"
+
 document.addEventListener("DOMContentLoaded", function () {
   const profileList = document.getElementById("profile-list")
   const categorySelect = document.getElementById("category-select")
@@ -16,6 +18,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const category = p.category || "Категория не указана"
         const region = p.city || "Регион не указан"
         const name = p.name || "Без имени"
+
+        // Генерируем slug на основе имени
+        const slug = slugify(name, { lower: true, strict: true })
+
         const image = p.image_url
           ? `https://res.cloudinary.com/dimallvw3/image/upload/w_300,h_200,c_fill,q_auto,f_webp/${p.image_url.replace(
               "https://res.cloudinary.com/dimallvw3/image/upload/",
@@ -29,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="profile-card__description">
               <h3>${name}</h3>
               <p>${region}, ${category}</p>
-              <a href="/profiles/${p.id}/">Подробнее</a>
+              <a href="/profiles/${slug}/">Подробнее</a>
             </div>
           </div>
         `

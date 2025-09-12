@@ -2,25 +2,63 @@
 layout: base
 permalink: /region/index.html
 eleventyComputed:
-  title: "{{ site.name }} — {{ site.title2 }}"
-  description: "{{ site.description2 }} Найдите профессионалов во всех регионах Майами"
-  seo_title: "{{ site.name }} — {{ site.title2 }}"
-  seo_description: "{{ site.description2 }} Модели, фотографы и стилисты во всех регионах Майами 2025"
-  seo_og_title: "{{ site.name }} — {{ site.title2 }}"
-  seo_og_description: "{{ site.description2 }} Профили профессионалов во всех регионах Майами 2025"
-  seo_og_image: "{{ site.url }}{{ site.seo_og_image }}"
-  seo_og_url: "{{ site.url }}/region"
-  seo_twitter_title: "{{ site.name }} — {{ site.title2 }}"
-  seo_twitter_description: "{{ site.description2 }} Модели, фотографы и стилисты во всех регионах Майами 2025"
-  seo_twitter_image: "{{ site.url }}{{ site.seo_og_image }}"
-  seo_canonical: "{{ site.url }}/region"
+  title: "Регионы — {{ site.name }}"
+  description: "Выберите регион для просмотра моделей, фотографов и стилистов."
+  seo_og_title: "Регионы — {{ site.name }}"
+  seo_og_description: "Каталог специалистов по регионам."
+  seo_og_image: "{{ site.url }}/img/og-image.png"
+  seo_og_url: "{{ site.url }}/region/"
+  seo_twitter_title: "Регионы — {{ site.name }}"
+  seo_twitter_description: "Каталог специалистов по регионам."
+  seo_canonical: "{{ site.url }}/region/"
   seo_json_ld: |
     {
       "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "{{ site.name }} — {{ site.title2 }}",
-      "url": "{{ site.url }}/region",
-      "description": "{{ site.description2 }} Обзор всех регионов с моделями, фотографами и стилистами."
+      "@type": "CollectionPage",
+      "name": "Регионы — {{ site.name }}",
+      "url": "{{ site.url }}/region/",
+      "description": "Каталог специалистов по регионам",
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": [
+          {% for region in collections.regions %}
+          {
+            "@type": "ListItem",
+            "position": {{ forloop.index }},
+            "item": {
+              "@type": "Place",
+              "name": "{{ region.name | escape }}",
+              "url": "{{ site.url }}/region/{{ region.name | slugify }}/"
+            }
+          }{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        ]
+      }
+    },
+    breadcrumb_json_ld: |
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Главная",
+          "item": "{{ site.url }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Регионы",
+          "item": "{{ site.url }}/region/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "{{ region.name | escape }}",
+          "item": "{{ site.url }}/region/{{ region.name | slugify }}/"
+        }
+      ]
     }
 ---
 
@@ -31,66 +69,18 @@ eleventyComputed:
   <ul class="region-list" role="list" label="Список регионов">
     {% for region in collections.regions %}
       <li class="region-card">
-        <a href="/region/{{ region.name | slugify }}/index.html" aria-label="Перейти к региону {{ r.name | escape }}">
+        <a href="/region/{{ region.name | slugify }}/index.html" aria-label="Перейти к региону {{ region.name | escape }}">
           {{ region.name | escape }}
         </a>
         <p>{{ region.profiles | size }} профилей</p>
       </li>
     {% endfor %}
   </ul>
+
   <div id="profile-list">
     <p>Загрузка профилей...</p>
   </div>
-    <div id="pagination-container"></div>
+  <div id="pagination-container"></div>
 </section>
 
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Профили по регионам {{ site.name }}",
-    "description": "{{ site.description2 }}",
-    "itemListElement": [
-      {% for region in collections.regions %}
-        {% for p in region.profiles %}
-        {
-          "@type": "ListItem",
-          "position": {{ forloop.index }},
-          "item": {
-            "@type": "Person",
-            "name": "{{ p.name | default: 'Без имени' | escape }}",
-            "description": "{{ p.description | truncate: 200 | escape }}",
-            "image": "{{ site.url }}{{ p.image_url | default: '/img/placeholder.webp' }}",
-            "url": "{{ site.url }}/profiles/{{ p.id | slugify }}/index.html"
-          }
-        }{% unless forloop.last %},{% endunless %}
-        {% endfor %}
 
-
-
-
-
-      {% endfor %}
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Главная",
-        "item": "{{ site.url }}/"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Регионы",
-        "item": "{{ site.url }}/region"
-      }
-    ]
-  }
-  </script>

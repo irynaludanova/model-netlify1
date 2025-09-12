@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     return
   }
 
+  if (!window.CLOUDINARY_CLOUD_NAME) {
+    console.error("CLOUDINARY_CLOUD_NAME не определено!")
+    return
+  }
+
   const supabase = window.supabase.createClient(
     window.SUPABASE_URL,
     window.SUPABASE_KEY
@@ -17,6 +22,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   window.allProfilesData = []
   const pageSize = 4
   let currentPage = 1
+
+  function slugify(text) {
+    return text
+      .toString()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+  }
 
   async function loadProfiles() {
     try {
@@ -81,26 +96,43 @@ document.addEventListener("DOMContentLoaded", async () => {
       profileList.innerHTML = "<p>Нет профилей для отображения.</p>"
     } else {
       profileList.innerHTML = pageData
-        .map(
-          (p) => `
-        <article class="profile-card" data-region="${p.city}" data-category="${
-            p.category
-          }">
-          <img class="profile-card__image" width="300" height="200"
-            src="${p.image_url || "/img/placeholder.webp"}"
-            alt="Фото профиля ${p.name || "Без имени"}" loading="lazy"/>
-          <div class="profile-card__description">
-            <h3>${p.name || "Без имени"}</h3>
-            <p>${p.city || "Регион не указан"}, ${
+        .map((p) => {
+          let imgSrc = p.image_url || "/img/placeholder.webp"
+          let imgSrcSet = `${imgSrc} 300w, ${imgSrc} 600w, ${imgSrc} 1200w`
+
+          if (imgSrc.includes("res.cloudinary.com")) {
+            const path = imgSrc.split("/upload/").pop()
+            imgSrc = `https://res.cloudinary.com/${window.CLOUDINARY_CLOUD_NAME}/image/upload/w_600,h_400,c_fill,q_auto,f_webp/${path}`
+            imgSrcSet = `
+              https://res.cloudinary.com/${window.CLOUDINARY_CLOUD_NAME}/image/upload/w_300,h_200,c_fill,q_auto,f_webp/${path} 300w,
+              https://res.cloudinary.com/${window.CLOUDINARY_CLOUD_NAME}/image/upload/w_600,h_400,c_fill,q_auto,f_webp/${path} 600w,
+              https://res.cloudinary.com/${window.CLOUDINARY_CLOUD_NAME}/image/upload/w_1200,h_800,c_fill,q_auto,f_webp/${path} 1200w
+            `
+          }
+
+          return `
+            <article class="profile-card" data-region="${
+              p.city
+            }" data-category="${p.category}">
+              <img class="profile-card__image" width="300" height="200"
+                src="${imgSrc}"
+                srcset="${imgSrcSet}"
+                sizes="(max-width: 600px) 300px, (max-width: 1200px) 600px, 1200px"
+                alt="Фото профиля ${p.name || "Без имени"}" loading="lazy"/>
+              <div class="profile-card__description">
+                <h3>${p.name || "Без имени"}</h3>
+                <p>${p.city || "Регион не указан"}, ${
             p.category || "Категория не указана"
           }</p>
-            <a href="/profiles/${p.name}" aria-label="Подробнее о ${
+          <a href="/profiles/${p.name}/" aria-label="Подробнее о ${
             p.name
-          }" >Подробнее</a>
-          </div>
-        </article>
-      `
-        )
+          }">Подробнее</a>
+
+
+              </div>
+            </article>
+          `
+        })
         .join("")
     }
 
@@ -115,7 +147,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     let html = '<nav class="pagination" aria-label="Навигация по страницам">'
-
     if (currentPage > 1) html += `<a href="#" class="pagination-btn prev">←</a>`
     for (let i = 1; i <= totalPages; i++) {
       html += `<a href="#" class="pagination-btn ${
@@ -124,10 +155,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     if (currentPage < totalPages)
       html += `<a href="#" class="pagination-btn next">→</a>`
-
     html += "</nav>"
-    paginationContainer.innerHTML = html
 
+    paginationContainer.innerHTML = html
     paginationContainer.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", (e) => {
         e.preventDefault()
