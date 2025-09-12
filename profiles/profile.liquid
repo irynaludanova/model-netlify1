@@ -70,7 +70,7 @@ eleventyComputed:
           <p><strong>Email:</strong> <a href="mailto:{{ profile.email | escape }}" rel="nofollow">{{ profile.email | escape }}</a></p>
         {% endif %}
         {% if profile.phone %}
-          <p><strong>Телефон:</strong> <a href="tel:{{ profile.phone | escape }}" rel="nofollow">{{ profile.phone | escape }}</a></p>
+          <p><strong>Телефон:</strong> <a rel="nofollow" href="tel:{{ profile.phone | escape }}" rel="nofollow">{{ profile.phone | escape }}</a></p>
         {% endif %}
         {% if profile.description %}
           <p><strong>Описание:</strong> {{ profile.description | escape }}</p>

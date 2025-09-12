@@ -23,8 +23,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="https://models-connect.netlify.app/img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://models-connect.netlify.app/img/favicon-16x16.png">
   <link rel="manifest" href="https://models-connect.netlify.app/img/site.webmanifest">
-  <link rel="preload" href="/css/style.css" as="style">
+   <link rel="preload" href="/css/style.css" as="style">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="dns-prefetch" href="https://api.cloudinary.com">
+
 
   <script type="application/ld+json">
     {
@@ -32,7 +34,61 @@
   "@type": "CollectionPage",
   "name": "ModelConnect Miami — Главная",
   "url": "https://models-connect.netlify.app/",
-  "description": "Свежие профили моделей, фотографов и стилистов Майами 2025"
+  "description": "Свежие профили моделей, фотографов и стилистов Майами 2025",
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "Person",
+          "name": "Kate",
+          "jobTitle": "Модель",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Корал-Гейблс"
+          },
+          "image": "/img/profile-low-5.webp",
+          "url": "https://models-connect.netlify.app/profiles/26fed455f36b/"
+        }
+      },
+      
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Person",
+          "name": "Ivan",
+          "jobTitle": "Фотограф",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Miami"
+          },
+          "image": "/img/profile-low-1.webp",
+          "url": "https://models-connect.netlify.app/profiles/4166f5d9324e/"
+        }
+      },
+      
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "Person",
+          "name": "Nika",
+          "jobTitle": "Модель",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Майами-Бич"
+          },
+          "image": "/img/profile-low-3.webp",
+          "url": "https://models-connect.netlify.app/profiles/26fed455f38b/"
+        }
+      }
+      
+    ]
+  }
 }
 
   </script>
@@ -53,19 +109,18 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
-  <nav>
-    <ul class="nav-list">
-      <li><a href="/">Главная</a></li>
+    <nav class="nav-list" aria-label="Основная навигация">
+      <li><a href="/" >Главная</a></li>
       <li><a href="/region/">Регионы</a></li>
       <li><a href="/category/">Категории</a></li>
       <li><a href="/add-profile/">Добавить профиль</a></li>
-    </ul>
-  </nav>
+    </nav>
 
   <main>
     
 <section class="profiles-section">
-  <h1>Свежие профили</h1>
+  <h1>ModelConnect Miami</h1>
+   <h2> Свежие профили моделей, фотографов, стилистов в 2025</h2>
 
   <div class="filters">
     <label for="region-select">Регион:</label>
@@ -87,6 +142,21 @@
 </section>
 
 <script type="module" src="/js/profiles.js"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Главная",
+    "item": "https://models-connect.netlify.app/"
+  }]
+}
+</script>
+
+
 
   </main>
 

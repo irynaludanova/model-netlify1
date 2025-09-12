@@ -50,6 +50,7 @@ export default async function (eleventyConfig) {
     console.log(`Fetched ${profilesData.length} profiles from Supabase ✅`)
   } catch (err) {
     console.error("Ошибка при загрузке профилей из Supabase:", err)
+    profilesData = []
   }
 
   eleventyConfig.addCollection("profiles", () => profilesData)

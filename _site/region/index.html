@@ -23,8 +23,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="https://models-connect.netlify.app/img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://models-connect.netlify.app/img/favicon-16x16.png">
   <link rel="manifest" href="https://models-connect.netlify.app/img/site.webmanifest">
-  <link rel="preload" href="/css/style.css" as="style">
+   <link rel="preload" href="/css/style.css" as="style">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="dns-prefetch" href="https://api.cloudinary.com">
+
 
   <script type="application/ld+json">
     {
@@ -53,14 +55,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
-  <nav>
-    <ul class="nav-list">
-      <li><a href="/">Главная</a></li>
+    <nav class="nav-list" aria-label="Основная навигация">
+      <li><a href="/" >Главная</a></li>
       <li><a href="/region/">Регионы</a></li>
       <li><a href="/category/">Категории</a></li>
       <li><a href="/add-profile/">Добавить профиль</a></li>
-    </ul>
-  </nav>
+    </nav>
 
   <main>
     
@@ -68,24 +68,24 @@
   <h1> Профили по регионам</h1>
   <p>Выберите регион для просмотра профилей:</p>
 
-  <ul class="region-list" role="list">
+  <ul class="region-list" role="list" label="Список регионов">
     
       <li class="region-card">
-        <a href="/region/hallandejl/index.html">
+        <a href="/region/hallandejl/index.html" aria-label="Перейти к региону ">
           Халландейл
         </a>
         <p>5 профилей</p>
       </li>
     
       <li class="region-card">
-        <a href="/region/koral-gejbls/index.html">
+        <a href="/region/koral-gejbls/index.html" aria-label="Перейти к региону ">
           Корал-Гейблс
         </a>
         <p>3 профилей</p>
       </li>
     
       <li class="region-card">
-        <a href="/region/majami-bich/index.html">
+        <a href="/region/majami-bich/index.html" aria-label="Перейти к региону ">
           Майами-Бич
         </a>
         <p>2 профилей</p>
@@ -98,6 +98,178 @@
     <div id="pagination-container"></div>
 </section>
 
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Профили по регионам ModelConnect Miami",
+    "description": "Смотрите профили моделей, фотографов и стилистов по регионам Майами.",
+    "itemListElement": [
+      
+        
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Person",
+            "name": "Nick",
+            "description": "wertyuiop",
+            "image": "https://models-connect.netlify.apphttps://res.cloudinary.com/dimallvw3/image/upload/v1757419442/phvgfe0d2mo5yghl8ks4.jpg",
+            "url": "https://models-connect.netlify.app/profiles/bced9eb5-bebf-465d-a352-d67b1d03e121/index.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Person",
+            "name": "Alex",
+            "description": "qwertyuio",
+            "image": "https://models-connect.netlify.apphttps://res.cloudinary.com/dimallvw3/image/upload/v1757418218/v5qta1cmgjxdysqkwi0l.jpg",
+            "url": "https://models-connect.netlify.app/profiles/6f26f5a1-8ca8-4da6-9651-1f5ca752be0f/index.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "Person",
+            "name": "Anna",
+            "description": "&#34;At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non prov...",
+            "image": "https://models-connect.netlify.apphttps://res.cloudinary.com/dimallvw3/image/upload/v1757342206/pho5f1nncqprm4faucjc.jpg",
+            "url": "https://models-connect.netlify.app/profiles/50ba7c00-1993-4e21-9eef-b0474cc920a0/index.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "Person",
+            "name": "Maria",
+            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
+            "image": "https://models-connect.netlify.apphttps://res.cloudinary.com/dimallvw3/image/upload/v1757334488/szmq04q6ze5lrgaudkpr.jpg",
+            "url": "https://models-connect.netlify.app/profiles/53345958-12d5-492d-b15a-e4d0fc406c72/index.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@type": "Person",
+            "name": "Ivan",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi u...",
+            "image": "https://models-connect.netlify.apphttps://res.cloudinary.com/dimallvw3/image/upload/v1757334343/ca1h3mnfjw2vr8c4v2rq.jpg",
+            "url": "https://models-connect.netlify.app/profiles/af25b537-8bf5-46c5-85e2-ef50e7c74b41/index.html"
+          }
+        }
+        
+
+
+
+
+
+      
+        
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Person",
+            "name": "Test",
+            "description": "qewrtyuiop",
+            "image": "https://models-connect.netlify.apphttps://res.cloudinary.com/dimallvw3/image/upload/v1757344642/l6zvuzteyvpmxtdmihly.jpg",
+            "url": "https://models-connect.netlify.app/profiles/a2e0472e-8848-477d-8be7-086c972fe368/index.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Person",
+            "name": "Tim",
+            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
+            "image": "https://models-connect.netlify.apphttps://res.cloudinary.com/dimallvw3/image/upload/v1757334672/agvnwemqynntxfc5ku5e.jpg",
+            "url": "https://models-connect.netlify.app/profiles/b4fe21c6-ee77-4ed8-a36b-5ed1453024d6/index.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "Person",
+            "name": "Kate",
+            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
+            "image": "https://models-connect.netlify.apphttps://res.cloudinary.com/dimallvw3/image/upload/v1757334441/cbjxr8libhlfmdthwekt.jpg",
+            "url": "https://models-connect.netlify.app/profiles/a411a3c2-d0db-420d-8a2e-778d95724200/index.html"
+          }
+        }
+        
+
+
+
+
+
+      
+        
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Person",
+            "name": "Nika",
+            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
+            "image": "https://models-connect.netlify.apphttps://res.cloudinary.com/dimallvw3/image/upload/v1757334629/idprxxfkwdmbsqw6mlqt.jpg",
+            "url": "https://models-connect.netlify.app/profiles/e5720766-b43c-4a2d-941d-2b6826a811d8/index.html"
+          }
+        },
+        
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Person",
+            "name": "John",
+            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
+            "image": "https://models-connect.netlify.apphttps://res.cloudinary.com/dimallvw3/image/upload/v1757334399/mh6ejrpmv7xdm4i2ueae.jpg",
+            "url": "https://models-connect.netlify.app/profiles/83455fd6-193d-4b96-9e24-ed9160cab722/index.html"
+          }
+        }
+        
+
+
+
+
+
+      
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Главная",
+        "item": "https://models-connect.netlify.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Регионы",
+        "item": "https://models-connect.netlify.app/region"
+      }
+    ]
+  }
+  </script>
   </main>
 
   <footer class="site-footer">

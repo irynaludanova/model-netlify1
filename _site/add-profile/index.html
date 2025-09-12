@@ -23,8 +23,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="https://models-connect.netlify.app/img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://models-connect.netlify.app/img/favicon-16x16.png">
   <link rel="manifest" href="https://models-connect.netlify.app/img/site.webmanifest">
-  <link rel="preload" href="/css/style.css" as="style">
+   <link rel="preload" href="/css/style.css" as="style">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="dns-prefetch" href="https://api.cloudinary.com">
+
 
   <script type="application/ld+json">
     {
@@ -33,6 +35,7 @@
   "name": "Добавить профиль — ModelConnect Miami",
   "url": "https://models-connect.netlify.app/add-profile",
   "description": "Добавьте свой профиль модели, фотографа или стилиста на платформу ModelConnect Miami. Форма для добавления профиля модели, фотографа или стилиста в Майами."
+
 }
 
   </script>
@@ -53,14 +56,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
-  <nav>
-    <ul class="nav-list">
-      <li><a href="/">Главная</a></li>
+    <nav class="nav-list" aria-label="Основная навигация">
+      <li><a href="/" >Главная</a></li>
       <li><a href="/region/">Регионы</a></li>
       <li><a href="/category/">Категории</a></li>
       <li><a href="/add-profile/">Добавить профиль</a></li>
-    </ul>
-  </nav>
+    </nav>
 
   <main>
     

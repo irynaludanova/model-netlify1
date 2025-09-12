@@ -23,8 +23,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="https://models-connect.netlify.app/img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://models-connect.netlify.app/img/favicon-16x16.png">
   <link rel="manifest" href="https://models-connect.netlify.app/img/site.webmanifest">
-  <link rel="preload" href="/css/style.css" as="style">
+   <link rel="preload" href="/css/style.css" as="style">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="dns-prefetch" href="https://api.cloudinary.com">
+
 
   <script type="application/ld+json">
     {
@@ -61,14 +63,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
-  <nav>
-    <ul class="nav-list">
-      <li><a href="/">Главная</a></li>
+    <nav class="nav-list" aria-label="Основная навигация">
+      <li><a href="/" >Главная</a></li>
       <li><a href="/region/">Регионы</a></li>
       <li><a href="/category/">Категории</a></li>
       <li><a href="/add-profile/">Добавить профиль</a></li>
-    </ul>
-  </nav>
+    </nav>
 
   <main>
     
@@ -99,7 +99,7 @@
             <h2>Nick</h2>
             <p>Халландейл</p>
             <p>wertyuiop</p>
-            <a href="/profiles/nick/index.html">Подробнее</a>
+            <a href="/profiles/nick/index.html" aria-label="Подробнее о Nick">Подробнее</a>
           </div>
         </article>
       
@@ -116,7 +116,7 @@
             <h2>Test</h2>
             <p>Корал-Гейблс</p>
             <p>qewrtyuiop</p>
-            <a href="/profiles/test/index.html">Подробнее</a>
+            <a href="/profiles/test/index.html" aria-label="Подробнее о Test">Подробнее</a>
           </div>
         </article>
       
@@ -133,7 +133,7 @@
             <h2>Maria</h2>
             <p>Халландейл</p>
             <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,...</p>
-            <a href="/profiles/maria/index.html">Подробнее</a>
+            <a href="/profiles/maria/index.html" aria-label="Подробнее о Maria">Подробнее</a>
           </div>
         </article>
       
@@ -150,7 +150,7 @@
             <h2>John</h2>
             <p>Майами-Бич</p>
             <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,...</p>
-            <a href="/profiles/john/index.html">Подробнее</a>
+            <a href="/profiles/john/index.html" aria-label="Подробнее о John">Подробнее</a>
           </div>
         </article>
       
@@ -158,6 +158,91 @@
   </div>
      <div id="pagination-container"></div>
 </section>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Профили в категории Стилист",
+    "description": "Профили профессионалов в категории Стилист",
+    "itemListElement": [
+      
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "Person",
+          "name": "Nick",
+          "description": "wertyuiop",
+          "image": "https://models-connect.netlify.apphttps://res.cloudinary.com/dimallvw3/image/upload/v1757419442/phvgfe0d2mo5yghl8ks4.jpg",
+          "url": "https://models-connect.netlify.app/profiles/bced9eb5-bebf-465d-a352-d67b1d03e121/index.html"
+        }
+      },
+      
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Person",
+          "name": "Test",
+          "description": "qewrtyuiop",
+          "image": "https://models-connect.netlify.apphttps://res.cloudinary.com/dimallvw3/image/upload/v1757344642/l6zvuzteyvpmxtdmihly.jpg",
+          "url": "https://models-connect.netlify.app/profiles/a2e0472e-8848-477d-8be7-086c972fe368/index.html"
+        }
+      },
+      
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "Person",
+          "name": "Maria",
+          "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
+          "image": "https://models-connect.netlify.apphttps://res.cloudinary.com/dimallvw3/image/upload/v1757334488/szmq04q6ze5lrgaudkpr.jpg",
+          "url": "https://models-connect.netlify.app/profiles/53345958-12d5-492d-b15a-e4d0fc406c72/index.html"
+        }
+      },
+      
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "item": {
+          "@type": "Person",
+          "name": "John",
+          "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dic...",
+          "image": "https://models-connect.netlify.apphttps://res.cloudinary.com/dimallvw3/image/upload/v1757334399/mh6ejrpmv7xdm4i2ueae.jpg",
+          "url": "https://models-connect.netlify.app/profiles/83455fd6-193d-4b96-9e24-ed9160cab722/index.html"
+        }
+      }
+      
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Главная",
+        "item": "https://models-connect.netlify.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Категории",
+        "item": "https://models-connect.netlify.app/category"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Стилист",
+        "item": "https://models-connect.netlify.app/category/stilist"
+      }
+    ]
+  }
+  </script>
 
   </main>
 

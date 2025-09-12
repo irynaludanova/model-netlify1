@@ -23,8 +23,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="https://models-connect.netlify.app/img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://models-connect.netlify.app/img/favicon-16x16.png">
   <link rel="manifest" href="https://models-connect.netlify.app/img/site.webmanifest">
-  <link rel="preload" href="/css/style.css" as="style">
+   <link rel="preload" href="/css/style.css" as="style">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="dns-prefetch" href="https://api.cloudinary.com">
+
 
   <script type="application/ld+json">
     {
@@ -63,14 +65,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
-  <nav>
-    <ul class="nav-list">
-      <li><a href="/">Главная</a></li>
+    <nav class="nav-list" aria-label="Основная навигация">
+      <li><a href="/" >Главная</a></li>
       <li><a href="/region/">Регионы</a></li>
       <li><a href="/category/">Категории</a></li>
       <li><a href="/add-profile/">Добавить профиль</a></li>
-    </ul>
-  </nav>
+    </nav>
 
   <main>
     
@@ -106,7 +106,7 @@
           <p><strong>Email:</strong> <a href="mailto:ivan@gmail.com" rel="nofollow">ivan@gmail.com</a></p>
         
         
-          <p><strong>Телефон:</strong> <a href="tel:2345678" rel="nofollow">2345678</a></p>
+          <p><strong>Телефон:</strong> <a rel="nofollow" href="tel:2345678" rel="nofollow">2345678</a></p>
         
         
           <p><strong>Описание:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>

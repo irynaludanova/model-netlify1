@@ -19,12 +19,36 @@ eleventyComputed:
       "@type": "CollectionPage",
       "name": "{{ site.name }} — Главная",
       "url": "{{ site.url }}/",
-      "description": "Свежие профили моделей, фотографов и стилистов Майами 2025"
+      "description": "Свежие профили моделей, фотографов и стилистов Майами 2025",
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": [
+          {% for profile in profiles %}
+          {
+            "@type": "ListItem",
+            "position": {{ forloop.index }},
+            "item": {
+              "@type": "Person",
+              "name": "{{ profile.name | escape }}",
+              "jobTitle": "{{ profile.category | escape }}",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "{{ profile.city | escape }}"
+              },
+              "image": "{{ profile.image_url | default: '/img/placeholder.webp' }}",
+              "url": "{{ site.url }}/profiles/{{ profile.id | slugify }}/"
+            }
+          }{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        ]
+      }
     }
+
 ---
 
 <section class="profiles-section">
-  <h1>Свежие профили</h1>
+  <h1>{{ site.name }}</h1>
+   <h2>{{ site.title1 }} в 2025</h2>
 
   <div class="filters">
     <label for="region-select">Регион:</label>
@@ -46,3 +70,23 @@ eleventyComputed:
 </section>
 
 <script type="module" src="/js/profiles.js"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Главная",
+    "item": "{{ site.url }}/"
+  }]
+}
+</script>
+
+{% if pagination.href.previous %}
+  <link rel="prev" href="{{ pagination.href.previous }}">
+{% endif %}
+{% if pagination.href.next %}
+  <link rel="next" href="{{ pagination.href.next }}">
+{% endif %}
