@@ -74,11 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
       phone: fd.get("phone") || null,
       image_url,
     }
-    if (!slug) {
-      console.error("[add-profile.js] Slug generation failed for name:", name)
-      alert("Ошибка: невозможно создать slug для имени")
-      return
-    }
 
     try {
       const resp = await fetch("/.netlify/functions/add-profile", {
