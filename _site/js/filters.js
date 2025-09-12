@@ -33,7 +33,7 @@ export function initFilters(profilesData) {
             <div class="profile-card__description">
               <h3>${name}</h3>
               <p>${region}, ${category}</p>
-              <a href="/profiles/${slug}/">Подробнее</a>
+             <a href="/profiles/${p.id}/">Подробнее</a>
             </div>
           </div>
         `

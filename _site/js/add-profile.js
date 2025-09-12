@@ -1,5 +1,3 @@
-const slugify = window.slugify
-
 async function cloudinaryUpload(file) {
   const form = new FormData()
   form.append("file", file)
@@ -21,9 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault()
+
     const fd = new FormData(form)
     let image_url = "/img/placeholder.webp"
-
     const file = fd.get("image")
     if (file && file.size) {
       try {
@@ -34,12 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    const name = fd.get("name").trim()
-    const slug = slugify(name, { lower: true, strict: true })
-
     const payload = {
-      name,
-      slug,
+      name: fd.get("name").trim(),
       city: fd.get("city"),
       category: fd.get("category"),
       description: fd.get("description"),
@@ -59,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const result = await resp.json()
       if (!resp.ok) throw new Error(result.error || "Ошибка сервера")
 
-      window.location.href = `/profiles/${slug}/`
+      window.location.href = `/profiles/${result.profile.id}/`
     } catch (err) {
       alert("Ошибка при отправке профиля: " + err.message)
     }
