@@ -1,4 +1,4 @@
-const slugify = window.slugify
+import slugify from "https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js"
 
 async function cloudinaryUpload(file) {
   const form = new FormData()
