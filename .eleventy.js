@@ -87,7 +87,7 @@ export default function (eleventyConfig) {
   })
 
   eleventyConfig.addGlobalData("site", {
-    url: process.env.SITE_URL || "http://localhost:8080",
+    url: "https://models-connect.netlify.app/" || "http://localhost:8080",
     supabase_url: process.env.SUPABASE_URL,
     supabase_anon_key: process.env.SUPABASE_ANON_KEY,
     cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
