@@ -44,10 +44,10 @@
   </script>
   {% endif %}
 
- <script defer src="/js/analytics.js"></script>
+ <script defer src="{{ site.url }}/js/analytics.js"></script>
 
 <script type="module" defer>
-  import { initFilters } from '/js/filters.js';
+  import { initFilters } from '{{ site.url }}/js/filters.js';
   if (window.allProfilesData) initFilters(window.allProfilesData);
 </script>
 
@@ -85,7 +85,7 @@
     <p>© {{ "now" | date: "%Y" }} {{ site.name }}</p>
   </footer>
 
-  <script src="/js/profiles.js" defer></script>
+  <script src="{{ site.url }}/js/profiles.js" defer></script>
 
 </body>
 </html>
