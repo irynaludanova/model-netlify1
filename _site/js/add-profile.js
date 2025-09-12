@@ -63,17 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return
     }
 
-    const slug = slugify(name)
-
-    if (!slug) {
-      console.error("[add-profile.js] Slug generation failed for name:", name)
-      alert("Ошибка: невозможно создать slug для имени")
-      return
-    }
-
     const payload = {
       name,
-      slug,
+      slug: slugify(name),
       city: fd.get("city") || null,
       category: fd.get("category") || null,
       description: fd.get("description") || null,
@@ -81,6 +73,11 @@ document.addEventListener("DOMContentLoaded", () => {
       email: fd.get("email") || null,
       phone: fd.get("phone") || null,
       image_url,
+    }
+    if (!slug) {
+      console.error("[add-profile.js] Slug generation failed for name:", name)
+      alert("Ошибка: невозможно создать slug для имени")
+      return
     }
 
     try {
