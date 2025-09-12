@@ -52,7 +52,7 @@ export default function (eleventyConfig) {
     return profilesData.map((profile) => {
       return {
         ...profile,
-        slug: slugify(profile.name || profile.id, {
+        slug: slugify(profile.name, {
           lower: true,
           strict: true,
         }),

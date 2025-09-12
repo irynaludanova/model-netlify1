@@ -1,5 +1,7 @@
 async function cloudinaryUpload(file) {
   const form = new FormData()
+  const name = formData.get("name")
+
   form.append("file", file)
   form.append("upload_preset", "unsigned_profiles")
   const res = await fetch("https://api.cloudinary.com/v1_1/dimallvw3/upload", {
@@ -14,6 +16,7 @@ async function cloudinaryUpload(file) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("#add-profile-form")
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault()
     const fd = new FormData(form)
@@ -30,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const payload = {
       name: fd.get("name").trim(),
+      slug: slugify(fd.get("name").trim()),
       city: fd.get("city"),
       category: fd.get("category"),
       description: fd.get("description"),

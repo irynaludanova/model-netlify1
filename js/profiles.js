@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <p>${p.city || "Регион не указан"}, ${
             p.category || "Категория не указана"
           }</p>
-          <a href="/profiles/${p.name}/" aria-label="Подробнее о ${
+          <a href="/profiles/${p.slug}/" aria-label="Подробнее о ${
             p.name
           }">Подробнее</a>
 

@@ -24,7 +24,7 @@ eleventyComputed:
       "email": "{{ profile.email | default: '' }}",
       "telephone": "{{ profile.phone | default: '' }}",
       "birthDate": "{{ profile.date | date: '%Y-%m-%d' }}",
-      "url": "{{ site.url }}/profiles/{{ profile.name | slugify }}/"
+      "url": "{{ site.url }}/profiles/{{ profile.slug  }}/"
     }
   breadcrumb_json_ld: |
     {
@@ -53,7 +53,7 @@ eleventyComputed:
           "@type": "ListItem",
           "position": 4,
           "name": "{{ profile.name | escape }}",
-          "item": "{{ site.url }}/profiles/{{ profile.name | slugify }}/"
+          "item": "{{ site.url }}/profiles/{{ profile.slug }}/"
         }
       ]
     }
