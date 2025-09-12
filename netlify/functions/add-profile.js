@@ -22,7 +22,7 @@ export async function handler(event) {
       headers: { "Access-Control-Allow-Origin": "*" },
     }
   }
-
+  console.log("body", body)
   const profileData = {
     name: body.name?.trim() || null,
     slug: body.slug || null,

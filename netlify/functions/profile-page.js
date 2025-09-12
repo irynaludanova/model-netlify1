@@ -7,13 +7,10 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
 export async function handler(event) {
   try {
-    const { id } = event.queryStringParameters
-    if (!id) return { statusCode: 400, body: "Profile ID is required" }
-
     const { data: profile, error } = await supabase
       .from("profiles")
       .select("*")
-      .eq("id", id)
+      .eq("slug", slug)
       .single()
 
     if (error || !profile) return { statusCode: 404, body: "Profile not found" }

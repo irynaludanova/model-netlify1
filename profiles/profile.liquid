@@ -4,7 +4,7 @@ pagination:
   data: collections.profiles
   size: 1
   alias: profile
-permalink: "profiles/{{ profile.name | slugify }}/index.html"
+permalink: "profiles/{{ profile.slug  }}/index.html"
 
 eleventyComputed:
   title: "{{ profile.name }} — {{ site.name }}"
