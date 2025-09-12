@@ -90,8 +90,8 @@ export default function (eleventyConfig) {
     url: "https://models-connect.netlify.app/" || "http://localhost:8080",
     supabase_url: process.env.SUPABASE_URL,
     supabase_anon_key: process.env.SUPABASE_ANON_KEY,
-    cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    cloudinary_upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
+    cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "default",
+    cloudinary_upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET || "default",
     netlify_build_hook: process.env.NETLIFY_BUILD_HOOK,
   })
 
