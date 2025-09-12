@@ -6,6 +6,7 @@ import fs from "fs"
 dotenv.config()
 
 export default async function (eleventyConfig) {
+  // 🔹 Фильтр для slugify
   eleventyConfig.addFilter("slugify", (str) => {
     return slugify(str || "", {
       lower: true,
@@ -14,6 +15,7 @@ export default async function (eleventyConfig) {
     })
   })
 
+  // 🔹 Загружаем JSON из _data
   let regionsData = []
   try {
     const rawRegions = fs.readFileSync("./_data/regions.json", "utf-8")
@@ -33,11 +35,13 @@ export default async function (eleventyConfig) {
   eleventyConfig.addGlobalData("regionsData", regionsData)
   eleventyConfig.addGlobalData("categoriesData", categoriesData)
 
+  // 🔹 Supabase client
   const supabase = createClient(
     process.env.SUPABASE_URL,
     process.env.SUPABASE_ANON_KEY
   )
 
+  // 🔹 Загружаем профили
   let profilesData = []
   try {
     const { data, error } = await supabase
@@ -53,6 +57,7 @@ export default async function (eleventyConfig) {
     profilesData = []
   }
 
+  // 🔹 Коллекции
   eleventyConfig.addCollection("profiles", () => profilesData)
 
   eleventyConfig.addCollection("regions", () => {
@@ -91,6 +96,17 @@ export default async function (eleventyConfig) {
     return Object.values(categoriesMap)
   })
 
+  // 🔹 Пробрасываем env в глобальные данные
+  eleventyConfig.addGlobalData("site", {
+    url: process.env.SITE_URL || "http://localhost:8080",
+    supabase_url: process.env.SUPABASE_URL,
+    supabase_anon_key: process.env.SUPABASE_ANON_KEY,
+    cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    cloudinary_upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
+    netlify_build_hook: process.env.NETLIFY_BUILD_HOOK,
+  })
+
+  // 🔹 Статические файлы
   eleventyConfig.addPassthroughCopy("css")
   eleventyConfig.addPassthroughCopy("js")
   eleventyConfig.addPassthroughCopy("img")

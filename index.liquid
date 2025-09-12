@@ -68,8 +68,12 @@ eleventyComputed:
 
   <div id="pagination-container"></div>
 </section>
+<script>
+  window.SUPABASE_URL = "{{ site.supabase_url }}";
+  window.SUPABASE_KEY = "{{ site.supabase_anon_key }}";
+</script>
 
-<script type="module" src="/js/profiles.js"></script>
+<script type="module" src="/js/profiles.js" ></script>
 
 <script type="application/ld+json">
 {
