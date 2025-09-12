@@ -24,13 +24,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   let currentPage = 1
 
   function slugify(text) {
-    return text
+    const result = text
       .toString()
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "")
+
+    return result
   }
 
   async function loadProfiles() {
@@ -41,6 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         .order("created_at", { ascending: false })
 
       if (error) throw error
+
       window.allProfilesData = data
 
       populateFilters()
@@ -110,6 +113,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             `
           }
 
+          const profileSlug = slugify(p.name || "")
+
           return `
             <article class="profile-card" data-region="${
               p.city
@@ -124,11 +129,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <p>${p.city || "Регион не указан"}, ${
             p.category || "Категория не указана"
           }</p>
-          <a href="/profiles/${p.slug}/" aria-label="Подробнее о ${
-            p.name
+                <a href="/profiles/${profileSlug}/" aria-label="Подробнее о ${
+            p.name || "Без имени"
           }">Подробнее</a>
-
-
               </div>
             </article>
           `

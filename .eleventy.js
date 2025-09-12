@@ -10,7 +10,6 @@ function loadProfilesCache() {
   try {
     const rawData = fs.readFileSync(cachePath, "utf-8")
     profilesData = JSON.parse(rawData)
-    console.log(`Loaded ${profilesData.length} profiles from cache ✅`)
   } catch (err) {
     console.warn("Profiles cache not found, proceeding with empty array.", err)
     profilesData = []
