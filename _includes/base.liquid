@@ -44,7 +44,13 @@
   </script>
   {% endif %}
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4CXZPMW012"></script>
+ <script defer src="/js/analytics.js"></script>
+
+<script type="module" defer>
+  import { initFilters } from '/js/filters.js';
+  if (window.allProfilesData) initFilters(window.allProfilesData);
+</script>
+
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -55,19 +61,21 @@
   <script>
       window.SUPABASE_URL = "{{ site.supabase_url }}";
       window.SUPABASE_KEY = "{{ site.supabase_anon_key }}";
-       window.CLOUDINARY_CLOUD_NAME = "{{ site.cloudinary_cloud_name }}";
+      window.CLOUDINARY_CLOUD_NAME = "{{ site.cloudinary_cloud_name }}";
 
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
-  <nav class="nav-list" aria-label="Основная навигация">
+<nav aria-label="Главная навигация">
+  <ul class="nav-list">
     <li><a href="/">Главная</a></li>
     <li><a href="/region/">Регионы</a></li>
     <li><a href="/category/">Категории</a></li>
     <li><a href="/add-profile/">Добавить профиль</a></li>
-  </nav>
+  </ul>
+</nav>
 
   <main>
     {{ content }}
@@ -78,6 +86,6 @@
   </footer>
 
   <script src="/js/profiles.js" defer></script>
-  <script src="/js/filters.js" defer></script>
+
 </body>
 </html>

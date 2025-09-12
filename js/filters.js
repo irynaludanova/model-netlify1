@@ -1,6 +1,7 @@
+// filters.js
 import slugify from "slugify"
 
-document.addEventListener("DOMContentLoaded", function () {
+export function initFilters(profilesData) {
   const profileList = document.getElementById("profile-list")
   const categorySelect = document.getElementById("category-select")
   const regionSelect = document.getElementById("region-select")
@@ -19,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const region = p.city || "Регион не указан"
         const name = p.name || "Без имени"
 
-        // Генерируем slug на основе имени
         const slug = slugify(name, { lower: true, strict: true })
 
         const image = p.image_url
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const selectedCategory = categorySelect.value
     const selectedRegion = regionSelect.value
 
-    const filtered = window.allProfilesData.filter((p) => {
+    const filtered = profilesData.filter((p) => {
       const matchCategory =
         selectedCategory === "все" || p.category === selectedCategory
       const matchRegion = selectedRegion === "все" || p.city === selectedRegion
@@ -83,16 +83,9 @@ document.addEventListener("DOMContentLoaded", function () {
     renderProfiles(filtered)
   }
 
-  if (window.allProfilesData && window.allProfilesData.length) {
-    populateFilters(window.allProfilesData)
-    renderProfiles(window.allProfilesData)
-  }
+  populateFilters(profilesData)
+  renderProfiles(profilesData)
 
   categorySelect.addEventListener("change", filterProfiles)
   regionSelect.addEventListener("change", filterProfiles)
-
-  document.addEventListener("profilesLoaded", () => {
-    populateFilters(window.allProfilesData)
-    renderProfiles(window.allProfilesData)
-  })
-})
+}
