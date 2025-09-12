@@ -1,10 +1,8 @@
-// filters.js
-import slugify from "slugify"
-
 export function initFilters(profilesData) {
   const profileList = document.getElementById("profile-list")
   const categorySelect = document.getElementById("category-select")
   const regionSelect = document.getElementById("region-select")
+  const slugify = window.slugify
 
   if (!profileList || !categorySelect || !regionSelect) return
 
