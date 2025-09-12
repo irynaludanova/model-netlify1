@@ -2,7 +2,6 @@ async function cloudinaryUpload(file) {
   const form = new FormData()
   form.append("file", file)
   form.append("upload_preset", "unsigned_profiles")
-
   const res = await fetch("https://api.cloudinary.com/v1_1/dimallvw3/upload", {
     method: "POST",
     body: form,
@@ -15,11 +14,8 @@ async function cloudinaryUpload(file) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("#add-profile-form")
-  if (!form) return
-
   form.addEventListener("submit", async (e) => {
     e.preventDefault()
-
     const fd = new FormData(form)
     let image_url = "/img/placeholder.webp"
     const file = fd.get("image")
@@ -53,9 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const result = await resp.json()
       if (!resp.ok) throw new Error(result.error || "Ошибка сервера")
 
-      window.location.href = `/profiles/${result.profile.id}/`
+      localStorage.setItem("newProfile", JSON.stringify(result.profile))
+      alert("Профиль успешно добавлен!")
+      window.location.href = "/"
     } catch (err) {
-      alert("Ошибка при отправке профиля: " + err.message)
+      console.error("Ошибка при отправке формы:", err.message)
+      alert("Ошибка при отправке формы: " + err.message)
     }
   })
 })
