@@ -83,6 +83,11 @@ nav {
   max-width: 1200px;
   padding: 1rem;
 }
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+}
 
 .nav-list {
   list-style: none;

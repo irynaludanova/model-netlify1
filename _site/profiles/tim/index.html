@@ -114,11 +114,53 @@
 </head>
 <body>
 <nav aria-label="Главная навигация">
-  <ul class="nav-list">
-    <li><a href="/">Главная</a></li>
+  <ul class="nav-container">
+  <div class="nav-list"><li><a href="/">Главная</a></li>
     <li><a href="/region/">Регионы</a></li>
     <li><a href="/category/">Категории</a></li>
     <li><a href="/add-profile/">Добавить профиль</a></li>
+    </div>
+     <button id="google-signin" class="auth-btn">
+    <svg class="google-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
+      <path fill="#4285F4" d="M488 261.8c0-17.7-1.5-35.1-4.3-52H249v98.4h134.4c-5.8 31-23.4 57.3-49.6 74.9v62.1h80.2c46.9-43.2 74-106.9 74-183.4z"/>
+      <path fill="#34A853" d="M249 492c66.7 0 122.6-22.1 163.4-59.8l-80.2-62.1c-22.4 15-51 23.8-83.2 23.8-63.9 0-118-43.1-137.4-101.2H28.5v63.5C69.8 436.3 152.9 492 249 492z"/>
+      <path fill="#FBBC05" d="M111.6 292.7c-4.9-14.6-7.7-30.2-7.7-46.2s2.8-31.6 7.7-46.2V137h-83C11.7 172.1 0 209.7 0 246.5s11.7 74.4 28.6 109.5l83-63.3z"/>
+      <path fill="#EA4335" d="M249 97.5c36.3 0 68.9 12.5 94.6 37l71.1-71.1C371.6 24.1 315.7 2 249 2 152.9 2 69.8 57.7 28.5 137l83 63.3c19.4-58.1 73.5-101.2 137.4-101.2z"/>
+    </svg>
+    Войти через Google
+  </button>
+
+  <style>
+       .auth-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 1rem 0;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #333;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .auth-btn:hover {
+      background: #f7f7f7;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .auth-btn:active {
+      background: #eee;
+    }
+
+    .google-icon {
+      width: 20px;
+      height: 20px;
+    }
+  </style>
   </ul>
 </nav>
 
