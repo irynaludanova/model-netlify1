@@ -11,9 +11,6 @@ function loadProfilesCache() {
   try {
     const rawData = fs.readFileSync(cachePath, "utf-8")
     profilesData = JSON.parse(rawData)
-    console.log(
-      `[eleventy] Loaded ${profilesData.length} profiles from cache ✅`
-    )
   } catch (err) {
     console.warn(
       "[eleventy] Profiles cache not found, proceeding with empty array.",
@@ -25,11 +22,7 @@ function loadProfilesCache() {
 }
 
 export default function (eleventyConfig) {
-  // Игнорировать profiles_cache.json в режиме наблюдения
   eleventyConfig.ignores.add("./_data/profiles_cache.json")
-  console.log(
-    "[eleventy] Ignoring changes to ./ _data/profiles_cache.json to prevent infinite loop"
-  )
 
   eleventyConfig.addFilter("slugify", (str) => {
     return slugify(str || "", {
@@ -66,12 +59,7 @@ export default function (eleventyConfig) {
         lower: true,
         strict: true,
       })
-      console.log(
-        "[eleventy] Processing profile:",
-        profile.name,
-        "Slug:",
-        profile.slug || generatedSlug
-      )
+
       return {
         ...profile,
         slug: profile.slug || generatedSlug,
@@ -119,27 +107,21 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("img")
   eleventyConfig.addPassthroughCopy("favicon.ico")
 
-  // Обновление кэша только если файл устарел или отсутствует
   eleventyConfig.on("eleventy.before", async () => {
     const cachePath = "./_data/profiles_cache.json"
     let shouldUpdateCache = false
 
-    // Проверяем, существует ли кэш и его возраст
     try {
       const stats = fs.statSync(cachePath)
-      const cacheAge = (Date.now() - stats.mtimeMs) / 1000 / 60 // Возраст в минутах
+      const cacheAge = (Date.now() - stats.mtimeMs) / 1000 / 60
       if (cacheAge > 5) {
-        // Обновлять кэш, если старше 5 минут
         shouldUpdateCache = true
-        console.log("[eleventy] Cache is older than 5 minutes, updating...")
       }
     } catch (err) {
-      shouldUpdateCache = true // Если кэш отсутствует, обновляем
-      console.log("[eleventy] Cache file not found, will create new cache")
+      shouldUpdateCache = true
     }
 
     if (shouldUpdateCache) {
-      console.log("[eleventy] Fetching profiles from Supabase for cache...")
       const supabase = createClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY
@@ -155,10 +137,8 @@ export default function (eleventyConfig) {
         )
         return
       }
-      console.log("[eleventy] Fetched profiles:", data.length)
       try {
         fs.writeFileSync(cachePath, JSON.stringify(data, null, 2))
-        console.log("[eleventy] Updated cache with", data.length, "profiles")
       } catch (err) {
         console.error("[eleventy] Error writing profiles_cache.json:", err)
       }

@@ -1,4 +1,3 @@
-// add-profile.js (Netlify Function)
 import fetch from "node-fetch"
 
 const SUPABASE_URL = process.env.SUPABASE_URL
@@ -6,7 +5,6 @@ const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
 const NETLIFY_BUILD_HOOK = process.env.NETLIFY_BUILD_HOOK
 
 function slugify(text) {
-  console.log("[add-profile-function] Input to slugify:", text)
   if (!text || typeof text !== "string" || text.trim() === "") {
     console.error("[add-profile-function] Invalid input for slugify:", text)
     return null
@@ -18,13 +16,11 @@ function slugify(text) {
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
-  console.log("[add-profile-function] Generated slug:", result)
   return result || null
 }
 
 export async function handler(event) {
   if (event.httpMethod !== "POST") {
-    console.log("[add-profile-function] Invalid method:", event.httpMethod)
     return {
       statusCode: 405,
       body: JSON.stringify({ error: "Method Not Allowed" }),
@@ -35,7 +31,6 @@ export async function handler(event) {
   let body
   try {
     body = JSON.parse(event.body)
-    console.log("[add-profile-function] Received body:", body)
   } catch (err) {
     console.error("[add-profile-function] JSON parse error:", err.message)
     return {
@@ -48,16 +43,10 @@ export async function handler(event) {
   const name = body.name?.trim()
   let slug = body.slug?.trim()
 
-  console.log("[add-profile-function] Name received:", name)
-  console.log("[add-profile-function] Slug received:", slug)
-
-  // Генерируем slug, если он отсутствует и name валиден
   if (!slug && name) {
     slug = slugify(name)
-    console.log("[add-profile-function] Generated slug from name:", slug)
   }
 
-  // Если slug отсутствует, полагаемся на триггер Supabase
   if (!slug) {
     console.warn(
       "[add-profile-function] No slug provided, relying on Supabase trigger"
@@ -66,7 +55,7 @@ export async function handler(event) {
 
   const profileData = {
     name: name || null,
-    slug: slug || null, // Позволяем null, так как триггер Supabase обработает
+    slug: slug || null,
     city: body.city || null,
     category: body.category || null,
     description: body.description || null,
@@ -75,9 +64,7 @@ export async function handler(event) {
     phone: body.phone || null,
     image_url: body.image_url || null,
   }
-  console.log("[add-profile-function] Profile data for Supabase:", profileData)
 
-  // Валидация только name
   if (!profileData.name) {
     console.error("[add-profile-function] Missing name:", profileData)
     return {
@@ -87,7 +74,6 @@ export async function handler(event) {
     }
   }
 
-  // Проверка уникальности slug, если он предоставлен
   if (slug) {
     const checkRes = await fetch(
       `${SUPABASE_URL}/rest/v1/profiles?slug=eq.${slug}`,
@@ -100,7 +86,6 @@ export async function handler(event) {
       }
     )
     const existing = await checkRes.json()
-    console.log("[add-profile-function] Existing profiles with slug:", existing)
     if (existing.length > 0) {
       console.error("[add-profile-function] Slug already exists:", slug)
       return {
@@ -126,8 +111,7 @@ export async function handler(event) {
   let result
   try {
     result = JSON.parse(text)
-    console.log("[add-profile-function] Supabase response:", result)
-  } catch (err) {
+   } catch (err) {
     console.error("[add-profile-function] Supabase response parse error:", text)
     return {
       statusCode: 500,
@@ -146,16 +130,13 @@ export async function handler(event) {
   }
 
   if (NETLIFY_BUILD_HOOK) {
-    console.log("[add-profile-function] Triggering Netlify build hook")
     await fetch(NETLIFY_BUILD_HOOK, { method: "POST" }).catch((err) =>
       console.error("[add-profile-function] Build hook error:", err)
     )
   }
 
-  // Используем slug из ответа Supabase
   const savedSlug =
     result[0]?.slug || slug || slugify(name || `temp-${Date.now()}`)
-  console.log("[add-profile-function] Returning slug for redirect:", savedSlug)
 
   return {
     statusCode: 200,
