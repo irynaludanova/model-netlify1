@@ -8,7 +8,7 @@ export async function signInWithGoogle() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${window.location.origin}/auth/callback`,
+      redirectTo: `${site.url}/auth/callback/`,
     },
   })
   if (error) console.error("Ошибка входа:", error.message)
