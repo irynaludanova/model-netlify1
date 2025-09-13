@@ -123,7 +123,6 @@
       window.SUPABASE_URL = "https://zftnzsbflzfhfyfnyqza.supabase.co";
       window.SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdG56c2JmbHpmaGZ5Zm55cXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwODQyMjQsImV4cCI6MjA3MjY2MDIyNH0.ZiNtVmNKFPsW7NPngNvRrDsRFwcPQw0aE6m8FwmCvZg";
       window.CLOUDINARY_CLOUD_NAME = "dimallvw3";
-
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
@@ -261,6 +260,27 @@
   </footer>
 
   <script src="https://models-connect.netlify.app//js/profiles.js" defer></script>
+<script type="module">
+    import { signInWithGoogle, onAuthChange, getCurrentUser } from '/js/auth.js'
 
+    const btn = document.getElementById('google-signin')
+    if (btn) {
+      btn.addEventListener('click', () => {
+        console.log('▶ Нажата кнопка Google входа')
+        signInWithGoogle()
+      })
+    }
+
+    onAuthChange(async (event, session) => {
+      if (session) {
+        const user = await getCurrentUser()
+        console.log('✅ Вошёл пользователь:', user)
+        if (btn) btn.textContent = `Выйти (${user.email})`
+      } else {
+        console.log('🚪 Пользователь вышел')
+        if (btn) btn.textContent = 'Войти через Google'
+      }
+    })
+  </script>
 </body>
 </html>
