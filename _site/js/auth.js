@@ -2,14 +2,13 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
 const SUPABASE_URL = window.SUPABASE_URL
 const SUPABASE_KEY = window.SUPABASE_KEY
-
 export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
 export async function signInWithGoogle() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${window.location.origin}/auth/callback/`,
+      redirectTo: "https://models-connect.netlify.app/auth/callback",
     },
   })
   if (error) console.error("Ошибка входа:", error.message)
@@ -20,7 +19,7 @@ export async function handleAuthRedirect() {
     const {
       data: { session },
       error,
-    } = await supabase.auth.getSessionFromUrl({ storeSession: true })
+    } = await supabase.auth.getSession()
     if (error) {
       console.error("Ошибка авторизации:", error.message)
       return
@@ -30,7 +29,12 @@ export async function handleAuthRedirect() {
       console.log("Вошёл пользователь:", session.user)
       window.location.href = "/account/"
     } else {
-      console.error("Пользователь не найден после редиректа")
+      supabase.auth.onAuthStateChange((event, session) => {
+        if (session) {
+          console.log("Вошёл пользователь:", session.user)
+          window.location.href = "/account/"
+        }
+      })
     }
   } catch (err) {
     console.error("Ошибка в handleAuthRedirect:", err)
@@ -42,12 +46,9 @@ export function onAuthChange(cb) {
 }
 
 export async function getCurrentUser() {
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser()
+  const { data, error } = await supabase.auth.getUser()
   if (error) throw error
-  return user
+  return data.user
 }
 
 export async function signOut() {
