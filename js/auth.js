@@ -8,37 +8,21 @@ export async function signInWithGoogle() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "https://models-connect.netlify.app/auth/callback",
+      redirectTo: "https://models-connect.netlify.app/auth/callback/",
     },
   })
   if (error) console.error("Ошибка входа:", error.message)
 }
 
 export async function handleAuthRedirect() {
-  try {
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.getSession()
-    if (error) {
-      console.error("Ошибка авторизации:", error.message)
-      return
-    }
-
-    if (session) {
-      console.log("Вошёл пользователь:", session.user)
-      window.location.href = "/account/"
-    } else {
-      supabase.auth.onAuthStateChange((event, session) => {
-        if (session) {
-          console.log("Вошёл пользователь:", session.user)
-          window.location.href = "/account/"
-        }
-      })
-    }
-  } catch (err) {
-    console.error("Ошибка в handleAuthRedirect:", err)
+  const { data, error } = await supabase.auth.getSessionFromUrl({
+    storeSession: true,
+  })
+  if (error) {
+    console.error("Ошибка авторизации:", error.message)
+    return
   }
+  window.location.href = "/account/"
 }
 
 export function onAuthChange(cb) {

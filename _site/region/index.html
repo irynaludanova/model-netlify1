@@ -199,18 +199,26 @@ breadcrumb_json_ld: |
 
   <script src="https://models-connect.netlify.app//js/profiles.js" defer></script>
 <script type="module">
-  import { signInWithGoogle, onAuthChange, getCurrentUser } from 'https://models-connect.netlify.app//js/auth.js'
+    import { signInWithGoogle, onAuthChange, getCurrentUser } from 'https://models-connect.netlify.app//js/auth.js'
 
-  document.getElementById('google-signin').addEventListener('click', () => {
-    signInWithGoogle()
-  })
-
-  onAuthChange(async (event, session) => {
-    if (session) {
-      const user = await getCurrentUser()
-      console.log("Вошёл пользователь:", user)
+    const btn = document.getElementById('google-signin')
+    if (btn) {
+      btn.addEventListener('click', () => {
+        console.log('▶ Нажата кнопка Google входа')
+        signInWithGoogle()
+      })
     }
-  })
-</script>
+
+    onAuthChange(async (event, session) => {
+      if (session) {
+        const user = await getCurrentUser()
+        console.log('✅ Вошёл пользователь:', user)
+        if (btn) btn.textContent = `Выйти (${user.email})`
+      } else {
+        console.log('🚪 Пользователь вышел')
+        if (btn) btn.textContent = 'Войти через Google'
+      }
+    })
+  </script>
 </body>
 </html>
