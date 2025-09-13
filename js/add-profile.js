@@ -1,4 +1,3 @@
-// add-profile.js (клиентский)
 async function cloudinaryUpload(file) {
   console.log(
     "[add-profile.js] Starting Cloudinary upload for file:",
@@ -108,13 +107,13 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("[add-profile.js] Fetch response data:", result)
       if (!resp.ok) throw new Error(result.error || "Ошибка сервера")
 
-      // Используем slug из ответа сервера
-      const redirectSlug = result.slug || slug
-      console.log(
-        "[add-profile.js] Redirecting to:",
-        `/profiles/${redirectSlug}/`
+      alert(
+        `Профиль добавлен! Страница /profiles/${
+          result.slug || slug
+        }/ будет доступна через 1-2 минуты после пересборки сайта.`
       )
-      window.location.href = `/profiles/${redirectSlug}/`
+      console.log("[add-profile.js] Redirecting to home")
+      window.location.href = "/"
     } catch (err) {
       console.error("[add-profile.js] Form submission error:", err.message)
       alert("Ошибка при отправке формы: " + err.message)

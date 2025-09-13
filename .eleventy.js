@@ -1,6 +1,7 @@
 import dotenv from "dotenv"
 import slugify from "slugify"
 import fs from "fs"
+import { createClient } from "@supabase/supabase-js"
 
 dotenv.config()
 
@@ -10,14 +11,26 @@ function loadProfilesCache() {
   try {
     const rawData = fs.readFileSync(cachePath, "utf-8")
     profilesData = JSON.parse(rawData)
+    console.log(
+      `[eleventy] Loaded ${profilesData.length} profiles from cache ✅`
+    )
   } catch (err) {
-    console.warn("Profiles cache not found, proceeding with empty array.", err)
+    console.warn(
+      "[eleventy] Profiles cache not found, proceeding with empty array.",
+      err
+    )
     profilesData = []
   }
   return profilesData
 }
 
 export default function (eleventyConfig) {
+  // Игнорировать profiles_cache.json в режиме наблюдения
+  eleventyConfig.ignores.add("./_data/profiles_cache.json")
+  console.log(
+    "[eleventy] Ignoring changes to ./ _data/profiles_cache.json to prevent infinite loop"
+  )
+
   eleventyConfig.addFilter("slugify", (str) => {
     return slugify(str || "", {
       lower: true,
@@ -30,7 +43,7 @@ export default function (eleventyConfig) {
   try {
     regionsData = JSON.parse(fs.readFileSync("./_data/regions.json", "utf-8"))
   } catch (e) {
-    console.error("Ошибка при загрузке regions.json:", e)
+    console.error("[eleventy] Error loading regions.json:", e)
   }
 
   let categoriesData = []
@@ -39,7 +52,7 @@ export default function (eleventyConfig) {
       fs.readFileSync("./_data/categories.json", "utf-8")
     )
   } catch (e) {
-    console.error("Ошибка при загрузке categories.json:", e)
+    console.error("[eleventy] Error loading categories.json:", e)
   }
 
   eleventyConfig.addGlobalData("regionsData", regionsData)
@@ -49,12 +62,19 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addCollection("profiles", () => {
     return profilesData.map((profile) => {
+      const generatedSlug = slugify(profile.name || `unknown-${profile.id}`, {
+        lower: true,
+        strict: true,
+      })
+      console.log(
+        "[eleventy] Processing profile:",
+        profile.name,
+        "Slug:",
+        profile.slug || generatedSlug
+      )
       return {
         ...profile,
-        slug: slugify(profile.name, {
-          lower: true,
-          strict: true,
-        }),
+        slug: profile.slug || generatedSlug,
       }
     })
   })
@@ -98,6 +118,54 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("js")
   eleventyConfig.addPassthroughCopy("img")
   eleventyConfig.addPassthroughCopy("favicon.ico")
+
+  // Обновление кэша только если файл устарел или отсутствует
+  eleventyConfig.on("eleventy.before", async () => {
+    const cachePath = "./_data/profiles_cache.json"
+    let shouldUpdateCache = false
+
+    // Проверяем, существует ли кэш и его возраст
+    try {
+      const stats = fs.statSync(cachePath)
+      const cacheAge = (Date.now() - stats.mtimeMs) / 1000 / 60 // Возраст в минутах
+      if (cacheAge > 5) {
+        // Обновлять кэш, если старше 5 минут
+        shouldUpdateCache = true
+        console.log("[eleventy] Cache is older than 5 minutes, updating...")
+      }
+    } catch (err) {
+      shouldUpdateCache = true // Если кэш отсутствует, обновляем
+      console.log("[eleventy] Cache file not found, will create new cache")
+    }
+
+    if (shouldUpdateCache) {
+      console.log("[eleventy] Fetching profiles from Supabase for cache...")
+      const supabase = createClient(
+        process.env.SUPABASE_URL,
+        process.env.SUPABASE_ANON_KEY
+      )
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .order("created_at", { ascending: false })
+      if (error) {
+        console.error(
+          "[eleventy] Error fetching profiles from Supabase:",
+          error
+        )
+        return
+      }
+      console.log("[eleventy] Fetched profiles:", data.length)
+      try {
+        fs.writeFileSync(cachePath, JSON.stringify(data, null, 2))
+        console.log("[eleventy] Updated cache with", data.length, "profiles")
+      } catch (err) {
+        console.error("[eleventy] Error writing profiles_cache.json:", err)
+      }
+    } else {
+      console.log("[eleventy] Cache is up-to-date, skipping Supabase fetch")
+    }
+  })
 
   return {
     dir: {
