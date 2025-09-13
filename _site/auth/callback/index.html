@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+
+  <title>ModelConnect Miami</title>
+  <meta name="description" content="">
+
+  <meta property="og:title" content="">
+  <meta property="og:site_name" content="ModelConnect Miami">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:description" content="">
+  <meta property="og:image" content="https://models-connect.netlify.app//img/og-default.jpg">
+  <meta property="og:url" content="https://models-connect.netlify.app/">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="https://models-connect.netlify.app//img/og-default.jpg">
+
+  <link rel="canonical" href="https://models-connect.netlify.app/">
+  <link rel="icon" type="image/x-icon" href="https://models-connect.netlify.app//favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://models-connect.netlify.app//img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://models-connect.netlify.app//img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://models-connect.netlify.app//img/favicon-16x16.png">
+  <link rel="manifest" href="https://models-connect.netlify.app//img/site.webmanifest">
+
+  <link rel="preload" href="https://models-connect.netlify.app//css/style.css" as="style">
+  <link rel="stylesheet" href="https://models-connect.netlify.app//css/style.css">
+  <link rel="dns-prefetch" href="https://api.cloudinary.com">
+
+  
+
+  
+<script src="https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js"></script>
+ <script defer src="https://models-connect.netlify.app//js/analytics.js"></script>
+
+<script type="module" defer>
+  import { initFilters } from 'https://models-connect.netlify.app//js/filters.js';
+  if (window.allProfilesData) initFilters(window.allProfilesData);
+</script>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '');
+  </script>
+
+  <script>
+      window.SUPABASE_URL = "https://zftnzsbflzfhfyfnyqza.supabase.co";
+      window.SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdG56c2JmbHpmaGZ5Zm55cXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwODQyMjQsImV4cCI6MjA3MjY2MDIyNH0.ZiNtVmNKFPsW7NPngNvRrDsRFwcPQw0aE6m8FwmCvZg";
+      window.CLOUDINARY_CLOUD_NAME = "dimallvw3";
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body>
+<nav aria-label="Главная навигация">
+  <ul class="nav-container">
+  <div class="nav-list"><li><a href="/">Главная</a></li>
+    <li><a href="/region/">Регионы</a></li>
+    <li><a href="/category/">Категории</a></li>
+    <li><a href="/add-profile/">Добавить профиль</a></li>
+    </div>
+     <button id="google-signin" class="auth-btn">
+    <svg class="google-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
+      <path fill="#4285F4" d="M488 261.8c0-17.7-1.5-35.1-4.3-52H249v98.4h134.4c-5.8 31-23.4 57.3-49.6 74.9v62.1h80.2c46.9-43.2 74-106.9 74-183.4z"/>
+      <path fill="#34A853" d="M249 492c66.7 0 122.6-22.1 163.4-59.8l-80.2-62.1c-22.4 15-51 23.8-83.2 23.8-63.9 0-118-43.1-137.4-101.2H28.5v63.5C69.8 436.3 152.9 492 249 492z"/>
+      <path fill="#FBBC05" d="M111.6 292.7c-4.9-14.6-7.7-30.2-7.7-46.2s2.8-31.6 7.7-46.2V137h-83C11.7 172.1 0 209.7 0 246.5s11.7 74.4 28.6 109.5l83-63.3z"/>
+      <path fill="#EA4335" d="M249 97.5c36.3 0 68.9 12.5 94.6 37l71.1-71.1C371.6 24.1 315.7 2 249 2 152.9 2 69.8 57.7 28.5 137l83 63.3c19.4-58.1 73.5-101.2 137.4-101.2z"/>
+    </svg>
+    Войти через Google
+  </button>
+
+  <style>
+       .auth-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 1rem 0;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #333;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .auth-btn:hover {
+      background: #f7f7f7;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .auth-btn:active {
+      background: #eee;
+    }
+
+    .google-icon {
+      width: 20px;
+      height: 20px;
+    }
+  </style>
+  </ul>
+</nav>
+
+  <main>
+    <h1>Обработка авторизации...</h1>
+
+<script type="module">
+  import { handleAuthRedirect } from '/js/auth.js'
+
+  handleAuthRedirect()
+</script>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 ModelConnect Miami</p>
+  </footer>
+
+  <script src="https://models-connect.netlify.app//js/profiles.js" defer></script>
+<script type="module">
+    import { signInWithGoogle, onAuthChange, getCurrentUser } from '/js/auth.js'
+
+    const btn = document.getElementById('google-signin')
+    if (btn) {
+      btn.addEventListener('click', () => {
+        console.log('▶ Нажата кнопка Google входа')
+        signInWithGoogle()
+      })
+    }
+
+    onAuthChange(async (event, session) => {
+      if (session) {
+        const user = await getCurrentUser()
+        console.log('✅ Вошёл пользователь:', user)
+        if (btn) btn.textContent = `Выйти (${user.email})`
+      } else {
+        console.log('🚪 Пользователь вышел')
+        if (btn) btn.textContent = 'Войти через Google'
+      }
+    })
+  </script>
+</body>
+</html>
